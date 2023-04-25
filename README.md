@@ -72,4 +72,4 @@ Anforderungen:
  a)	Elemente haben keine eigene Funktionen 
  -	Nutzer der library integriert selber Funktionen 
  
-![image](https://user-images.githubusercontent.com/55583693/234297453-13ae2cdd-01bc-4595-807b-c0dd08117cb9.png)
+
