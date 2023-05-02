@@ -25,83 +25,47 @@ Präsentation eines Projektes und dessen Ergebnisse)Erstellung eines Software-Pa
 wird durch unterschiedliche Lehrveranstaltungen implementiert. Fachliche Lehrziele sind angebotsspezifisch.
 
 
-
+------
 
 # Anforderungen:
 
-**1)	Hauptziele – Must have**
-
-
- a)	Bedienung per Touchscreen und Drehknopf
- -	Soll mit verschiedenen Screenarten-/größen funktionieren
- -	Auch für Bildschirme ohne Touch 
-
-
- b)	Grid-Screen
- -	„Hauptscreen“ mit Einteilung in Rastern
-
-
- c)	Elemente 
- 
-   (1)	Button
-   
-   (2)	Textfelder
-   
-   (3)	Slider
-   
-   (4)	Bilder/Icons 
-
+**1) Hauptziele – Must have**
+- Bedienung per Touchscreen und Drehknopf
+    - Soll mit verschiedenen Screenarten-/größen funktionieren
+    - Auch für Bildschirme ohne Touch 
+- Grid-Screen
+    - „Hauptscreen“ mit Einteilung in Rastern
+- Elemente 
+   - Button
+   - Textfelder
+   - Slider
+   - Bilder/Icons 
 
 **2)	Should have**
 
-
- a)	Auf anderen Microcontrollern nutzbar sein
- 
- b)	Line-Screen
- 
- -	Listenmenü 
-
- c)	Custom Screen
- 
- -	Leeres Seite auf der Nutzer selber etwas gestalten kann
-
- d)	Zusätzliche Elemente:
- 
-  (1)	Farbrad
-  
-  (2)	Slider zur Zahleneingabe
-  
- e)	MQTT Integration
- 
- -	Kommunikation mit anderen Geräten/Servern
- -	In bestehende Smart Home Systeme integrieren
- 
- f)	Gestlatungsoptionen für Elemente 
-
+- Auf anderen Microcontrollern nutzbar sein
+- Line-Screen
+- Listenmenü
+- Custom Screen
+    - Leeres Seite auf der Nutzer selber etwas gestalten kann
+- Zusätzliche Elemente:
+    - Farbrad
+    - Slider zur Zahleneingabe
+- Bedienung mit anderen (externen) Tasten
+    - z.B. Funktionen für Pfeiltasten
 
 **3)	Could have**
 
- a)	Bedienung mit anderen (externen) Tasten
- -	z.B. Funktionen für Pfeiltasten
-
-
- b)	Graph-Screen
-
- -	Diagramme darstellen 
- 
- c)	Virtuelle Tastatur
- 
- -	Zur Toucheingabe 
- 
- d)	Sidebar
-
- -	Verknüpfungen zu verschiedenen Screens
+- Gestlatungsoptionen für Elemente
+- Graph-Screen
+    - Diagramme darstellen 
+- Virtuelle Tastatur
+    - Zur Toucheingabe 
+- Sidebar
+    - Direkte Verknüpfungen zu verschiedenen Screens an der Seite
 
 
 **4)	 Won’t have**
 
- a)	Elemente haben keine eigene Funktionen 
- 
- -	Nutzer der library integriert selber Funktionen 
- 
-
+- Elemente haben keine eigene Funktionen 
+    - Nutzer der library integriert selber Funktionen 
