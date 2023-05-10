@@ -14,22 +14,42 @@
 #define TFT_CS 15
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
 
-void setup() {
-  tft.begin();
+#include "TouchMenuLib.h"
 
-  tft.fillRect(0,0,320, 240, 255255255);
+void callback (bool) {}
 
-  tft.setCursor(26, 120);
-  tft.setTextColor(ILI9341_RED);
-  tft.setTextSize(3);
-  tft.println("Hello, TFT!");
+TouchMenuLib TML(100,100);
 
-  tft.setCursor(20, 160);
-  tft.setTextColor(ILI9341_GREEN);
-  tft.setTextSize(2);
-  tft.println("I can has colors?");
+void setup_TML() {
+  TML.init();
+  GridScreen* screen1 = new GridScreen(3, 2, Color(0, 0, 128 ));
+  
+  screen1->add(new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1);
 
-  // Meme reference: https://english.stackexchange.com/questions/20356/origin-of-i-can-haz
+  //auto e = RoundButton(COLOR_BLUE, COLOR_GREEN, callback);
+  //screen1.add(e, 1, 1, 1, 1);
+
+  TML.add(0, screen1);
 }
 
-void loop() { }
+void setup() {
+  // tft.begin();
+
+  // tft.fillRect(0,0,320, 240, 255255255);
+
+  // tft.setCursor(26, 120);
+  // tft.setTextColor(ILI9341_RED);
+  // tft.setTextSize(3);
+  // tft.println("Hello, TFT!");
+
+  // tft.setCursor(20, 160);
+  // tft.setTextColor(ILI9341_GREEN);
+  // tft.setTextSize(2);
+  // tft.println("I can has colors?");
+
+  setup_TML();
+}
+
+void loop() {
+  TML.loop();
+}

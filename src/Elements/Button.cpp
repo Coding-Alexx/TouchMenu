@@ -3,6 +3,7 @@
 
 Button::Button(const button_func_ptr button_callback) : button_callback(button_callback), switch_callback(nullptr) {}
 Button::Button(const switch_func_ptr swich_callback) : switch_callback(swich_callback), button_callback(nullptr) {}
+Button::~Button(){};
 
 void Button::setExternalValue(bool* value) {
     Button::externalValue = value;
@@ -17,6 +18,7 @@ bool Button::select() {
         value = !value;
         switch_callback(value);
     }
+    return false;
 }
 
 // Auchtung: die Callback wird bei einer externen Wertänderrung nicht aufgerufen, dies kann der Entwickler selbst tun

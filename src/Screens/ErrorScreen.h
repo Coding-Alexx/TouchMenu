@@ -1,12 +1,15 @@
 #include "../Screen.h"
+#include "../Element.h"
+
+#pragma once
 
 class ErrorSreen: public Screen {
 public:
-    ErrorSreen (int height, int width, char* error_title, char* error_text, Color background_color);
+    ErrorSreen (char* error_title, char* error_text, const Color& background_color);
     void loop() override;
 
 private:
     char* error_title;
     char* error_text;
-    Color background_color;
+    const Color& background_color;
 };
