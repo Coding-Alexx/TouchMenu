@@ -22,14 +22,16 @@ TouchMenuLib TML(100,100);
 
 void setup_TML() {
   TML.init();
-  GridScreen* screen1 = new GridScreen(3, 2, Color(0, 0, 128 ));
+  GridScreen* screen1 = new GridScreen(3, 2, Color(0, 0, 128 ), {
+    {new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1},
+    {new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1}
+  });
   
-  screen1->add(new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1);
-
-  //auto e = RoundButton(COLOR_BLUE, COLOR_GREEN, callback);
-  //screen1.add(e, 1, 1, 1, 1);
+  GridScreen* screen2 = new GridScreen(3, 2, Color(0, 0, 128 ));
+  screen2->add(new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1);
 
   TML.add(0, screen1);
+  TML.add(1, screen2);
 }
 
 void setup() {

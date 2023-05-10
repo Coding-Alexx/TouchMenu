@@ -8,6 +8,23 @@ GridScreen::GridScreen(const uint8_t col, const uint8_t raw, const Color& backgr
     elements.reserve(raw*col);
 }
 
+GridScreen::GridScreen(const uint8_t col, const uint8_t raw, const Color& background, std::vector<std::tuple<Element*, const uint16_t, const uint16_t, const uint16_t, const uint16_t>> elementList):
+    background(background),
+    height(0),
+    width(0) 
+    {
+        elements.reserve(raw*col);
+        for(auto element: elementList) {
+            Element* e = std::get<0>(element);
+            auto posX = std::get<1>(element);
+            auto posY = std::get<1>(element);
+            auto sizeX = std::get<1>(element);
+            auto sizeY = std::get<1>(element);
+
+            add(e, posX, posY, sizeX, sizeY);
+        }
+    }
+
 template <typename T>
 std::unique_ptr<Element> GridScreen::make_unique_derived(Element* element) {
     return std::make_unique<T>();
