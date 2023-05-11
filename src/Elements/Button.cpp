@@ -1,8 +1,8 @@
 #include "Button.h"
 #include "../Config.h"
 
-Button::Button(const button_func_ptr button_callback) : button_callback(button_callback), switch_callback(nullptr) {}
-Button::Button(const switch_func_ptr swich_callback) : switch_callback(swich_callback), button_callback(nullptr) {}
+Button::Button(button_func_ptr button_callback) : button_callback(button_callback), switch_callback(nullptr) {}
+Button::Button(switch_func_ptr swich_callback) : button_callback(nullptr), switch_callback(swich_callback) {}
 Button::~Button(){};
 
 void Button::setExternalValue(bool* value) {

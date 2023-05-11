@@ -53,6 +53,7 @@ wird durch unterschiedliche Lehrveranstaltungen implementiert. Fachliche Lehrzie
     - Slider zur Zahleneingabe
 - Bedienung mit anderen (externen) Tasten
     - z.B. Funktionen für Pfeiltasten
+- Fehler geben, bei Falschen Menü Definitionen -> z.B. 2 Elemente am selben Ort
 
 **3)	Could have**
 

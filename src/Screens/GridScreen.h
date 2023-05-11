@@ -21,6 +21,7 @@ public:
     // Oder mit Macros arbeiten
     //bool add(Element& element, const uint16_t posX, const uint16_t posY, const uint16_t sizeX, const uint16_t sizeY);
     void loop() override;
+    void draw() override;
 
 private:
     std::vector<std::unique_ptr<Element>> elements; // TODO eventuell eine Map nutzen
