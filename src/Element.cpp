@@ -16,5 +16,9 @@ bool Element::setSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) {
     return true;
 }
 
+void Element::setDisplay(Display* const disp) {
+    display = disp;
+}
+
 Element::~Element() {}
 Element::Element() {}

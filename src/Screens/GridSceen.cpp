@@ -38,6 +38,8 @@ bool GridScreen::add(Element* element, const uint16_t posX, const uint16_t posY,
         return false;
     }
 
+    element->setDisplay(display);
+
     std::unique_ptr<Element> uptr (element);
     elements.push_back(std::move(uptr));
     element = nullptr;  // uptr besitzt jetzt die Ressource

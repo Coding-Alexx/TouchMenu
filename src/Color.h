@@ -33,4 +33,9 @@ public:
         blue(other.blue) {}
     
     inline virtual ~Color() {}
+
+    // Falls es zu einem Fehler fürht, dann explicit vor operator
+    inline operator uint16_t() const {
+        return ((red & 0xF8) << 8) | ((green & 0xFC) << 3) | (blue >> 3);
+    }
 };

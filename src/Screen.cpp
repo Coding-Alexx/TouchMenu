@@ -1,16 +1,20 @@
 #include "Screen.h"
 
-Screen::Screen () = default;
+Screen::Screen () {}
 
-void Screen::setResolution(const size_t height, const size_t width) {
+void Screen::setResolution(const int16_t height, const int16_t width) {
     this->height = height;
     this->width = width;
 }
 
-const size_t Screen::getResolutionHeight(){
+const int16_t Screen::getResolutionHeight(){
     return height;
 }
 
-const size_t Screen::getResolutionWidth(){
+const int16_t Screen::getResolutionWidth(){
     return width;
+}
+
+void Screen::setDisplay(Display* const disp) {
+    display = disp;
 }

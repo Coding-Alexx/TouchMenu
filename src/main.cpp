@@ -6,19 +6,19 @@
   https://wokwi.com/arduino/projects/308024602434470466
 */
 
-#include "SPI.h"
-#include "Adafruit_GFX.h"
-#include "Adafruit_ILI9341.h"
-
 #define TFT_DC 2
 #define TFT_CS 15
-Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
+
 
 #include "TouchMenuLib.h"
 
-void callback (bool) {}
+TouchMenuLib TML(Display(TFT_CS, TFT_DC));
 
-TouchMenuLib TML(100,100);
+void callback (bool) {
+  TML.back();
+}
+
+
 
 void setup_TML() {
   TML.init();
@@ -40,7 +40,7 @@ void setup() {
   // tft.fillRect(0,0,320, 240, 255255255);
 
   // tft.setCursor(26, 120);
-  // tft.setTextColor(ILI9341_RED);
+  // tft.setTextColor();
   // tft.setTextSize(3);
   // tft.println("Hello, TFT!");
 

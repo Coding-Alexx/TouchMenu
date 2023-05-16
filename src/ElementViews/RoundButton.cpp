@@ -1,14 +1,16 @@
 #include "RoundButton.h"
 
 RoundButton::RoundButton(const Color& infill, const Color& border, const button_func_ptr button_callback) : 
+    Button(button_callback),
     infill(infill), 
-    border(border), 
-    Button(button_callback) {}
+    border(border)
+{}
 
 RoundButton::RoundButton(const Color& infill, const Color& border, const switch_func_ptr switch_callback) : 
+    Button(switch_callback),
     infill(infill),
-    border(border), 
-    Button(switch_callback) {}
+    border(border)
+{}
 
 void RoundButton::loop(uint16_t touchX, uint16_t touchY) {
     
