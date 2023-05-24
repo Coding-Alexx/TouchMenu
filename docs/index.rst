@@ -5,16 +5,42 @@
 
 Welcome to Touch Menu's documentation!
 ======================================
+TODO Bug fixen, dass Unterreiter an der Seite random verschwinden
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :hidden:
+   :caption: About:
+
+   About/introduction
+   About/features
+   About/faq
+   About/troubleshooting
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Getting Started:
+  
+   GettingStarted/installation
+   GettingStarted/quickstartguide
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Class Reference:
+
+   ClassReference/button.rst
+   ClassReference/element.rst
+   ClassReference/error.rst
+   ClassReference/grid.rst
+   ClassReference/roundButton.rst
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Tutorials:
+
+   Tutorials & Examples/tutorials.rst
 
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
