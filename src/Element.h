@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "Display.h"
 
 #pragma once
 
@@ -12,6 +13,7 @@ public:
 
     void setPosition(const uint16_t posX, const uint16_t posY);
     bool setSize(const uint16_t sizeX, const uint16_t sizeY, const uint8_t rotation);  // true -> größe OK, false -> zu klein/groß zum Zeichnen
+    void setDisplay(Display* const display);
     
 private:
     virtual bool checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) = 0;
@@ -21,4 +23,6 @@ private:
     uint16_t sizeX;
     uint16_t sizeY;
     uint8_t rotation;
+
+    Display* display;
 };

@@ -1,0 +1,177 @@
+@startuml
+
+class Color {
+  - red: uint8_t
+  - green: uint8_t
+  - blue: uint8_t
+  + Color(r: const uint8_t, g: const uint8_t, b: const uint8_t)
+  + getR(): uint8_t
+  + getG(): uint8_t
+  + getB(): uint8_t
+  + operator=(other: const Color&): Color&
+  + Color(other: const Color&)
+  + ~Color()
+  + operator uint16_t(): uint16_t
+}
+
+Color <-- RoundButton
+
+class RoundButton {
+  - infill: const Color&
+  - border: const Color&
+  + RoundButton(infill: const Color&, border: const Color&, button_callback: button_func_ptr)
+  + RoundButton(infill: const Color&, border: const Color&, switch_callback: switch_func_ptr)
+  + loop(touchX: uint16_t, touchY: uint16_t): void
+  + draw(): void
+  - checkSize(sizeX: uint16_t, sizeY: uint16_t, rotation: uint8_t): bool
+}
+
+class Button {
+  - button_callback: button_func_ptr
+  - switch_callback: switch_func_ptr
+  - value: bool
+  - externalValue: bool*
+  - timer: unsigned long
+  + Button(button_callback: button_func_ptr)
+  + Button(switch_callback: switch_func_ptr)
+  + setExternalValue(value: bool*)
+  + select(): bool
+}
+
+class Element {
+  - posX: uint16_t
+  - posY: uint16_t
+  - sizeX: uint16_t
+  - sizeY: uint16_t
+  - rotation: uint8_t
+  + Element()
+  + ~Element()
+  + select(): bool
+  + loop(touchX: uint16_t, touchY: uint16_t): void
+  + draw(): void
+  + setPosition(posX: const uint16_t, posY: const uint16_t): void
+  + setSize(sizeX: const uint16_t, sizeY: const uint16_t, rotation: const uint8_t): bool
+  - checkSize(sizeX: uint16_t, sizeY: uint16_t, rotation: uint8_t): bool
+}
+
+RoundButton --|> Button
+Button --|> Element
+
+newpage
+
+class Element {
+  - posX: uint16_t
+  - posY: uint16_t
+  - sizeX: uint16_t
+  - sizeY: uint16_t
+  - rotation: uint8_t
+  - display: Display*
+  + Element()
+  + ~Element()
+  + select(): bool
+  + loop(touchX: uint16_t, touchY: uint16_t): void
+  + draw(): void
+  + setPosition(posX: uint16_t, posY: uint16_t): void
+  + setSize(sizeX: uint16_t, sizeY: uint16_t, rotation: uint8_t): bool
+  + setDisplay(display: Display* const): void
+  - checkSize(sizeX: uint16_t, sizeY: uint16_t, rotation: uint8_t): bool
+}
+
+Element --> Display
+
+class GridScreen {
+  - elements: std::vector<std::unique_ptr<Element>>
+  - background: const Color&
+  - height: size_t
+  - width: size_t
+  - raw: uint8_t
+  - col: uint8_t
+  + GridScreen(col: const uint8_t, raw: const uint8_t, background: const Color&)
+  + GridScreen(col: const uint8_t, raw: const uint8_t, background: const Color&, e: std::vector<std::tuple<Element*, const uint16_t, const uint16_t, const uint16_t, const uint16_t>>)
+  + add(element: Element*, posX: const uint16_t, posY: const uint16_t, sizeX: const uint16_t, sizeY: const uint16_t): bool
+  + loop(): void
+  + draw(): void
+  + make_unique_derived<T>(element: Element*): std::unique_ptr<Element>
+}
+
+GridScreen --|> Screen
+GridScreen --> Element
+
+class ErrorSreen {
+  - error_title: char*
+  - error_text: char*
+  - background_color: const Color&
+  + ErrorSreen(error_title: char*, error_text: char*, background_color: const Color&)
+  + loop(): void
+  + draw(): void
+}
+ErrorSreen --|> Screen
+
+class Screen {
+  - height: int16_t
+  - width: int16_t
+  - display: Display*
+  + Screen()
+  + loop(): void
+  + draw(): void
+  + setDisplay(display: Display* const): void
+  + setResolution(height: int16_t, width: int16_t): void
+  + getResolutionHeight(): const int16_t
+  + getResolutionWidth(): const int16_t
+}
+
+Screen --> Display
+
+
+class TouchMenuLib {
+  - screens: std::map<uint8_t, std::unique_ptr<Screen>>
+  - screenHistory: std::stack<Screen*>
+  - display: Display*
+  + TouchMenuLib(display: Display&&)
+  + ~TouchMenuLib()
+  + init(): void
+  + add(id: uint8_t, screen: Screen*): void
+  + loop(): void
+  + back(): void
+  + back(i: size_t): void
+  + goTo(id: size_t, toHistory: bool): bool
+}
+
+TouchMenuLib --> Display
+TouchMenuLib --> Screen
+
+class Display {
+  - tft: Adafruit_ILI9341
+  + Display(pin_tft_CS: const uint8_t, pin_tft_DC: const uint8_t)
+  + Display(other: const Display&)
+  + operator=(other: const Display&): Display&
+  + init(): void
+  + rect(pos_x: const uint16_t, pos_y: const uint16_t, width: const uint16_t, height: const uint16_t, border_size: const uint8_t, border_color: const Color*, radius: uint8_t, infill_color: const Color*)
+  + rect(pos_x: const uint16_t, pos_y: const uint16_t, width: const uint16_t, height: const uint16_t, border_size: const uint8_t, border_color: const Color*, radius: uint8_t)
+  + rect(pos_x: const uint16_t, pos_y: const uint16_t, width: const uint16_t, height: const uint16_t, border_size: const uint8_t, border_color: const Color*)
+  + circle(pos_x: const uint16_t, pos_y: const uint16_t, d: const uint16_t, border_size: const uint8_t, border_color: const Color*, infill_color: const Color*)
+  + circle(pos_x: const uint16_t, pos_y: const uint16_t, d: const uint16_t, border_size: const uint8_t, border_color: const Color*)
+  + text(pos_x: const uint16_t, pos_y: const uint16_t, width: const uint16_t, height: const uint16_t, text_size: const uint8_t, text_color: const Color*)
+  + text_center(pos_x: const uint16_t, pos_y: const uint16_t, width: const uint16_t, height: const uint16_t, text_size: const uint8_t, text_color: const Color*)
+  + line(x1: const uint16_t, y1: const uint16_t, x2: const uint16_t, y2: const uint16_t, color: const Color*)
+  + point(x1: const uint16_t, y1: const uint16_t, color: const Color*)
+  + height: int16_t
+  + width: int16_t
+}
+
+Display --> Adafruit_ILI9341
+Display --> Color
+
+class Color {
+  - red: uint8_t
+  - green: uint8_t
+  - blue: uint8_t
+  + Color(r: const uint8_t, g: const uint8_t, b: const uint8_t)
+  + getR(): uint8_t
+  + getG(): uint8_t
+  + getB(): uint8_t
+  + operator=(other: const Color&): Color&
+  + Color(other: const Color&)
+}
+
+@enduml

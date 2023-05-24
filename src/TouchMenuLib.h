@@ -8,9 +8,11 @@
 #include "Screens/ErrorScreen.h"
 #include "ElementViews/RoundButton.h"
 
+#pragma once
+
 class TouchMenuLib {
 public:
-    TouchMenuLib (const size_t heigth, const size_t wigth);
+    TouchMenuLib (Display&& display);
     ~TouchMenuLib ();
 
     // inizialisiere das Menü mit der gewünschten ausgabe
@@ -33,11 +35,5 @@ private:
     std::map<uint8_t, std::unique_ptr<Screen>> screens; // falls Referenzen nicht funktionieren sollten, kann man z.B. std::reference_wrapper<Screen> nutzen
     std::stack<Screen*> screenHistory;
 
-    const size_t resolutionHeigth;
-    const size_t resolutionWigth;
+    Display* display;
 };
-
-#ifndef dTML
-    #define dTML
-    
-#endif
