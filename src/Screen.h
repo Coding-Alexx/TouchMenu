@@ -18,8 +18,7 @@ public:
     const int16_t getResolutionWidth();
 
 protected:
-    int16_t height;
-    int16_t width;
-
+    int16_t height = 0;
+    int16_t width = 0;
     Display* display;
 };

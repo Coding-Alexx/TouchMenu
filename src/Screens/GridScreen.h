@@ -30,9 +30,4 @@ private:
     size_t width;
     uint8_t raw;
     uint8_t col;
-
-    template <typename T>
-    std::unique_ptr<Element> make_unique_derived(Element* element);
-
-    
 };

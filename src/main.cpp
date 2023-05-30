@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <tuple>
 
 /*
   Simple "Hello World" for ILI9341 LCD
@@ -6,13 +7,10 @@
   https://wokwi.com/arduino/projects/308024602434470466
 */
 
-#define TFT_DC 2
-#define TFT_CS 15
-
-
 #include "TouchMenuLib.h"
 
-TouchMenuLib TML(Display(TFT_CS, TFT_DC));
+//TouchMenuLib TML(DisplayGFX(TFT_CS, TFT_DC));
+TouchMenuLib TML(new DisplayTFTeSPI());
 
 void callback (bool) {
   TML.back();
@@ -21,17 +19,26 @@ void callback (bool) {
 
 
 void setup_TML() {
-  TML.init();
-  GridScreen* screen1 = new GridScreen(3, 2, Color(0, 0, 128 ), {
-    {new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1},
-    {new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1}
-  });
+  // GridScreen* screen1 = new GridScreen(3, 2, Color(0, 0, 128), {
+  //   {new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1},
+  //   {new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1}
+  // });
   
-  GridScreen* screen2 = new GridScreen(3, 2, Color(0, 0, 128 ));
-  screen2->add(new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1);
+  GridScreen* screen1 = new GridScreen(3, 2, Color(0, 0, 128 ), {
+    // FRAGE: Wie kann man das besser machen (ohne make_tuple)
+    std::make_tuple(new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1)
+  });
 
+  // GridScreen* screen2 = new GridScreen(3, 2, Color(0, 0, 128 ));
+  // screen2->add(new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1);
+
+  ErrorSreen* error = new ErrorSreen("Hello World", "Dies ist ein kleiner Test");
+
+  TML.add(99, error);
   TML.add(0, screen1);
-  TML.add(1, screen2);
+  //TML.add(1, screen2);
+
+  TML.init();
 }
 
 void setup() {
@@ -49,7 +56,14 @@ void setup() {
   // tft.setTextSize(2);
   // tft.println("I can has colors?");
 
+  Serial.begin(9600);
+  Serial.println("Beginn:");
+
   setup_TML();
+
+  // DisplayTFTeSPI d = DisplayTFTeSPI();
+  // d.init();
+  // d.fillScreen(COLOR_GREEN);
 }
 
 void loop() {

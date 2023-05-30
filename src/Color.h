@@ -2,9 +2,11 @@
 
 #pragma once
 
-#define COLOR_RED       Color(128,  0,      0   )
-#define COLOR_GREEN     Color(0,    128,    0   )
-#define COLOR_BLUE      Color(0,    0,      128 )
+#define COLOR_RED       Color(255, 0,   0   )
+#define COLOR_GREEN     Color(0,   255, 0   )
+#define COLOR_BLUE      Color(0,   0,   255 )
+#define COLOR_BLACK     Color(0,   0,   0   )
+#define COLOR_WHITE     Color(255, 255, 255 )
 
 class Color {
 private:
@@ -15,9 +17,9 @@ private:
 public:
     inline Color (const uint8_t r, const uint8_t g, const uint8_t b) : red(r), green(g), blue(b) {};
     //inline Color () : red(0), green(0), blue(0) {};
-    inline uint8_t getR () {return red;}
-    inline uint8_t getG () {return green;}
-    inline uint8_t getB () {return blue;}
+    inline uint8_t getRed   () const {return red;}
+    inline uint8_t getGreen () const {return green;}
+    inline uint8_t getBlue  () const {return blue;}
 
     inline Color& operator= (const Color& other) {
         red = other.red;
@@ -33,9 +35,4 @@ public:
         blue(other.blue) {}
     
     inline virtual ~Color() {}
-
-    // Falls es zu einem Fehler fürht, dann explicit vor operator
-    inline operator uint16_t() const {
-        return ((red & 0xF8) << 8) | ((green & 0xFC) << 3) | (blue >> 3);
-    }
 };
