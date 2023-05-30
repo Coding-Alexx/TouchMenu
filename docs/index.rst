@@ -5,7 +5,7 @@
 
 Welcome to Touch Menu's documentation!
 ======================================
-TODO Bug fixen, dass Unterreiter an der Seite random verschwinden
+
 
 .. toctree::
    :maxdepth: 2
@@ -31,10 +31,14 @@ TODO Bug fixen, dass Unterreiter an der Seite random verschwinden
    :caption: Class Reference:
 
    ClassReference/button.rst
+   ClassReference/color.rst
+   ClassReference/display.rst
    ClassReference/element.rst
    ClassReference/error.rst
    ClassReference/grid.rst
    ClassReference/roundButton.rst
+   ClassReference/screen.rst
+   ClassReference/touchMenuLib.rst
 
 .. toctree::
    :maxdepth: 2

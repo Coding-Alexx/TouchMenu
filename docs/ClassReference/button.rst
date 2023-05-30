@@ -5,8 +5,7 @@ Beschreibung
 =============
 Was macht die Klasse
 
-TODO Oben im Reiter Funktionen Verlinkung zur Beschreibung der Funktion, 
-Verlinkung zu roundButton 
+TODO Verlinkung zu roundButton 
 
 Tutorials/ Examples
 =====================
@@ -15,29 +14,64 @@ oder direkt hier einbinden
 
 Funktionen
 =============
+relevant für eigenes Menü
 
 .. csv-table:: 
     :widths: 100 1000
 
-    void, setExternalValue(bool* value)
-    bool, select()
-    void, loop()
+     , :ref:`Button <buttonButton>` (button_func_ptr button_callback)
+     , :ref:`Button <buttonSwitch>` (switch_func_ptr swich_callback)
+
+
+sonstige 
+
+.. csv-table:: 
+    :widths: 100 1000
+
+    void, :ref:`loop <buttonLoop>` ()
+    bool, :ref:`select <buttonSelect>` ()
+    void, :ref:`setExternalValue <buttonsetexternalvalue>` (bool* value)
 
 Funktionen Beschreibung
 =========================
 
+.. _buttonButton:
 
-void Button::setExternalValue(bool* value)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Button (button_func_ptr button_callback)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Elements/Button.cpp 
-    :lines: 8-11
+    :lines: 4
     :linenos:
 
-Erklärung. Variablen auch erklären? In extra Bereich? oder bei jeweiligen Klasse?
+Erklärung
 
-bool Button::select()
-~~~~~~~~~~~~~~~~~~~~~~
+.. _buttonSwitch:
+
+Button (switch_func_ptr swich_callback)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../../src/Elements/Button.cpp 
+    :lines: 5
+    :linenos:
+
+Erklärung
+
+.. _buttonLoop:
+
+void loop ()
+~~~~~~~~~~~~~~~~~~~~~~~~
+.. literalinclude:: ../../src/Elements/Button.cpp 
+    :lines: 25-41
+    :linenos:
+
+Erklärung
+
+
+.. _buttonSelect:
+
+bool select ()
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Elements/Button.cpp 
     :lines: 12-22
@@ -45,11 +79,13 @@ bool Button::select()
 
 Erklärung
 
-void Button::loop()
-~~~~~~~~~~~~~~~~~~~~~
+.. _buttonSetExternalValue:
+
+void setExternalValue (bool* value)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Elements/Button.cpp 
-    :lines: 25-41
+    :lines: 8-11
     :linenos:
 
 Erklärung
