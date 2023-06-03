@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <tuple>
 
 /*
   Simple "Hello World" for ILI9341 LCD
@@ -16,27 +15,34 @@ void callback (bool) {
   TML.back();
 }
 
-
-
 void setup_TML() {
+
+  //ErrorScreen* error = new ErrorScreen("Hello World", "Dies ist ein kleiner Test");
+  //TML.add(99, error);
+  CREATE_ERROR_SCREEN(TML, 1, "Hello World", "Dies ist ein kleiner Test")
+  CREATE_ERROR_SCREEN_with_Colors(TML, 2, "Hello World", "Dies ist ein kleiner Test", COLOR_BLACK, COLOR_BLUE)
+
   // GridScreen* screen1 = new GridScreen(3, 2, Color(0, 0, 128), {
   //   {new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1},
   //   {new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1}
   // });
-  
-  GridScreen* screen1 = new GridScreen(3, 2, Color(0, 0, 128 ), {
-    // FRAGE: Wie kann man das besser machen (ohne make_tuple)
+
+  // TouchMenuLib, ScreenID, col, raw, color, elements
+  CREATE_GRID_SCREEN(TML, 10, 3, 2, Color(0, 0, 128),
+    std::make_tuple(new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1),
     std::make_tuple(new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1)
-  });
+  );
 
-  // GridScreen* screen2 = new GridScreen(3, 2, Color(0, 0, 128 ));
-  // screen2->add(new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1);
+  CREATE_GRID_SCREEN(TML, 11, 3, 2, Color(0, 0, 128),
+    std::make_tuple(new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1),
+    std::make_tuple(new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1)
+  );
 
-  ErrorSreen* error = new ErrorSreen("Hello World", "Dies ist ein kleiner Test");
-
-  TML.add(99, error);
-  TML.add(0, screen1);
-  //TML.add(1, screen2);
+  // So machen:
+  GridScreen* gridScreen = new GridScreen(3, 2, Color(0, 0, 128 ));
+  gridScreen->add(new RoundButton(COLOR_BLUE, COLOR_GREEN, callback), 1, 1, 1, 1);
+  TML.add(78, gridScreen);
+  // oder Factory Pattern
 
   TML.init();
 }
