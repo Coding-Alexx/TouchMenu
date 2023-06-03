@@ -28,8 +28,9 @@ public:
     // aktualisiere das Menü
     void loop();
 
+    void draw();
+
     // gehe ein Screen in der History 1 oder mehrere shritte zurück zurück -> bei back(0) -> gehe zum zuletzt gespeicherten Screen (falls man die History zwischendurch deaktiviert hat)
-    void back();
     void back(size_t i);
 
     // gehe zum Screen mit kennung id, man kann es auch deaktivieren, dass dieser Screen auf dem Stabel der Historys gelegt wird
@@ -42,4 +43,6 @@ private:
     Display* display;
 
     bool isDisplayInit = false;
+
+    void setAutoResolution(Screen* screen);
 };

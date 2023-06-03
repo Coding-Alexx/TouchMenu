@@ -23,12 +23,10 @@ void TouchMenuLib::init() {
     for (const auto& screenPair : screens) {
         Screen* screen = screenPair.second.get();
         // Auflösung setzen, falls 0 oder zu groß
-        if (screen->getResolutionHeight() == 0 || screen->getResolutionHeight() == 0 || screen->getResolutionHeight() > display->getHeight() || screen->getResolutionWidth() > display->getWigth()) {
-            screen->setResolution(display->getHeight(), display->getWigth());
-        }
+        setAutoResolution(screen);
     }
 
-    screens[screenHistory.top()].get()->draw(); // rufe den obersten Screen auf und lasse ihn Zeichnen
+    draw();
 
     isDisplayInit = true;
 }
@@ -40,11 +38,7 @@ void TouchMenuLib::add (uint8_t id, Screen* screen) {
     std::unique_ptr<Screen> uptr (screen);
     screens[id] = std::move(uptr);
 
-    if (isDisplayInit) {
-        if (screen->getResolutionHeight() == 0 || screen->getResolutionHeight() == 0 || screen->getResolutionHeight() > display->getHeight() || screen->getResolutionWidth() > display->getWigth()) {
-            screen->setResolution(display->getHeight(), display->getWigth());
-        }
-    }
+    if (isDisplayInit) setAutoResolution(screen);
 
     screen = nullptr;   // damit der Nutzer keinen Schaden anrichten kann (z.B. pointer löschen)
 
@@ -54,17 +48,34 @@ void TouchMenuLib::add (uint8_t id, Screen* screen) {
     }
 }
 
-void TouchMenuLib::back() {
-
+// gehe i Schritte in der Histroy zurück
+void TouchMenuLib::back(size_t i=1){
+    for(int j = i; i > 0; i--) {
+        screenHistory.pop();
+    }
+    draw();
 }
-void TouchMenuLib::back(size_t i){
 
-}
-
+// jehe zum Screen id, wenn toHistory=false, dann will man keine neue Ebene in der History
 bool TouchMenuLib::goTo(size_t id, bool toHistory=true){
-    return false;
+    if (screens.count(id) == 0) return false;
+
+    if (!toHistory) screenHistory.pop();
+    screenHistory.push(id);
+    draw();
+    return true;
 }
 
 void TouchMenuLib::loop(){
 
+}
+
+void TouchMenuLib::draw() {
+    screens[screenHistory.top()].get()->draw(); // rufe den obersten Screen auf und lasse ihn Zeichnen
+}
+
+void TouchMenuLib::setAutoResolution(Screen* screen){
+    if (screen->getResolutionHeight() == 0 || screen->getResolutionHeight() == 0 || screen->getResolutionHeight() > display->getHeight() || screen->getResolutionWidth() > display->getWigth()) {
+        screen->setResolution(display->getHeight(), display->getWigth());
+    }
 }
