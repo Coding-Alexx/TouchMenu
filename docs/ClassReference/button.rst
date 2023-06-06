@@ -5,8 +5,8 @@ Button
 
 Beschreibung
 =============
-Buttons sind :ref:`Elemente <element>`, bei denen ein einmaliger Input zum Ausführen einer bestimmten Aktivität führt.
-Vom Button erben folgende Klassen: roundButton(Link test)
+Buttons sind :doc:`Elemente </ClassReference/Element>`, bei denen ein einmaliger Input zum Ausführen einer bestimmten Aktivität führt.
+Vom Button erben folgende Klassen: roundButton(Link test)hhhhhhhhh
 
 TODO Verlinkung zu roundButton 
 
