@@ -10,8 +10,6 @@ Beschreibung
 * :ref:`GridScreens <gridscreen>`
 * :ref:`ErrorScreens <errorscreen>`
 
-TODO Verlinkung zu roundButton 
-
 Tutorials/ Examples
 =====================
 Link dazu, wenn vorhanden
