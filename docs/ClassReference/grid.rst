@@ -1,9 +1,11 @@
+.. _gridscreen:
+
 GridScreen
 +++++++++++
 
 Beschreibung
 =============
-Was macht die Klasse
+GridScreens sind :ref:`Screens <screen>`, bei denen :ref:`Elemente <element>` in einem Raster mit Zeilen und Spalten eingeordnet werden können.
 
 
 Tutorials/ Examples
