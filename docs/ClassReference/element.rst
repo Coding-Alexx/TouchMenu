@@ -83,6 +83,8 @@ void setPosition (const uint16_t posX, const uint16_t posY)
 .. literalinclude:: ../../src/Element.cpp
     :lines: 4-7
     :linenos:
+    
+Die x und y Koordinaten des Elements auf dem Bildschirm werden festgelegt.  
 
 .. _elementSetSize:
 
@@ -92,6 +94,11 @@ bool setSize (const uint16_t sizeX, const uint16_t sizeY, const uint8_t rotation
 .. literalinclude:: ../../src/Element.cpp
     :lines: 9-17
     :linenos:
+
+Die Funktion gibt aus, ob das Element zeichenbar ist oder nicht. Gibt sie "true" zurück lässt sich das Element zeichnen, bei "false" ist das Element zu groß bzw. zu klein zum zeichnen. 
+Hierbei wird zuerst :ref:`checkSize <elementchecksize>` ausgeführt.
+
+TODO Continue
 
 .. _elementSetDisplay:
 
