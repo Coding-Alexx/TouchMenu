@@ -1,9 +1,11 @@
+.. _button:
+
 Button
 ++++++++
 
 Beschreibung
 =============
-Was macht die Klasse
+Buttons sind :ref:`Elemente <element.rst>`, bei denen ein einmaliger Input zum Ausführen einer bestimmten Aktivität führt.
 
 TODO Verlinkung zu roundButton 
 
