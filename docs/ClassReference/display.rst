@@ -1,11 +1,11 @@
+.. _display:
+
 Display
 ++++++++
 
 Beschreibung
 =============
-Was macht die Klasse
-
-TODO Verlinkung zu roundButton 
+Display ist eine abstrakte Klasse, die als Schnittstelle zwischen :ref:`Menü <touchmenulib>` und dem Ausgabegerät fungiert.
 
 Tutorials/ Examples
 =====================
