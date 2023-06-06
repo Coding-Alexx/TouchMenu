@@ -6,7 +6,7 @@ Button
 Beschreibung
 =============
 Buttons sind :ref:`Elemente <element>`, bei denen ein einmaliger Input zum Ausführen einer bestimmten Aktivität führt.
-|Vom Button erben folgende Klassen: 
+| Vom Button erben folgende Klassen: 
  - :ref:`roundButton <roundbutton>`
 
 Tutorials/ Examples
