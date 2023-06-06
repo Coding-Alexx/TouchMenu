@@ -5,7 +5,7 @@ Button
 
 Beschreibung
 =============
-Buttons sind :ref:`Elemente <element.rst>`, bei denen ein einmaliger Input zum Ausführen einer bestimmten Aktivität führt.
+Buttons sind :ref:`Elemente <../element.rst>`, bei denen ein einmaliger Input zum Ausführen einer bestimmten Aktivität führt.
 
 TODO Verlinkung zu roundButton 
 
