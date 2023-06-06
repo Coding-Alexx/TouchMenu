@@ -32,8 +32,8 @@ Funktionen Beschreibung
 GridScreen (const uint8_t col, const uint8_t raw, const Color& background)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: ../../src/Screens/GridSceen.cpp
-    :lines: 3-5
+.. literalinclude:: ../../src/Screens/GridScreen.cpp
+    :lines: 3-9
     :linenos:
 
 .. _gridGridScreenVectorConstructor:
@@ -41,17 +41,14 @@ GridScreen (const uint8_t col, const uint8_t raw, const Color& background)
 GridScreen (const uint8_t col, const uint8_t raw, const Color& background, std::vector<std::tuple<Element*, const uint16_t, const uint16_t, const uint16_t, const uint16_t>> e)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: ../../src/Screens/GridSceen.cpp
-    :lines: 7-22
-    :linenos:
 
 .. _gridAdd:
 
 bool add (Element* element, const uint16_t posX, const uint16_t posY, const uint16_t sizeX, const uint16_t sizeY)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
-.. literalinclude:: ../../src/Screens/GridSceen.cpp
-    :lines: 29-48
+.. literalinclude:: ../../src/Screens/GridScreen.cpp
+    :lines: 11-30
     :linenos:
 
 .. _gridLoop:
@@ -69,7 +66,3 @@ void draw () override
 
 std::unique_ptr<Element> make_unique_derived (Element* element);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. literalinclude:: ../../src/Screens/GridSceen.cpp
-    :lines: 24-27
-    :linenos:
