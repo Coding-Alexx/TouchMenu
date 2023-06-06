@@ -1,11 +1,11 @@
+.. _displaytftespi:
+
 DisplayTFTeSPI
 ++++++++++++++++
+DisplayTFTeSPI erben von der Klasse :ref:`Display <display>` und nutzen für ihre Ausgabe die Bibliothek `TFTeSPI <https://github.com/Bodmer/TFT_eSPI>`.
 
 Beschreibung
 =============
-Was macht die Klasse
-
-TODO Verlinkung zu roundButton 
 
 Tutorials/ Examples
 =====================
