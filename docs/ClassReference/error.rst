@@ -1,9 +1,11 @@
+.. _errorscreen:
+
 ErrorScreen
 +++++++++++++++
 
 Beschreibung
 =============
-Was macht die Klasse
+ErrorScreens sind :ref:`Screens <screen>`, die eine Fehlermeldung ausgeben.
 
 
 Tutorials/ Examples
