@@ -5,9 +5,10 @@ Elements
 
 Beschreibung
 =============
-Elemente sind vordefinierte Funktionseinheiten, die auf einem Screen(Link) eingefügt werden können.
-Dazu gehören Buttons(Link)
-
+| Elemente sind vordefinierte Funktionseinheiten, die auf einem :ref:`Screen <screen>` eingefügt werden können.
+| Dazu gehören 
+* :ref:`Buttons <button>`
+* :ref:`Slider <slider>`
 
 Tutorials/ Examples
 =====================
