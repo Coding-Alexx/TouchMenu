@@ -5,8 +5,8 @@ Button
 
 Beschreibung
 =============
-Buttons sind :doc:`Elemente <../element.rst>`, bei denen ein einmaliger Input zum Ausführen einer bestimmten Aktivität führt.
-Vom Button erben folgende Klassen: roundButton(Link)
+Buttons sind :ref:`Elemente <element>`, bei denen ein einmaliger Input zum Ausführen einer bestimmten Aktivität führt.
+Vom Button erben folgende Klassen: roundButton(Link test)
 
 TODO Verlinkung zu roundButton 
 
