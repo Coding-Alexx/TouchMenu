@@ -6,6 +6,7 @@ Button
 Beschreibung
 =============
 Buttons sind :ref:`Elemente <../element.rst>`, bei denen ein einmaliger Input zum Ausführen einer bestimmten Aktivität führt.
+Vom Button erben folgende Klassen: roundButton
 
 TODO Verlinkung zu roundButton 
 
