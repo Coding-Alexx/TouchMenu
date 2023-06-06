@@ -1,11 +1,11 @@
+.. _touchMenuLib:
+
 TouchMenuLib
 ++++++++++++++
 
 Beschreibung
 =============
-Was macht die Klasse
-
-TODO Verlinkung zu roundButton 
+TouchMenuLib arbeitet als Schnittstelle und verwaltet das Menü und kommuniziert mit dem Nutzer.
 
 Tutorials/ Examples
 =====================
