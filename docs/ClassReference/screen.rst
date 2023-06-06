@@ -1,9 +1,14 @@
+.. _screen:
+
 Screen
 ++++++++++++++
 
 Beschreibung
 =============
-Was macht die Klasse
+| Screens sind abstrakte Klassen, die für die Darstellungsart des Bildschirms auf dem Display des Ausgabegerätes verantwortlich sind.
+| Zu den Screens gehören:
+* :ref:`GridScreens <gridscreen>`
+* :ref:`ErrorScreens <errorscreen>`
 
 TODO Verlinkung zu roundButton 
 
