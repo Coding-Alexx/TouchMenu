@@ -1,9 +1,12 @@
+.. _element:
+
 Elements
 ++++++++++
 
 Beschreibung
 =============
-Was macht die Klasse
+Elemente sind vordefinierte Funktionseinheiten, die auf einem Screen(Link) eingefügt werden können.
+Dazu gehören Buttons(Link)
 
 
 Tutorials/ Examples
