@@ -1,11 +1,11 @@
+.. _color:
+
 Color
 ++++++++
 
 Beschreibung
 =============
-Was macht die Klasse
-
-TODO Verlinkung zu roundButton 
+Color verwaltet alles, was in irgendeiner Form mit Farben zu tun hat.
 
 Tutorials/ Examples
 =====================
