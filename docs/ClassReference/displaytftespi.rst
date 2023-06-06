@@ -2,10 +2,10 @@
 
 DisplayTFTeSPI
 ++++++++++++++++
-DisplayTFTeSPI erben von der Klasse :ref:`Display <display>` und nutzen für ihre Ausgabe die Bibliothek `TFTeSPI <https://github.com/Bodmer/TFT_eSPI/>`_.
 
 Beschreibung
 =============
+DisplayTFTeSPI erben von der Klasse :ref:`Display <display>` und nutzen für ihre Ausgabe die Bibliothek `TFTeSPI <https://github.com/Bodmer/TFT_eSPI/>`_.
 
 Tutorials/ Examples
 =====================
