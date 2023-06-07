@@ -18,13 +18,17 @@
     /* TODO: überprüfen, ob screenID bereits genutzt wurde*/ \
     \
     GridScreen* screen##screenID = new GridScreen(col, row, color); \
-    std::vector<std::tuple<Element*, const uint16_t, const uint16_t, const uint16_t, const uint16_t>> elements##screenID = {__VA_ARGS__}; \
+    TML.add(screenID, screen##screenID); \
+    std::vector<std::tuple<Element*, const uint16_t, const uint16_t, const uint16_t, const uint16_t>> elements##screenID {__VA_ARGS__}; \
     for (const auto& elementTuple : elements##screenID) { \
-        screen##screenID->add(std::get<0>(elementTuple), std::get<1>(elementTuple), \
-                              std::get<2>(elementTuple), std::get<3>(elementTuple), \
-                              std::get<4>(elementTuple)); \
-    }\
-    TML.add(screenID, screen##screenID);
+        Element* element; \
+        uint16_t arg1; \
+        uint16_t arg2; \
+        uint16_t arg3; \
+        uint16_t arg4; \
+        std::tie(element, arg1, arg2, arg3, arg4) = elementTuple; \
+        screen##screenID->add(element, arg1, arg2, arg3, arg4); \
+    }
 
 class GridScreen: public Screen {
 public:
@@ -39,12 +43,11 @@ public:
     //bool add(Element& element, const uint16_t posX, const uint16_t posY, const uint16_t sizeX, const uint16_t sizeY);
     void loop() override;
     void draw() override;
+    void setResolution(int16_t height, int16_t width);
 
 private:
-    std::vector<std::unique_ptr<Element>> elements; // TODO eventuell eine Map nutzen
-    const Color& background;
-    size_t height;
-    size_t width;
-    uint8_t raw;
+    const Color color_background;
+    uint8_t row;
     uint8_t col;
+    std::vector<std::unique_ptr<Element>> elements; // TODO eventuell eine Map nutzen
 };

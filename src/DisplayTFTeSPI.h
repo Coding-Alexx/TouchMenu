@@ -46,4 +46,9 @@ public:
 
     int16_t getHeight();
     int16_t getWigth();
+
+    uint8_t getRotation();
+
+private:
+    uint8_t rotation = 0;
 };

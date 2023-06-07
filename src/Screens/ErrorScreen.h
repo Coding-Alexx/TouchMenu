@@ -9,8 +9,7 @@
     static_assert(std::is_same<decltype(TML), TouchMenuLib>::value, "TML must be of type TouchMenuLib"); \
     static_assert(std::is_convertible<decltype(errorMessage), const char*>::value, "errorMessage must be of type const char*"); \
     static_assert(std::is_convertible<decltype(errorTitle), const char*>::value, "errorTitle must be of type const char*"); \
-    ErrorScreen* screen##screenID = new ErrorScreen(errorTitle, errorMessage); \
-    TML.add(screenID, screen##screenID);
+    TML.add(screenID, new ErrorScreen(errorTitle, errorMessage));
 
 #define CREATE_ERROR_SCREEN_with_Colors(TML, screenID, errorTitle, errorMessage, backgroundColor, textColor) \
     static_assert(std::is_integral<decltype(screenID)>::value && screenID >= 0 && screenID <= UINT8_MAX, "screenID must be of type uint8_t"); \

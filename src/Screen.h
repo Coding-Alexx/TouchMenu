@@ -13,7 +13,7 @@ public:
     virtual void draw() = 0;    // Zeichne den Screen und alle Elemente neu
 
     void setDisplay(Display* const display);
-    void setResolution(int16_t height, int16_t width);
+    virtual void setResolution(int16_t height, int16_t width);
     const int16_t getResolutionHeight();
     const int16_t getResolutionWidth();
 

@@ -25,22 +25,22 @@ void DisplayTFTeSPI::rect(const uint16_t pos_x, const uint16_t pos_y, const uint
 }
 
 void DisplayTFTeSPI::rect(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const uint8_t border_size, const Color& border_color, uint8_t radius) {
-    rect(pos_x, pos_y, width, height, border_size, border_color, radius, COLOR_BLACK);
+    //rect(pos_x, pos_y, width, height, border_size, border_color, radius, COLOR_BLACK);
 }
 
 void DisplayTFTeSPI::rect(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const uint8_t border_size, const Color& border_color) {
-    rect(pos_x, pos_y, width, height, border_size, border_color, 0, COLOR_BLACK);
+    //rect(pos_x, pos_y, width, height, border_size, border_color, 0, COLOR_BLACK);
 }
 
 void DisplayTFTeSPI::circle(const uint16_t pos_x, const uint16_t pos_y, const uint16_t d, const uint8_t border_size, const Color& border_color, const Color& infill_color) {
-    // tft.fillCircle(pos_x, pos_y, d / 2, uint16_t(*infill_color));
-    // if (border_size > 0) {
-    //     tft.drawCircle(pos_x, pos_y, d / 2, uint16_t(*border_color));
-    // }
+    tft.fillCircle(pos_x, pos_y, d / 2, reverseColor565(infill_color));
+    if (border_size > 0) {
+        tft.drawCircle(pos_x, pos_y, d / 2, reverseColor565(border_color));
+    }
 }
 
-void DisplayTFTeSPI::circle(const uint16_t pos_x, const uint16_t pos_y, const uint16_t d, const uint8_t border_size, const Color& border_color) {
-
+void DisplayTFTeSPI::circle(const uint16_t x, const uint16_t y, const uint16_t d, const uint8_t border_size, const Color& border_color) {
+    tft.drawCircle(x, y, d/2, reverseColor565(border_color));
 }
 
 void DisplayTFTeSPI::text(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const uint8_t text_size, const Color& text_color) {
@@ -66,8 +66,6 @@ void DisplayTFTeSPI::point(const uint16_t x1, const uint16_t y1, const Color& co
 }
 
 void DisplayTFTeSPI::fillScreen(const Color& color) {
-    //tft.fillScreen(tft.color565(color.getRed(), color.getGreen(), color.getBlue()));
-    //tft.fillScreen(reverseColor565(0, 0, 255));
     tft.fillScreen(reverseColor565(color));
 }
 
@@ -89,4 +87,8 @@ int16_t DisplayTFTeSPI::getHeight() {
 
 int16_t DisplayTFTeSPI::getWigth() {
     return tft.width();
+}
+
+uint8_t DisplayTFTeSPI::getRotation() {
+    return rotation;
 }
