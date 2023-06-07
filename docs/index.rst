@@ -33,6 +33,7 @@ Welcome to Touch Menu's documentation!
    ClassReference/button.rst
    ClassReference/color.rst
    ClassReference/display.rst
+   ClassReference/displaytftespi.rst
    ClassReference/element.rst
    ClassReference/error.rst
    ClassReference/grid.rst

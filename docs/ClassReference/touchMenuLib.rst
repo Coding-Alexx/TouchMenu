@@ -1,11 +1,11 @@
+.. _touchMenuLib:
+
 TouchMenuLib
 ++++++++++++++
 
 Beschreibung
 =============
-Was macht die Klasse
-
-TODO Verlinkung zu roundButton 
+TouchMenuLib arbeitet als Schnittstelle und verwaltet das Menü und kommuniziert mit dem Nutzer.
 
 Tutorials/ Examples
 =====================
@@ -19,7 +19,7 @@ Funktionen
 .. csv-table:: 
     :widths: 100 10000
 
-    , ":ref:`TouchMenuLib <touchmenulibtouchmenulibconstructor>` (Display&& display)"
+    , ":ref:`TouchMenuLib <touchmenulibtouchmenulibconstructor>` (Display* disp)"
     , ":ref:`~TouchMenuLib <touchmenulibtouchmenulibdestructor>` ()"
     void, ":ref:`init <touchmenulibinit>` ()"
     void, ":ref:`add <touchmenulibadd>` (uint8_t id, Screen* screen)"
@@ -34,7 +34,7 @@ Funktionen Beschreibung
 
 .. _TouchMenuLibTouchMenuLibConstructor:
 
-TouchMenuLib (Display&& display)
+TouchMenuLib (Display* disp)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/TouchMenuLib.cpp

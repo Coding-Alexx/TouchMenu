@@ -1,11 +1,12 @@
+.. _roundbutton:
+
 RoundButton
 ++++++++++++++
 
 Beschreibung
 =============
-Was macht die Klasse
-
-TODO Verlinkung zu roundButton 
+RoundButtons sind :ref:`Buttons <button>` mit einer runden Form. Sie unterscheiden sich von anderen Buttons jediglich hinsichtlich ihres Aussehens.
+ 
 
 Tutorials/ Examples
 =====================
