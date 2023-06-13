@@ -9,7 +9,8 @@
 #include "TouchMenuLib.h"
 
 //TouchMenuLib TML(DisplayGFX(TFT_CS, TFT_DC));
-TouchMenuLib TML(new DisplayTFTeSPI());
+auto* disp = new DisplayTFTeSPI();
+TouchMenuLib TML(disp);
 
 void callback (bool) {
   TML.back();
@@ -18,10 +19,23 @@ void callback (bool) {
 void setup_TML() {
 
   TML.init();
+  uint16_t calData[5];
+  disp->getTFTObjekt().calibrateTouch(calData, TFT_MAGENTA, TFT_BLACK, 15);
+  Serial.print("  uint16_t calData[5] = {");
+  for (uint8_t i = 0; i < 5; i++) {
+    Serial.print(calData[i]);
+    if (i < 4) Serial.print(", ");
+  }
+  Serial.println(" };");
+
   CREATE_GRID_SCREEN(TML, 10, 3, 3, COLOR_GREEN,
-    std::make_tuple(new RoundButton(10, COLOR_BLUE, COLOR_YELLOW, callback), 1, 1, 1, 1),
-    std::make_tuple(new RoundButton(10, COLOR_BLUE, COLOR_RED, callback), 0, 0, 2, 2)
+    std::make_tuple(new RoundButton(COLOR_WHITE, COLOR_YELLOW, callback), 2, 1, 1, 1),
+    std::make_tuple(new RoundButton(COLOR_BLUE, COLOR_RED, callback), 0, 0, 2, 3)
   );
+
+  // CalibrateTouchScreen* cali = new CalibrateTouchScreen();
+  // TML.add(67, cali);
+  // TML.goTo(67);
 
   // CREATE_GRID_SCREEN(TML, 80, 0, 0, COLOR_RED,
     

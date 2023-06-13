@@ -41,7 +41,7 @@ public:
     // Entweder mit Template, wo alle T Kind von Element sein müssen (static_assert(std::is_base_of<Element, T>::value, "T must be a derived class of Element"); // statische Überprüfung)
     // Oder mit Macros arbeiten
     //bool add(Element& element, const uint16_t posX, const uint16_t posY, const uint16_t sizeX, const uint16_t sizeY);
-    void loop() override;
+    void loop(Inputs& input) override;
     void draw() override;
     void setResolution(int16_t height, int16_t width);
 
@@ -50,4 +50,5 @@ private:
     uint8_t row;
     uint8_t col;
     std::vector<std::unique_ptr<Element>> elements; // TODO eventuell eine Map nutzen
+    std::vector<uint8_t> matrix; 
 };

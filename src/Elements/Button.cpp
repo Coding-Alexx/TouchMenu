@@ -39,3 +39,15 @@ void Button::loop(){
         timer = 0;
     }
 }
+
+void Button::loop(Inputs& input) {
+    if (input.enter) {
+        LOGGER("Enter")
+        value = !value;
+    }
+}
+
+void Button::setTouch(uint16_t x, uint16_t y) {
+    LOGGER("Es wurde auf Button getippt")
+    value = !value;
+}

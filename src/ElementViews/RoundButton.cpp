@@ -1,29 +1,22 @@
 #include "RoundButton.h"
+#include <algorithm>
 
-RoundButton::RoundButton(const uint16_t radius, const Color& infill, const Color& border, const button_func_ptr button_callback) : 
+RoundButton::RoundButton(const Color& infill, const Color& border, const button_func_ptr button_callback) : 
     Button(button_callback),
     infill(infill), 
-    border(border),
-    radius(radius)
-{}
+    border(border){}
 
-RoundButton::RoundButton(const uint16_t radius, const Color& infill, const Color& border, const switch_func_ptr switch_callback) : 
+RoundButton::RoundButton(const Color& infill, const Color& border, const switch_func_ptr switch_callback) : 
     Button(switch_callback),
     infill(infill),
-    border(border),
-    radius(radius)
-{}
+    border(border){}
 
-RoundButton::RoundButton(const uint16_t radius, const switch_func_ptr switch_callback) : 
+RoundButton::RoundButton(const switch_func_ptr switch_callback) : 
     Button(switch_callback),
     infill(COLOR_WHITE),
-    border(COLOR_BLUE),
-    radius(radius)
-{}
+    border(COLOR_BLUE){}
 
-void RoundButton::loop(uint16_t touchX, uint16_t touchY) {
-    
-}
+void RoundButton::loop() {}
 
 bool RoundButton::checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) {
     // TODO: anpassen
@@ -32,6 +25,9 @@ bool RoundButton::checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) {
 }
 
 void RoundButton::draw() {
-    display->circle(posX + sizeX/2, posY + sizeY/2, radius, 1, border);
-    display->circle(posX, posY, radius, 1, !border);
+    LOGGER_PATTERN("Zeichne Runden Button, value=_", value)
+    uint16_t d = std::min(sizeX, sizeY);
+
+    if (value) display->circle(posX + sizeX/2, posY + sizeY/2, d, 2, border);
+    else display->circle(posX + sizeX/2, posY + sizeY/2, d, 2, border, infill);
 }

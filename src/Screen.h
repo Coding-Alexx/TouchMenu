@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "Color.h"
 #include "Display.h"
+#include "Input.h"
 
 #pragma once
 
@@ -9,7 +10,7 @@ public:
 
     // TODO: Datentypen überprüfen
     Screen ();
-    virtual void loop () = 0;   // aktualisiere die Elemente
+    virtual void loop (Inputs& input) = 0;   // aktualisiere die Elemente
     virtual void draw() = 0;    // Zeichne den Screen und alle Elemente neu
 
     void setDisplay(Display* const display);

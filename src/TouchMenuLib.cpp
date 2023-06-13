@@ -53,7 +53,6 @@ void TouchMenuLib::add (uint8_t id, Screen* screen) {
     if (screenHistory.empty()) {
         screenHistory.push(id);
         screenHistoryLevel = 1;
-        LOGGER("Ersten Element hinzugefügt");
     }
 }
 
@@ -79,7 +78,8 @@ bool TouchMenuLib::goTo(size_t id, bool toHistory){
 }
 
 void TouchMenuLib::loop(){
-
+    input.isTouched = display->getTouch(&input.touchX, &input.touchY);
+    screens[screenHistory.top()]->loop(input);
 }
 
 void TouchMenuLib::draw() {
@@ -94,4 +94,20 @@ void TouchMenuLib::setAutoResolution(Screen* screen){
     // if (screen->getResolutionHeight() == 0 || screen->getResolutionHeight() == 0 || screen->getResolutionHeight() > display->getHeight() || screen->getResolutionWidth() > display->getWigth()) {
     //     screen->setResolution(display->getHeight(), display->getWigth());
     // }
+}
+
+void TouchMenuLib::setInputEnter(){
+    input.enter = true;
+}
+void TouchMenuLib::setInputRight(){
+    input.right = true;
+}
+void TouchMenuLib::setInputLeft(){
+    input.left = true;
+}
+void TouchMenuLib::setInputUp(){
+    input.up = true;
+}
+void TouchMenuLib::setInputDown(){
+    input.down = true;
 }

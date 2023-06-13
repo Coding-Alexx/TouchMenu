@@ -92,3 +92,21 @@ int16_t DisplayTFTeSPI::getWigth() {
 uint8_t DisplayTFTeSPI::getRotation() {
     return rotation;
 }
+
+int16_t DisplayTFTeSPI::getTouch(uint16_t* x, uint16_t* y) {
+    if (x == nullptr || y == nullptr) LOGGER_ERROR("x oder y sind ein Null Pointer")
+    return tft.getTouch(x, y);
+}
+
+int16_t DisplayTFTeSPI::getTouch(uint16_t* x, uint16_t* y, bool) {
+    if (x == nullptr || y == nullptr) LOGGER_ERROR("x oder y sind ein Null Pointer")
+    return tft.getTouchRaw(x, y);
+}
+
+void DisplayTFTeSPI::setTouchCalibration(std::array<uint16_t, 4> coords) {
+    tft.setTouch(coords.data());
+}
+
+TFT_eSPI& DisplayTFTeSPI::getTFTObjekt() {
+    return tft;
+}

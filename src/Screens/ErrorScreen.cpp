@@ -19,6 +19,6 @@ void ErrorScreen::draw() {
     display->text_center(width/2, 2*height/3, 1, error_text, text_color);
 }
 
-void ErrorScreen::loop() {
+void ErrorScreen::loop(Inputs& input) {
 
 }

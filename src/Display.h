@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <array>
 #include "Color.h"
 
 #pragma once
@@ -38,4 +39,9 @@ public:
     virtual int16_t getWigth() = 0;
 
     virtual uint8_t getRotation() = 0;
+
+    virtual int16_t getTouch(uint16_t* x, uint16_t* y) = 0;
+    virtual int16_t getTouch(uint16_t* x, uint16_t* y, bool) = 0;
+
+    virtual void setTouchCalibration(std::array<uint16_t, 4> coords) = 0;
 };

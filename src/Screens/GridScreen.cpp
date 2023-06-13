@@ -4,7 +4,8 @@ GridScreen::GridScreen(const uint8_t col, const uint8_t row, const Color& backgr
     color_background(Color(background)),
     row(row),
     col(col),
-    elements(row*col)
+    elements(),
+    matrix(row*col, UINT8_MAX)
 {
     //elements.reserve(row*col);
 }
@@ -43,30 +44,48 @@ bool GridScreen::add(Element* element, const uint16_t posX, const uint16_t posY,
     element->setPosition(x, y);
     element->setDisplay(display);
 
+    LOGGER_PATTERN("Füge neues Element an Stelle x=_, y=_ mit sizeX=_, sizeY=_ hinzu", posX, posY, sizeX, sizeY)
+
     std::unique_ptr<Element> uptr (element);
-    // elements.push_back(std::move(uptr));
-    elements[posX*col+posY] = std::move(uptr);
+    elements.push_back(std::move(uptr));
+    for (int x = posX; x < posX+sizeX; x++)
+        for (int y = posY; y < posY+sizeY; y++) {
+            LOGGER(elements.size()-1)
+            matrix[y*col + x] = elements.size() - 1;
+            }
+            
+    //elements[posX*col+posY] = std::move(uptr);
     element = nullptr;  // uptr besitzt jetzt die Ressource
     return true;
 }
 
-void GridScreen::loop() {
+void GridScreen::loop(Inputs& input) {
+    if (input.isTouched) {
+        uint8_t x = input.touchX;
+        uint8_t y = height - input.touchY;
 
+        uint8_t rx = x / (width / row);
+        uint8_t ry = y / (height / col);
+        // LOGGER_PATTERN("rx: _=_/(_/_)", rx, x, width, row)
+        // LOGGER_PATTERN("ry: _=_/(_/_)", ry, y, height, col)
+
+        if (rx >= row || ry >= col) LOGGER_ERROR("rx oder ry sind zu groß")
+        
+        LOGGER("")
+        LOGGER_PATTERN("Aktualisiere Element im Feld _/_ (Berührt bei [_,_])", rx, ry, x, y)
+
+        uint8_t e = matrix[col*ry + rx];
+        if (e != UINT8_MAX) elements[e]->setTouch(x, y);
+        draw();
+    }
 }
 
 void GridScreen::draw() {
     display->fillScreen(color_background);
-    LOGGER(row)
-    LOGGER(col)
-    LOGGER(height)
-    LOGGER(width)
+    LOGGER("Zeichne Neu")
 
     const uint16_t columnSpacing = width / (col);
     const uint16_t rowSpacing = height / (row);
-
-    LOGGER(columnSpacing)
-    LOGGER(rowSpacing)
-    LOGGER(color_background.toString())
 
     #ifdef DEBUG
     // Vertikale Linien zeichnen -> Spalten

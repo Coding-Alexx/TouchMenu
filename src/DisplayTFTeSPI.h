@@ -44,10 +44,16 @@ public:
 
     /*-----------------------------------------------------------------------------------------*/
 
-    int16_t getHeight();
-    int16_t getWigth();
+    int16_t getHeight() override;
+    int16_t getWigth() override;
 
-    uint8_t getRotation();
+    uint8_t getRotation() override;
+
+    int16_t getTouch(uint16_t* x, uint16_t* y) override;
+    int16_t getTouch(uint16_t* x, uint16_t* y, bool) override;
+    void setTouchCalibration(std::array<uint16_t, 4> coords) override;
+
+    TFT_eSPI& getTFTObjekt();
 
 private:
     uint8_t rotation = 0;

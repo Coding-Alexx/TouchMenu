@@ -25,7 +25,7 @@ class ErrorScreen: public Screen {
 public:
     ErrorScreen (const char* error_title, const char* error_text);
     ErrorScreen (const char* error_title, const char* error_text, const Color& background_color, const Color& text_color);
-    void loop() override;
+    void loop(Inputs& input) override;
     void draw() override;
 
 private:
