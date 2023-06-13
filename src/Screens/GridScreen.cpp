@@ -61,13 +61,11 @@ bool GridScreen::add(Element* element, const uint16_t posX, const uint16_t posY,
 
 void GridScreen::loop(Inputs& input) {
     if (input.isTouched) {
-        uint8_t x = input.touchX;
-        uint8_t y = height - input.touchY;
+        uint16_t x = input.touchX;
+        uint16_t y = height - input.touchY;
 
         uint8_t rx = x / (width / row);
         uint8_t ry = y / (height / col);
-        // LOGGER_PATTERN("rx: _=_/(_/_)", rx, x, width, row)
-        // LOGGER_PATTERN("ry: _=_/(_/_)", ry, y, height, col)
 
         if (rx >= row || ry >= col) LOGGER_ERROR("rx oder ry sind zu groß")
         

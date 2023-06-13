@@ -10,6 +10,7 @@
 #define COLOR_BLACK     Color(0,   0,   0   )
 #define COLOR_WHITE     Color(255, 255, 255 )
 #define COLOR_YELLOW    Color(255, 255, 0   )
+#define COLOR_MAGENTA   Color(255, 0,   255 )
 
 class Color {
 private:

@@ -1,6 +1,7 @@
 #include <Arduino.h>
-#include <tft_espi.h> // Include the TFT library
-#include <SPI.h>      // Include the SPI library
+#include <tft_espi.h>
+#include <SPI.h>
+#include <array>
 #include "Display.h"
 
 #pragma once
@@ -8,11 +9,12 @@
 class DisplayTFTeSPI: public Display {
 private:
   TFT_eSPI tft;
-  uint16_t reverseColor565(const Color& color);
-  uint16_t reverseColor565(uint8_t r, uint8_t g, uint8_t b);
+  uint16_t colorTo565(const Color& color);
+  uint16_t colorTo565(uint8_t r, uint8_t g, uint8_t b);
 
 public:
   DisplayTFTeSPI();
+  DisplayTFTeSPI(std::array<uint16_t, 5> calData);
   DisplayTFTeSPI(const DisplayTFTeSPI& other);
   DisplayTFTeSPI& operator=(const DisplayTFTeSPI& other);
 
@@ -50,11 +52,11 @@ public:
     uint8_t getRotation() override;
 
     int16_t getTouch(uint16_t* x, uint16_t* y) override;
-    int16_t getTouch(uint16_t* x, uint16_t* y, bool) override;
-    void setTouchCalibration(std::array<uint16_t, 4> coords) override;
 
     TFT_eSPI& getTFTObjekt();
+    void startTouchCalibration();
 
 private:
     uint8_t rotation = 0;
+    std::array<uint16_t, 5> calData;
 };
