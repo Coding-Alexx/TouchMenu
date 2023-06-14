@@ -62,7 +62,7 @@ bool GridScreen::add(Element* element, const uint16_t posX, const uint16_t posY,
 void GridScreen::loop(Inputs& input) {
     if (input.isTouched) {
         uint16_t x = input.touchX;
-        uint16_t y = height - input.touchY;
+        uint16_t y = input.touchY;
 
         uint8_t rx = x / (width / row);
         uint8_t ry = y / (height / col);

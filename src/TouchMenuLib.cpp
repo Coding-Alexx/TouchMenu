@@ -13,21 +13,6 @@ TouchMenuLib::~TouchMenuLib (){
 
 void TouchMenuLib::init() {
     display->init();
-
-    // if (screenHistory.empty()) {
-    //     // print error "at least one screen must be added before init function were called"
-    //     return;
-    // }
-
-    // nachdem das Display inizialisiert wurde, werden alle nötigen Werte der Screens gesetzt
-    // for (const auto& screenPair : screens) {
-    //     Screen* screen = screenPair.second.get();
-    //     // Auflösung setzen, falls 0 oder zu groß
-    //     setAutoResolution(screen);
-    // }
-
-    //draw();
-
     isDisplayInit = true;
 }
 

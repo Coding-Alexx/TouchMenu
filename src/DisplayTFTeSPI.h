@@ -2,6 +2,8 @@
 #include <tft_espi.h>
 #include <SPI.h>
 #include <array>
+// #include <LittleFS.h>
+
 #include "Display.h"
 
 #pragma once
@@ -32,7 +34,7 @@ public:
     void circle(const uint16_t pos_x, const uint16_t pos_y, const uint16_t d, const uint8_t border_size, const Color& border_color) override;
 
     // pos_x    pos_y  size_x   size_y  text_size
-    void text(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const uint8_t text_size, const Color& text_color) override;
+    void text(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const char* text, const Color& text_color) override;
     void text_center(const uint16_t pos_x, const uint16_t pos_y, const uint8_t text_size, const char* text, const Color& text_color) override;
 
     // x1   y1  x2  y2  wide    color

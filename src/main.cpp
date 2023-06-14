@@ -22,9 +22,9 @@ void setup_TML() {
 
   // disp->startTouchCalibration();
 
-  CREATE_GRID_SCREEN(TML, 10, 3, 3, COLOR_GREEN,
-    std::make_tuple(new RoundButton(COLOR_WHITE, COLOR_YELLOW, callback), 2, 1, 1, 1),
-    std::make_tuple(new RoundButton(COLOR_BLUE, COLOR_RED, callback), 0, 0, 2, 3)
+  CREATE_GRID_SCREEN(TML, 10, 3, 3, COLOR_LIGHT_CYAN,
+    std::make_tuple(new RoundButton(  "Welt", COLOR_RED,    "Hallo", COLOR_GREEN,          COLOR_YELLOW,                   callback), 1, 0, 2, 2),
+    std::make_tuple(new RoundButton(  "GO!",  COLOR_YELLOW, "Lets",  COLOR_DARK_GREEN,     COLOR_GRAY,      COLOR_BLACK,   callback), 0, 1, 1, 1)
   );
 
   //TML.goTo(30);

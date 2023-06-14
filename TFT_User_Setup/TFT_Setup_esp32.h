@@ -1,3 +1,6 @@
+// #include <LittleFS.h>
+// #define FS_NO_GLOBALS
+// #define FS LittleFS
 
 #define ILI9341_DRIVER     // WARNING: Do not connect ILI9488 display SDO to MISO if other devices share the SPI bus (TFT SDO does NOT tristate when CS is high)
 

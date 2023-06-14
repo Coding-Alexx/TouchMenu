@@ -21,7 +21,7 @@ public:
     virtual void circle(const uint16_t pos_x, const uint16_t pos_y, const uint16_t d, const uint8_t border_size, const Color& border_color) = 0;
 
     // pos_x    pos_y  size_x   size_y  text_size
-    virtual void text(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const uint8_t text_size, const Color& text_color) = 0;
+    virtual void text (const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const char* text, const Color& text_color) = 0;
     virtual void text_center(const uint16_t pos_x, const uint16_t pos_y, const uint8_t text_size, const char* text, const Color& text_color) = 0;
 
     // x1   y1  x2  y2  wide    color

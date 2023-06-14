@@ -1,13 +1,13 @@
 #include "Button.h"
 #include "../Config.h"
 
-Button::Button(button_func_ptr button_callback) : button_callback(button_callback), switch_callback(nullptr) {}
-Button::Button(switch_func_ptr swich_callback) : button_callback(nullptr), switch_callback(swich_callback) {}
+Button::Button(button_func_ptr button_callback, bool* const value) : 
+    button_callback(button_callback), 
+    switch_callback(nullptr),
+    externalValue(value)
+    {}
+Button::Button(switch_func_ptr swich_callback, bool* const value) : button_callback(nullptr), switch_callback(swich_callback) {}
 Button::~Button(){};
-
-void Button::setExternalValue(bool* value) {
-    Button::externalValue = value;
-}
 
 bool Button::select() {
     if (button_callback) {

@@ -6,14 +6,19 @@
 
 class RoundButton: public Button {
 public:
-    RoundButton(const Color& infill, const Color& border, const button_func_ptr button_callback);
-    RoundButton(const Color& infill, const Color& border, const switch_func_ptr switch_callback);
-    RoundButton(const switch_func_ptr switch_callback);
+    RoundButton(const char* textOn, const Color& infillOn, const char* textOff, const Color& infillOff, const Color& border, const button_func_ptr button_callback, bool* const value=nullptr);
+    RoundButton(const char* textOn, const Color& infillOn, const char* textOff, const Color& infillOff, const Color& borderOn, const Color& borderOff, const button_func_ptr button_callback, bool* const value=nullptr);
+    RoundButton(const char* textOn, const Color& infillOn, const char* textOff, const Color& infillOff, const Color& border, const switch_func_ptr switch_callback, bool* const value=nullptr);
+    RoundButton(const char* textOn, const Color& infillOn, const char* textOff, const Color& infillOff, const Color& borderOn, const Color& borderOff, const switch_func_ptr switch_callback, bool* const value=nullptr);
     void loop();
     void draw() override;
 
 private:
     bool checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) override;
-    const Color infill;
-    const Color border;
+    const Color colorInfillOn;
+    const Color colorInfillOff;
+    const Color colorBorderOn;
+    const Color colorBorderOff;
+    const char* textOn;
+    const char* textOff;
 };
