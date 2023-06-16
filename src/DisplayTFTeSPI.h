@@ -26,6 +26,7 @@ public:
 
     // pos_x    pos_y  size_x   size_y  border  border_color  radius    infill_color
     void rect(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const uint8_t border_size, const Color& border_color, uint8_t radius, const Color& infill_color) override;
+    void rect(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const uint8_t border_size, const Color& border_color, const Color& infill_color) override;
     void rect(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const uint8_t border_size, const Color& border_color, uint8_t radius) override;
     void rect(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const uint8_t border_size, const Color& border_color) override;
 

@@ -32,10 +32,20 @@ void DisplayTFTeSPI::init() {
 /*-----------------------------------------------------------------------------------------*/
 
 void DisplayTFTeSPI::rect(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const uint8_t border_size, const Color& border_color, uint8_t radius, const Color& infill_color) {
-    // tft.fillRoundRect(pos_x, pos_y, width, height, radius, uint16_t(infill_color));
-    // if (border_size > 0) {
-    //     tft.drawRoundRect(pos_x, pos_y, width, height, radius, uint16_t(*border_color));
-    // }
+   tft.fillRoundRect(pos_x, pos_y, width, height, radius, colorTo565(infill_color));
+        if (border_size > 0) {
+            tft.drawRoundRect(pos_x, pos_y, width, height, radius, colorTo565(border_color));
+        }     
+}
+
+void DisplayTFTeSPI::rect(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const uint8_t border_size, const Color& border_color, const Color& infill_color) {
+     tft.fillRect(pos_x, pos_y, width, height, colorTo565(infill_color));
+        if (border_size > 0) {
+            tft.drawRect(pos_x, pos_y, width, height, colorTo565(border_color));
+        } 
+
+    //tft.fillCircle(pos_x+width * 0.85, pos_y+height/6, height / 6, colorTo565(COLOR_GREEN));   //kleiner Kreis der oben rechts in der Ecke des Buttons leigt, dafür die *0.85 und /6, height/6 ist die Größe des Kreises
+   
 }
 
 void DisplayTFTeSPI::rect(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const uint8_t border_size, const Color& border_color, uint8_t radius) {
@@ -43,7 +53,8 @@ void DisplayTFTeSPI::rect(const uint16_t pos_x, const uint16_t pos_y, const uint
 }
 
 void DisplayTFTeSPI::rect(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const uint8_t border_size, const Color& border_color) {
-    //rect(pos_x, pos_y, width, height, border_size, border_color, 0, COLOR_BLACK);
+     tft.drawRect(pos_x, pos_y, width, height, colorTo565(border_color));
+     //tft.fillCircle(pos_x+width * 0.85, pos_y+height/6, height / 6, colorTo565(COLOR_RED)); //s.o
 }
 
 void DisplayTFTeSPI::circle(const uint16_t pos_x, const uint16_t pos_y, const uint16_t d, const uint8_t border_size, const Color& border_color, const Color& infill_color) {
