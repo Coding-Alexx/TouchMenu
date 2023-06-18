@@ -56,32 +56,27 @@ void RectButtonCircle::draw() {
     const uint16_t circlePosX = posX + sizeX - circleSize/2 -2;
 
         uint16_t d = std::min(sizeX, sizeY) * 0.9;
-    if(hasRoundedCorners){                         //runde Ecken
+   
         
         LOGGER_PATTERN("Zeichne Rechteckigen Button mit abgerundeten Ecken und mit Kreis(state=_) mit d=_, d*0.1=_", value, d, d*0.1)
 
         if (value){
-            display->rect(posX, posY, sizeX, sizeY, 2, colorBorderOn, 10, colorInfillOn);
+            if(hasRoundedCorners){                  //runde Ecken
+                LOGGER_PATTERN("Zeichne Rechteckigen Button mit abgerundeten Ecken und mit Kreis(state=_) mit d=_, d*0.1=_", value, d, d*0.1)
+                display->rect(posX, posY, sizeX, sizeY, 2, colorBorderOn, 10, colorInfillOn);
+            }else{                                  //eckige Ecken
+                LOGGER_PATTERN("Zeichne Rechteckigen Button mit Kreis(state=_) mit d=_, d*0.1=_", value, d, d*0.1)                           
+                display->rect(posX, posY, sizeX, sizeY, 2, colorBorderOn, colorInfillOn);
+            }
             display->circle(circlePosX, circlePosY, circleSize, 0, colorBorderOn ,COLOR_RED);
             display->text_center(posX + sizeX/2, posY + sizeY/2, d*0.04, textOn, colorBorderOn);
         } else {
-            display->rect(posX, posY, sizeX, sizeY, 2, colorBorderOff, 10, colorInfillOff);
+            if(hasRoundedCorners){
+                display->rect(posX, posY, sizeX, sizeY, 2, colorBorderOff, 10, colorInfillOff);
+            }else{
+                display->rect(posX, posY, sizeX, sizeY, 2, colorBorderOff, colorInfillOff);
+            }
             display->circle(circlePosX, circlePosY, circleSize, 0, colorBorderOff ,COLOR_GREEN);
             display->text_center(posX + sizeX/2, posY + sizeY/2, d*0.04, textOff, colorBorderOff);
         }
-    }else{                                          //eckige Ecken
-        LOGGER_PATTERN("Zeichne Rechteckigen Button mit Kreis(state=_) mit d=_, d*0.1=_", value, d, d*0.1)
-
-        if (value){
-            display->rect(posX, posY, sizeX, sizeY, 2, colorBorderOn, colorInfillOn);
-            display->circle(circlePosX, circlePosY, circleSize, 0, colorBorderOn ,COLOR_RED);
-            display->text_center(posX + sizeX/2, posY + sizeY/2, d*0.04, textOn, colorBorderOn);
-        } else {
-            display->rect(posX, posY, sizeX, sizeY, 2, colorBorderOff, colorInfillOff);
-            display->circle(circlePosX, circlePosY, circleSize, 0, colorBorderOff ,COLOR_GREEN);
-            display->text_center(posX + sizeX/2, posY + sizeY/2, d*0.04, textOff, colorBorderOff);
-            // display->text(posX, posY, sizeX, sizeY, textOff, colorBorderOff);
-        }
-        
-    }
 }
