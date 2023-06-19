@@ -59,3 +59,24 @@ void RoundButton::draw() {
         // display->text(posX, posY, sizeX, sizeY, textOff, colorBorderOff);
     }
 }
+
+/*void Switch::draw() {
+ uint16_t switchHeight = sizeY / 2;
+    uint16_t switchTop = posY;
+    uint16_t switchBottom = posY + switchHeight;
+
+    // Draw the base color
+    display->rect(posX, posY, sizeX, sizeY, 2, colorBase, 5, colorBase);
+
+    if (isSwitched) {
+        // Draw the "ON" state
+        display->rect(posX, switchTop, sizeX, switchHeight, 2, colorBottomOn, 5, colorBottomOn);
+        display->rect(posX, switchBottom, sizeX, switchHeight,2, colorTopOn,5, colorTopOn);
+        display->text_center(posX + sizeX / 2, switchTop + switchHeight / 2, switchHeight * 0.6, textOn, colorBase);
+    } else {
+        // Draw the "OFF" state
+        display->rect(posX, switchTop, sizeX, switchHeight,2, colorBottomOff,5, colorBottomOff);
+        display->rect(posX, switchBottom, sizeX, switchHeight,2, colorTopOff,5, colorTopOff);
+        display->text_center(posX + sizeX / 2, switchBottom + switchHeight / 2, switchHeight * 0.6, textOff, colorBase);
+    }
+    */

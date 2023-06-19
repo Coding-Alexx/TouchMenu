@@ -21,4 +21,5 @@ private:
     const Color colorBorderOff;
     const char* textOn;
     const char* textOff;
+
 };
