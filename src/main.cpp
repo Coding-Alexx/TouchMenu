@@ -25,7 +25,7 @@ void setup_TML() {
   CREATE_GRID_SCREEN(TML, 10, 3, 3, COLOR_LIGHT_CYAN,
     //std::make_tuple(new RoundButton(  "Welt", COLOR_RED,    "Hallo", COLOR_GREEN,          COLOR_YELLOW,                   callback), 1, 0, 2, 2),
     //std::make_tuple(new RoundButton(  "GO!",  COLOR_YELLOW, "Lets",  COLOR_DARK_GREEN,     COLOR_GRAY,      COLOR_BLACK,   callback), 0, 1, 1, 1),
-    std::make_tuple(new ToggleSwitch("ON", COLOR_RED, COLOR_BLACK, "OFF", COLOR_BLACK, COLOR_BLUE, COLOR_BLACK, callback), 1 , 2 , 1 , 1 ),)
+    std::make_tuple(new ToggleSwitch("ON", COLOR_RED, COLOR_BLACK, "OFF", COLOR_BLUE, COLOR_BLACK, COLOR_BLACK, callback), 1 , 2 , 1 , 1 ),)
   ;
 
   //TML.goTo(30);
