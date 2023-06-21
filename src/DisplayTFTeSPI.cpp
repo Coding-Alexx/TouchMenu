@@ -1,11 +1,6 @@
 #include "DisplayTFTeSPI.h"
 #include <string>
 
-DisplayTFTeSPI::DisplayTFTeSPI(std::array<uint16_t, 5> calData):
-    tft(),
-    calData(calData)
-{}
-
 DisplayTFTeSPI::DisplayTFTeSPI():
     tft(),
     calData({0,0,0,0,0})
@@ -31,19 +26,16 @@ void DisplayTFTeSPI::init() {
 
 /*-----------------------------------------------------------------------------------------*/
 
-void DisplayTFTeSPI::rect(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const uint8_t border_size, const Color& border_color, uint8_t radius, const Color& infill_color) {
-    // tft.fillRoundRect(pos_x, pos_y, width, height, radius, uint16_t(infill_color));
-    // if (border_size > 0) {
-    //     tft.drawRoundRect(pos_x, pos_y, width, height, radius, uint16_t(*border_color));
-    // }
+
+void DisplayTFTeSPI::rect(const uint16_t x, const uint16_t y, const uint16_t width, const uint16_t height, const uint8_t border_size, const uint8_t border_radius, const Color& border_color, const Color& infill_color) {
+    tft.fillRoundRect(x - width / 2, y - height / 2, width, height, border_radius, colorTo565(border_color));
+    tft.fillRoundRect(x - width / 2 + border_size, y - height / 2 + border_size, width - (border_size*2), height - (border_size*2), border_radius, colorTo565(infill_color));
 }
 
-void DisplayTFTeSPI::rect(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const uint8_t border_size, const Color& border_color, uint8_t radius) {
-    //rect(pos_x, pos_y, width, height, border_size, border_color, radius, COLOR_BLACK);
-}
-
-void DisplayTFTeSPI::rect(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const uint8_t border_size, const Color& border_color) {
-    //rect(pos_x, pos_y, width, height, border_size, border_color, 0, COLOR_BLACK);
+void DisplayTFTeSPI::rect(const uint16_t x, const uint16_t y, const uint16_t width, const uint16_t height, const uint8_t border_size, const uint8_t border_radius, const Color& border_color) {
+    for (uint8_t i = 0; i < border_size; i++) {
+        tft.drawRoundRect(x - width / 2 - i, y - height / 2 - i, width + 2 * i, height + 2 * i, border_radius + i, colorTo565(border_color));
+    }
 }
 
 void DisplayTFTeSPI::circle(const uint16_t pos_x, const uint16_t pos_y, const uint16_t d, const uint8_t border_size, const Color& border_color, const Color& infill_color) {

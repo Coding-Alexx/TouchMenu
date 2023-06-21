@@ -10,6 +10,8 @@
 #include "Screens/GridScreen.h"
 #include "Screens/ErrorScreen.h"
 #include "ElementViews/RoundButton.h"
+#include "ElementViews/ToggleSwitch.h"
+#include "ElementViews/RectButtonCircle.h"
 
 //#include "DisplayGFX.h"
 #include "DisplayTFTeSPI.h"

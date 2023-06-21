@@ -9,8 +9,8 @@
 #include "TouchMenuLib.h"
 
 //TouchMenuLib TML(DisplayGFX(TFT_CS, TFT_DC));
-auto* disp = new DisplayTFTeSPI({383, 3445, 233, 3541, 7 }); //V1:{414, 3383, 254, 3497, 7 } V2:{383, 3445, 233, 3541, 7 } 
-TouchMenuLib TML(disp);
+//auto* disp = new DisplayTFTeSPI({383, 3445, 233, 3541, 7 }); //V1:{414, 3383, 254, 3497, 7 } V2:{383, 3445, 233, 3541, 7 } 
+TouchMenuLib TML(new DisplayTFTeSPI());
 
 void callback (bool) {
   TML.back();
@@ -23,8 +23,11 @@ void setup_TML() {
   // disp->startTouchCalibration();
 
   CREATE_GRID_SCREEN(TML, 10, 3, 3, COLOR_LIGHT_CYAN,
-    std::make_tuple(new RoundButton(  "Welt", COLOR_RED,    "Hallo", COLOR_GREEN,          COLOR_YELLOW,                   callback), 1, 0, 2, 2),
-    std::make_tuple(new RoundButton(  "GO!",  COLOR_YELLOW, "Lets",  COLOR_DARK_GREEN,     COLOR_GRAY,      COLOR_BLACK,   callback), 0, 1, 1, 1)
+    std::make_tuple(new RoundButton(  "AN", COLOR_RED,    "AUS", COLOR_GREEN,          COLOR_YELLOW,                   callback), 1, 0, 2, 2),
+    std::make_tuple(new RoundButton(  "Ein",  COLOR_YELLOW, "Aus",  COLOR_DARK_GREEN,     COLOR_GRAY,      COLOR_BLACK,   callback), 0, 1, 1, 1),
+    std::make_tuple(new ToggleSwitch("ON", COLOR_GREEN, COLOR_BLACK, "OFF", COLOR_BLACK, COLOR_RED, COLOR_BLACK, callback), 0 , 0 , 1 , 1 ),
+    std::make_tuple(new RectButtonCircle(  "ON",  COLOR_DARK_MAGENTA, "OFF",  COLOR_BROWN,     COLOR_GRAY,      COLOR_BLACK, 7, callback), 0, 2, 1, 1),
+    std::make_tuple(new RectButtonCircle(  "ON",  COLOR_DARK_GREEN, "OFF",  COLOR_DARK_RED, COLOR_DARK_BLUE, 9, callback), 1, 2, 2, 1)
   );
 
   //TML.goTo(30);
