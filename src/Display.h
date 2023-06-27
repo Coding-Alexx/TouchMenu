@@ -40,4 +40,7 @@ public:
     virtual uint8_t getRotation() = 0;
 
     virtual int16_t getTouch(uint16_t* x, uint16_t* y) = 0;
+
+    virtual void setGroup(const uint16_t w, const uint16_t h) = 0;
+    virtual void drawGroup(const uint16_t x, const uint16_t y) = 0;
 };

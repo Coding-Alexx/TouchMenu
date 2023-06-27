@@ -73,8 +73,11 @@ void GridScreen::loop(Inputs& input) {
         LOGGER_PATTERN("Aktualisiere Element im Feld _/_ (Berührt bei [_,_])", rx, ry, x, y)
 
         uint8_t e = matrix[col*ry + rx];
-        if (e != UINT8_MAX) elements[e]->setTouch(x, y);
-        draw();
+        if (e != UINT8_MAX) {
+            elements[e]->setTouch(x, y);
+            //elements[e]->draw();
+        }
+        //draw();
     }
 }
 

@@ -50,12 +50,13 @@ void RoundButton::draw() {
     uint16_t d = std::min(sizeX, sizeY) * 0.9;
     LOGGER_PATTERN("Zeichne Runden Button(state=_) mit d=_, d*0.1=_", value, d, d*0.1)
 
+    display->setGroup(sizeX, sizeY);
     if (value){
-        display->circle(posX + sizeX/2, posY + sizeY/2, d, 8, colorBorderOn, colorInfillOn);
-        display->text_center(posX + sizeX/2, posY + sizeY/2, d*0.04, textOn, colorBorderOn);
+        display->circle(sizeX/2, sizeY/2, d, 8, colorBorderOn, colorInfillOn);
+        display->text_center(sizeX/2, sizeY/2, d*0.04, textOn, colorBorderOn);
     } else {
-        display->circle(posX + sizeX/2, posY + sizeY/2, d, 8, colorBorderOff, colorInfillOff);
-        display->text_center(posX + sizeX/2, posY + sizeY/2, d*0.04, textOff, colorBorderOff);
-        // display->text(posX, posY, sizeX, sizeY, textOff, colorBorderOff);
+        display->circle(sizeX/2, sizeY/2, d, 8, colorBorderOff, colorInfillOff);
+        display->text_center(sizeX/2, sizeY/2, d*0.04, textOff, colorBorderOff);
     }
+    display->drawGroup(posX, posY);
 }

@@ -64,6 +64,7 @@ bool TouchMenuLib::goTo(size_t id, bool toHistory){
 
 void TouchMenuLib::loop(){
     input.isTouched = display->getTouch(&input.touchX, &input.touchY);
+    if (input.isTouched) LOGGER_PATTERN("Berührt, screen=_", screenHistory.top())
     screens[screenHistory.top()]->loop(input);
 }
 

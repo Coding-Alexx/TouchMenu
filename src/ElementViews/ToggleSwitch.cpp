@@ -56,15 +56,16 @@ bool ToggleSwitch::checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) {
 }
 
 void ToggleSwitch::draw() {
-    uint16_t switchX = posX + sizeX/2;
+    uint16_t switchX = sizeX/2;
     uint16_t switchHeight = sizeY / 2;
-    uint16_t switchTop = posY + switchHeight*0.6;
-    uint16_t switchBottom = posY + switchHeight*1.4;
+    uint16_t switchTop = switchHeight*0.6;
+    uint16_t switchBottom = switchHeight*1.4;
 
 
     uint16_t d = std::min(sizeX, sizeY) * 0.5;
     LOGGER_PATTERN("Zeichne Runden Button(state=_) mit d=_, d*0.1=_", value, d, d*0.1)
 
+    display -> setGroup(sizeX, sizeY);
 
     if (value) {
         // Draw "ON" (top circle)
@@ -78,6 +79,7 @@ void ToggleSwitch::draw() {
         display->text_center(switchX, switchBottom , switchHeight * 0.75, textOff, COLOR_BLACK);
     }
 
+    display -> drawGroup(posX, posY);
 
 
 /*    if (value) {

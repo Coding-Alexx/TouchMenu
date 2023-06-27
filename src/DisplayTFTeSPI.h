@@ -10,9 +10,14 @@
 
 class DisplayTFTeSPI: public Display {
 private:
-  TFT_eSPI tft;
+  TFT_eSPI tftObj;
+  TFT_eSprite tftSprite;
+  TFT_eSPI* tft;
   uint16_t colorTo565(const Color& color);
   uint16_t colorTo565(uint8_t r, uint8_t g, uint8_t b);
+
+  uint8_t rotation = 0;
+  std::array<uint16_t, 5> calData;
 
 public:
   DisplayTFTeSPI();
@@ -54,10 +59,9 @@ public:
 
     int16_t getTouch(uint16_t* x, uint16_t* y) override;
 
+    void setGroup(const uint16_t w, const uint16_t h) override;
+    void drawGroup(const uint16_t x, const uint16_t y) override;
+
     TFT_eSPI& getTFTObjekt();
     void startTouchCalibration();
-
-private:
-    uint8_t rotation = 0;
-    std::array<uint16_t, 5> calData;
 };

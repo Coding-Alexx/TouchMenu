@@ -24,3 +24,7 @@ def copy_user_setup():
                 print(f'PYTHON SCRIPT: Target directory not found for {file_name}: {target_dir}')
 
 copy_user_setup()
+
+
+a: int = 1 ** -1
+type(a) # <class 'float'>

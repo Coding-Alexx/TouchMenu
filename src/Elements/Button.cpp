@@ -50,4 +50,5 @@ void Button::loop(Inputs& input) {
 void Button::setTouch(uint16_t x, uint16_t y) {
     LOGGER("Es wurde auf Button getippt")
     value = !value;
+    draw();
 }
