@@ -39,5 +39,5 @@ public:
 
     virtual uint8_t getRotation() = 0;
 
-    virtual int16_t getTouch(uint16_t* x, uint16_t* y) = 0;
+    virtual bool getTouch(uint16_t* x, uint16_t* y) = 0;
 };

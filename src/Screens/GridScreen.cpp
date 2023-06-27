@@ -61,20 +61,20 @@ bool GridScreen::add(Element* element, const uint16_t posX, const uint16_t posY,
 
 void GridScreen::loop(Inputs& input) {
     if (input.isTouched) {
+
         uint16_t x = input.touchX;
         uint16_t y = input.touchY;
 
         uint8_t rx = x / (width / row);
         uint8_t ry = y / (height / col);
 
-        if (rx >= row || ry >= col) LOGGER_ERROR("rx oder ry sind zu groß")
+        if (rx >= row || ry >= col) LOGGER("rx oder ry sind zu groß")
         
         LOGGER("")
         LOGGER_PATTERN("Aktualisiere Element im Feld _/_ (Berührt bei [_,_])", rx, ry, x, y)
 
         uint8_t e = matrix[col*ry + rx];
         if (e != UINT8_MAX) elements[e]->setTouch(x, y);
-        draw();
     }
 }
 

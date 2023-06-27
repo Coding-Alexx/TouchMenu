@@ -52,7 +52,7 @@ public:
 
     uint8_t getRotation() override;
 
-    int16_t getTouch(uint16_t* x, uint16_t* y) override;
+    bool getTouch(uint16_t* x, uint16_t* y) override;
 
     TFT_eSPI& getTFTObjekt();
     void startTouchCalibration();

@@ -14,7 +14,7 @@ DisplayTFTeSPI& DisplayTFTeSPI::operator= (const DisplayTFTeSPI& other){
 void DisplayTFTeSPI::init() {
     tft.begin();
     tft.setRotation(1);
-    tft.setTouch(calData.data());
+    //tft.setTouch(calData.data());
     //tft.setSwapBytes(true);
     // if (!LittleFS.begin()) {
     //     Serial.println("Fehler beim Initialisieren von LittleFS");
@@ -157,9 +157,9 @@ uint8_t DisplayTFTeSPI::getRotation() {
     return rotation;
 }
 
-int16_t DisplayTFTeSPI::getTouch(uint16_t* x, uint16_t* y) {
-    if (x == nullptr || y == nullptr) LOGGER_ERROR("x oder y sind ein Null Pointer")
-    return tft.getTouch(x, y);
+bool DisplayTFTeSPI::getTouch(uint16_t* x, uint16_t* y) {
+    if (!x || !y) LOGGER_ERROR("x oder y ist ein Null Pointer")
+    return (tft.getTouch(x, y) != 0);
 }
 
 TFT_eSPI& DisplayTFTeSPI::getTFTObjekt() {

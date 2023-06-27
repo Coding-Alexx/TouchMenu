@@ -64,6 +64,7 @@ bool TouchMenuLib::goTo(size_t id, bool toHistory){
 
 void TouchMenuLib::loop(){
     input.isTouched = display->getTouch(&input.touchX, &input.touchY);
+    input.touchY = display->getHeight() - input.touchY;
     screens[screenHistory.top()]->loop(input);
 }
 
