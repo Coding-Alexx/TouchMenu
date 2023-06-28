@@ -28,6 +28,18 @@ bool GridScreen::add(Element* element, const uint16_t posX, const uint16_t posY,
         return false;
     }
 
+    
+     for (int x = posX; x < posX + sizeX; x++) {
+        for (int y = posY; y < posY + sizeY; y++) {
+            // If any of the cells are already occupied, we have an overlap
+            if (matrix[y * col + x] != UINT8_MAX) {
+                LOGGER_ERROR("Element would overlap an existing element")
+                return false;
+            }
+        }
+    }
+    
+
     // Berechne die Maße des Gridscreens
 
     const uint16_t columnSpacing = width / col;

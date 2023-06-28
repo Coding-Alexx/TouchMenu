@@ -2,6 +2,7 @@
 #include <array>
 #include <memory>
 #include <tuple>
+#include <vector>
 
 #include "../Screen.h"
 #include "../Color.h"
@@ -32,7 +33,7 @@
 
 class GridScreen: public Screen {
 public:
-    GridScreen(const uint8_t col, const uint8_t raw, const Color& background);
+    GridScreen(const uint8_t col, const uint8_t row, const Color& background);
     //GridScreen(const uint8_t col, const uint8_t raw, const Color& background, std::vector<std::tuple<Element*, const uint16_t, const uint16_t, const uint16_t, const uint16_t>> e);
     //GridScreen(uint8_t col, uint8_t raw, char* image) // später soll es auch die möglichkeit geben ein Hindergrundbild anzuzeigen
 
