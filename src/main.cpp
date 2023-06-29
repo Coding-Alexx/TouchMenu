@@ -35,6 +35,8 @@ void setup_TML() {
   TML.draw();
 }
 
+#ifndef PIO_UNIT_TESTING
+
 void setup() {
   // tft.begin();
 
@@ -62,3 +64,5 @@ void setup() {
 void loop() {
   TML.loop();
 }
+
+#endif
