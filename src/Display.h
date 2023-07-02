@@ -35,7 +35,7 @@ public:
     /*-----------------------------------------------------------------------------------------*/
 
     virtual int16_t getHeight() = 0;
-    virtual int16_t getWigth() = 0;
+    virtual int16_t getWidth() = 0;
 
     virtual uint8_t getRotation() = 0;
 

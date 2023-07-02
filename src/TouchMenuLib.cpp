@@ -75,7 +75,7 @@ void TouchMenuLib::draw() {
 
 void TouchMenuLib::setAutoResolution(Screen* screen){
 
-    screen->setResolution(display->getHeight(), display->getWigth());
+    screen->setResolution(display->getHeight(), display->getWidth());
 
     // if (screen->getResolutionHeight() == 0 || screen->getResolutionHeight() == 0 || screen->getResolutionHeight() > display->getHeight() || screen->getResolutionWidth() > display->getWigth()) {
     //     screen->setResolution(display->getHeight(), display->getWigth());

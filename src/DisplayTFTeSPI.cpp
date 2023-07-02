@@ -149,7 +149,7 @@ int16_t DisplayTFTeSPI::getHeight() {
     return tft.height();
 }
 
-int16_t DisplayTFTeSPI::getWigth() {
+int16_t DisplayTFTeSPI::getWidth() {
     return tft.width();
 }
 
