@@ -2,6 +2,7 @@
 #include <array>
 #include <memory>
 #include <tuple>
+#include <vector>
 
 #include "../Screen.h"
 #include "../Color.h"
