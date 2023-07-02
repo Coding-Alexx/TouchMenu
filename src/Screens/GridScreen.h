@@ -36,6 +36,8 @@ public:
     GridScreen(const uint8_t col, const uint8_t raw, const Color& background);
     //GridScreen(const uint8_t col, const uint8_t raw, const Color& background, std::vector<std::tuple<Element*, const uint16_t, const uint16_t, const uint16_t, const uint16_t>> e);
     //GridScreen(uint8_t col, uint8_t raw, char* image) // später soll es auch die möglichkeit geben ein Hindergrundbild anzuzeigen
+    virtual ~GridScreen() {} // virtual destructor
+
 
     bool add(Element* element, const uint16_t posX, const uint16_t posY, const uint16_t sizeX, const uint16_t sizeY);
     
