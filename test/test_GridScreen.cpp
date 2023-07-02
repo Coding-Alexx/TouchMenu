@@ -9,12 +9,6 @@ void callbackTest (bool) {
   TMLTest.back();
 }
 
-void test_if_gridscreen_size_is_less_equal_the_size_of_the_display_device(){
-
-}
-
-
-
 void test_if_elements_dont_overlap(){   //macht noch keinen sinn
     GridScreen* grid = new GridScreen (3, 3 , COLOR_LIGHT_CYAN);
 
@@ -24,13 +18,17 @@ void test_if_elements_dont_overlap(){   //macht noch keinen sinn
     grid->setDisplay(display);
     grid->setResolution(display->getWigth(), display->getHeight());
 
-    TEST_ASSERT_TRUE(grid->add(roundButton2,0,0,2,2));
+    grid->add(roundButton1,0,0,2,2);
+    TEST_ASSERT_FALSE(grid->add(roundButton2,0,0,2,2));
 
 
     //TEST_ASSERT(true);
     
 }
 
+void test_if_gridscreen_size_is_less_equal_the_size_of_the_display_device(){
+
+}
 void test_if_grids_are_at_least_as_big_as_a_minium_size(){
 
 }
