@@ -31,7 +31,7 @@ bool GridScreen::add(Element* element, const uint16_t posX, const uint16_t posY,
         for (int y = posY; y < posY + sizeY; y++) {
             // If any of the cells are already occupied, we have an overlap
             if (matrix[y * col + x] != UINT8_MAX) {
-                LOGGER_ERROR("Element would overlap an existing element")
+                LOGGER_ERROR("Element overlapping an existing element")
                 return false;
             }
         }
