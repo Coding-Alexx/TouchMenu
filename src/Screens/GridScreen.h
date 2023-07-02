@@ -47,6 +47,8 @@ public:
     void loop(Inputs& input) override;
     void draw() override;
     void setResolution(int16_t height, int16_t width);
+    uint8_t getRow() const { return row; }
+    uint8_t getCol() const { return col; }
 
 private:
     const Color color_background;
