@@ -26,14 +26,14 @@ public:
 
             display->rect_center(posX + sizeX/2, posY + sizeY/2, sizeX - t*2, sizeY - t*2, b, r, colorBorder, colorInfillOff);
             display->rect(posX + t + b, posY + t + b + sliderPos, sizeX - t*2 - b*2, sizeY - sliderPos - 2*b - 2*t, 0, r, colorBorder, colorInfillOn);
-            display->rect_center(posX + sizeX/2, posY + t + b + sliderPos, sizeX - t*2, r * 2, 0, r, colorBorder, colorSlider);
+            display->rect_center(posX + sizeX/2, posY + t + b + sliderPos, sizeX - t*2 - b, r * 2, 0, r, colorBorder, colorSlider);
         } else {
             uint16_t sx = sizeX - (2*b) - (2*t);
             uint16_t sliderPos = value * sx / maxValue;        
 
             display->rect_center(posX + sizeX/2, posY + sizeY/2, sizeX - t*2, sizeY - t*2, b, r, colorBorder, colorInfillOff);
             display->rect(posX + t + b, posY + t + b, sliderPos, sizeY - t*2 - b*2, 0, r, colorBorder, colorInfillOn);
-            display->rect_center(posX + t + b + sliderPos, posY + sizeY/2, r * 2, sizeY - t*2, 0, r, colorBorder, colorSlider);
+            display->rect_center(posX + t + b + sliderPos, posY + sizeY/2, r * 2, sizeY - t*2 - b, 0, r, colorBorder, colorSlider);
         }
     }
 
