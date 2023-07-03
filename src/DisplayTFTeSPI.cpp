@@ -28,14 +28,22 @@ void DisplayTFTeSPI::init() {
 
 
 void DisplayTFTeSPI::rect(const uint16_t x, const uint16_t y, const uint16_t width, const uint16_t height, const uint8_t border_size, const uint8_t border_radius, const Color& border_color, const Color& infill_color) {
-    tft.fillRoundRect(x - width / 2, y - height / 2, width, height, border_radius, colorTo565(border_color));
-    tft.fillRoundRect(x - width / 2 + border_size, y - height / 2 + border_size, width - (border_size*2), height - (border_size*2), border_radius, colorTo565(infill_color));
+    tft.fillRoundRect(x, y, width, height, border_radius, colorTo565(border_color));
+    tft.fillRoundRect(x + border_size, y + border_size, width - (border_size*2), height - (border_size*2), border_radius, colorTo565(infill_color));
 }
 
 void DisplayTFTeSPI::rect(const uint16_t x, const uint16_t y, const uint16_t width, const uint16_t height, const uint8_t border_size, const uint8_t border_radius, const Color& border_color) {
     for (uint8_t i = 0; i < border_size; i++) {
-        tft.drawRoundRect(x - width / 2 - i, y - height / 2 - i, width + 2 * i, height + 2 * i, border_radius + i, colorTo565(border_color));
+        tft.drawRoundRect(x - i, y - i, width + 2 * i, height + 2 * i, border_radius + i, colorTo565(border_color));
     }
+}
+
+void DisplayTFTeSPI::rect_center(const uint16_t x, const uint16_t y, const uint16_t width, const uint16_t height, const uint8_t border_size, const uint8_t border_radius, const Color& border_color, const Color& infill_color) {
+    rect (x - width/2, y - height/2, width, height, border_size, border_radius, border_color, infill_color);
+}
+
+void DisplayTFTeSPI::rect_center(const uint16_t x, const uint16_t y, const uint16_t width, const uint16_t height, const uint8_t border_size, const uint8_t border_radius, const Color& border_color) {
+    rect (x - width/2, y - height/2, width, height, border_size, border_radius, border_color);
 }
 
 void DisplayTFTeSPI::circle(const uint16_t pos_x, const uint16_t pos_y, const uint16_t d, const uint8_t border_size, const Color& border_color, const Color& infill_color) {

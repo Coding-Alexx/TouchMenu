@@ -12,6 +12,7 @@
 #include "ElementViews/RoundButton.h"
 #include "ElementViews/ToggleSwitch.h"
 #include "ElementViews/RectButtonCircle.h"
+#include "ElementViews/Slider_Rect.h"
 
 //#include "DisplayGFX.h"
 #include "DisplayTFTeSPI.h"
