@@ -93,3 +93,11 @@ void ToggleSwitch::draw() {
     }*/
 
 }
+
+uint16_t ToggleSwitch::getHeight(){
+    return sizeX;
+}
+
+uint16_t ToggleSwitch::getWidth(){
+    return sizeY;
+}

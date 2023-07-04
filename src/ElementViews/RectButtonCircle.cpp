@@ -60,11 +60,11 @@ void RectButtonCircle::draw() {
     LOGGER_PATTERN("Zeichne Rechteckigen Button mit abgerundeten Ecken und mit Kreis(state=_)", value)
 
     if (value){
-        display->rect_center(posX + sizeX/2, posY + sizeY/2, sizeX - t, sizeY - t, 5, radius, colorBorderOn, colorInfillOn);
+        display->rect(posX + sizeX/2, posY + sizeY/2, sizeX - t, sizeY - t, 5, radius, colorBorderOn, colorInfillOn);
         display->text_center(posX + sizeX/2, posY + sizeY/2, circleSize*0.2, textOn, colorBorderOn);
         display->circle(circlePosX, circlePosY, circleSize, 2, COLOR_BLACK ,COLOR_GREEN);
     } else {
-        display->rect_center(posX + sizeX/2, posY + sizeY/2, sizeX - t, sizeY - t, 5, radius, colorBorderOff, colorInfillOff);
+        display->rect(posX + sizeX/2, posY + sizeY/2, sizeX - t, sizeY - t, 5, radius, colorBorderOff, colorInfillOff);
         display->text_center(posX + sizeX/2, posY + sizeY/2, circleSize*0.2, textOff, colorBorderOff);
         display->circle(circlePosX, circlePosY, circleSize, 2, COLOR_BLACK ,COLOR_RED);
     }
@@ -87,4 +87,12 @@ void RectButtonCircle::draw() {
         //     display->circle(circlePosX, circlePosY, circleSize, 0, colorBorderOff ,COLOR_GREEN);
         //     display->text_center(posX + sizeX/2, posY + sizeY/2, d*0.04, textOff, colorBorderOff);
         // }
+}
+
+uint16_t RectButtonCircle::getHeight(){
+    return sizeX;
+}
+
+uint16_t RectButtonCircle::getWidth(){
+    return sizeY;
 }
