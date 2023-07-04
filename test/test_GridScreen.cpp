@@ -47,8 +47,8 @@ void test_add_element_outside_grid() {
 }
 
 void test_gridscreen_not_larger_than_display() {
-    TEST_ASSERT_LESS_OR_EQUAL(display->getWidth(), grid->getResolutionHeight());
-    TEST_ASSERT_LESS_OR_EQUAL(display->getHeight(), grid->getResolutionWidth());
+    TEST_ASSERT_LESS_OR_EQUAL(display->getWidth(), grid->getResolutionWidth());
+    TEST_ASSERT_LESS_OR_EQUAL(display->getHeight(), grid->getResolutionHeight());
 }
 
 // minimum 10x10 Pixel pro Grid
