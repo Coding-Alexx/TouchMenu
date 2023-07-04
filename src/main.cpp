@@ -16,6 +16,11 @@ void callback (bool) {
   TML.back();
 }
 
+// todo: so ändern, dass es auch mit int funktionieren würde
+void callbackSlider (int16_t) {
+  TML.back();
+}
+
 void setup_TML() {
 
   TML.init();
@@ -23,11 +28,12 @@ void setup_TML() {
   // disp->startTouchCalibration();
 
   CREATE_GRID_SCREEN(TML, 10, 3, 3, COLOR_LIGHT_CYAN,
-    std::make_tuple(new RoundButton(  "AN", COLOR_RED,    "AUS", COLOR_GREEN,          COLOR_YELLOW,                   callback), 1, 0, 2, 2),
+    // std::make_tuple(new RoundButton(  "AN", COLOR_RED,    "AUS", COLOR_GREEN,          COLOR_YELLOW,                   callback), 1, 0, 2, 2),
     std::make_tuple(new RoundButton(  "Ein",  COLOR_YELLOW, "Aus",  COLOR_DARK_GREEN,     COLOR_GRAY,      COLOR_BLACK,   callback), 0, 1, 1, 1),
     std::make_tuple(new ToggleSwitch("ON", COLOR_GREEN, COLOR_BLACK, "OFF", COLOR_BLACK, COLOR_RED, COLOR_BLACK, callback), 0 , 0 , 1 , 1 ),
     std::make_tuple(new RectButtonCircle(  "ON",  COLOR_DARK_MAGENTA, "OFF",  COLOR_BROWN,     COLOR_GRAY,      COLOR_BLACK, 7, callback), 0, 2, 1, 1),
-    std::make_tuple(new RectButtonCircle(  "ON",  COLOR_DARK_GREEN, "OFF",  COLOR_DARK_RED, COLOR_DARK_BLUE, 9, callback), 1, 2, 2, 1)
+    std::make_tuple(new Slider_Rect(COLOR_GREEN, COLOR_RED, COLOR_LIGHT_YELLOW, COLOR_BLACK, callbackSlider), 1, 2, 2, 1),
+    std::make_tuple(new Slider_Rect(COLOR_GREEN, COLOR_RED, COLOR_LIGHT_YELLOW, COLOR_BLACK, callbackSlider), 1, 0, 1, 2)
   );
 
   //TML.goTo(30);

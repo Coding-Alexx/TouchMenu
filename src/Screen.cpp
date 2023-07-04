@@ -2,7 +2,7 @@
 
 Screen::Screen () {}
 
-void Screen::setResolution(const int16_t h, const int16_t w) {
+void Screen::setResolution(const int16_t w, const int16_t h) {
     height = h;
     width = w;
 }
