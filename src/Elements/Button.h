@@ -22,6 +22,7 @@ private:
     void setTouch(uint16_t x, uint16_t y) override;
 
 public:
+    bool getValue() const { return value; }
     Button(button_func_ptr button_callback, bool* const value = nullptr);
     Button(switch_func_ptr swich_callback, bool* const value = nullptr);
     virtual ~Button();
