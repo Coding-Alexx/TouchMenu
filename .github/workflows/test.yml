@@ -25,10 +25,7 @@ jobs:
 
       - name: Install Libraries
         run: |
-          pio lib install "TFT_eSPI"
-          pio lib install "SPI"
-          pio lib install "FS"
-          pio lib install "SPIFFS"
+          pio pkg install "TFT_eSPI"
           
       - name: Run PlatformIO tests
         run: pio test
