@@ -13,6 +13,5 @@ struct Inputs {
     uint16_t touchY = 0;
     bool isTouched = false;
 
-    uint8_t back = 0;
     bool update = false;
 };

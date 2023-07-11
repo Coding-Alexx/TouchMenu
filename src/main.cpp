@@ -7,6 +7,7 @@
 */
 
 #include "TouchMenuLib.h"
+#include "Screens/TestGridScreen.h"
 
 //TouchMenuLib TML(DisplayGFX(TFT_CS, TFT_DC));
 //auto* disp = new DisplayTFTeSPI({383, 3445, 233, 3541, 7 }); //V1:{414, 3383, 254, 3497, 7 } V2:{383, 3445, 233, 3541, 7 } 
@@ -26,6 +27,10 @@ void setup_TML() {
   TML.init();
 
   // disp->startTouchCalibration();
+
+  //GridScreen* testRoundBottonScreen = TestGridScreenFactory::create(TML, 2, COLOR_LIGHT_CYAN, new RoundButton(  "Ein",  COLOR_YELLOW, "Aus",  COLOR_DARK_GREEN,     COLOR_GRAY,      COLOR_BLACK,   callback));
+  GridScreen* testRoundBottonScreen = TestGridScreenFactory::create(TML, 3, COLOR_LIGHT_CYAN, new Textbox_Rect("Hello\n World", COLOR_BLACK, COLOR_YELLOW, COLOR_BROWN));
+
 
   CREATE_GRID_SCREEN(TML, 10, 3, 3, COLOR_LIGHT_CYAN,
     // std::make_tuple(new RoundButton(  "AN", COLOR_RED,    "AUS", COLOR_GREEN,          COLOR_YELLOW,                   callback), 1, 0, 2, 2),

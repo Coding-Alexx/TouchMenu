@@ -42,6 +42,17 @@ RectButtonCircle::RectButtonCircle(const char* textOn, const Color& infillOn, co
     borderRadius(borderRadius)
 {}
 
+RectButtonCircle::RectButtonCircle(const RectButtonCircle& other)
+    : Button(other),
+      colorInfillOn(other.colorInfillOn),
+      colorInfillOff(other.colorInfillOff),
+      colorBorderOn(other.colorBorderOn),
+      colorBorderOff(other.colorBorderOff),
+      textOn(other.textOn),
+      textOff(other.textOff),
+      borderRadius(other.borderRadius)
+{}
+
 void RectButtonCircle::loop() {}
 
 bool RectButtonCircle::checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) {

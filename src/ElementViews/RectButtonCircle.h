@@ -10,6 +10,7 @@ public:
     RectButtonCircle(const char* textOn, const Color& infillOn, const char* textOff, const Color& infillOff, const Color& borderOn, const Color& borderOff,  const uint8_t borderRadius, const button_func_ptr button_callback, bool* const value=nullptr);
     RectButtonCircle(const char* textOn, const Color& infillOn, const char* textOff, const Color& infillOff, const Color& border,   const uint8_t borderRadius,const switch_func_ptr switch_callback, bool* const value=nullptr);
     RectButtonCircle(const char* textOn, const Color& infillOn, const char* textOff, const Color& infillOff, const Color& borderOn, const Color& borderOff,  const uint8_t borderRadius, const switch_func_ptr switch_callback, bool* const value=nullptr);
+    RectButtonCircle(const RectButtonCircle& other);
     void loop();
     void draw() override;
 
