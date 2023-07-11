@@ -59,3 +59,11 @@ void RoundButton::draw() {
         // display->text(posX, posY, sizeX, sizeY, textOff, colorBorderOff);
     }
 }
+
+uint16_t RoundButton::getHeight(){
+    return sizeX;
+}
+
+uint16_t RoundButton::getWidth(){
+    return sizeY;
+}

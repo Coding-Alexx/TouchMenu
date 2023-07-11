@@ -50,7 +50,7 @@ public:
     /*-----------------------------------------------------------------------------------------*/
 
     int16_t getHeight() override;
-    int16_t getWigth() override;
+    int16_t getWidth() override;
 
     uint8_t getRotation() override;
 
