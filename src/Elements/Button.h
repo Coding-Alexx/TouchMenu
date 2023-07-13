@@ -23,8 +23,8 @@ private:
 
 public:
     bool getValue() const { return value; }
-    Button(button_func_ptr button_callback, bool* const value = nullptr);
-    Button(switch_func_ptr swich_callback, bool* const value = nullptr);
+    Button(button_func_ptr button_callback, bool* externalValue = nullptr);
+    Button(switch_func_ptr swich_callback, bool* externalValue = nullptr);
     virtual ~Button();
     bool select() override;
 };

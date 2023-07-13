@@ -85,6 +85,10 @@ void GridScreen::loop(Inputs& input) {
         uint8_t e = matrix[col*ry + rx];
         if (e != UINT8_MAX) elements[e]->setTouch(x, y);
     }
+
+    for (const auto& element : elements) {
+        if (element) element->loop();
+    }
 }
 
 void GridScreen::draw() {

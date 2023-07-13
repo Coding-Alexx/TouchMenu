@@ -7,7 +7,7 @@
 
 class Slider_Rect: public NumberInput {
 public:
-    inline Slider_Rect(const Color& infillOn_color, const Color& infillOff_color, const Color& slider_color, const Color& border_color, const slider_func_ptr slider_callback, int16_t* const value=nullptr):
+    inline Slider_Rect(const Color& infillOn_color, const Color& infillOff_color, const Color& slider_color, const Color& border_color, const slider_func_ptr slider_callback, uint16_t* value=nullptr):
         NumberInput(slider_callback, value),
         colorInfillOn(infillOn_color),
         colorInfillOff(infillOff_color),
@@ -51,13 +51,9 @@ public:
         if (isVertical) {
             value = (y - yl) * maxValue / (yr-yl);
         } else {
-            // value = ((uint32_t)(x) * maxValue) / (posX + sizeX);
             value = (x - xl) * maxValue / (xr-xl);
-            
         }
-
-        //value = (value / 5) * 5;
-
+        *externalValue = value;
         LOGGER(value)
 
         draw();
@@ -86,7 +82,6 @@ private:
     const Color colorSlider;
     bool isVertical = false;
 
-    const uint16_t maxValue = 100;
     const uint16_t t = 10; // distance to border
     const uint16_t b = 10; // border
     const uint16_t r = 6; // border radius

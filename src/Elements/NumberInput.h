@@ -8,8 +8,10 @@ protected:
     typedef void (*slider_func_ptr) (int16_t);
     
     const slider_func_ptr slider_callback;
+    uint16_t* const externalValue;
     uint16_t value = 0;
-    const uint16_t* externalValue;
+    const uint16_t maxValue = 100;
+    
 
 private:
     // TODO: Smartpointer nutzen
@@ -20,7 +22,7 @@ private:
     virtual void setTouch(uint16_t x, uint16_t y) = 0;
 
 public:
-    NumberInput(slider_func_ptr slider_callback, int16_t* const value = nullptr);
+    NumberInput(slider_func_ptr slider_callback, uint16_t* externalValue = nullptr);
     virtual ~NumberInput();
     bool select() override;
 };

@@ -38,8 +38,6 @@ RoundButton::RoundButton(const char* textOn, const Color& infillOn, const char* 
     textOff(textOff)
 {}
 
-void RoundButton::loop() {}
-
 bool RoundButton::checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) {
     // TODO: anpassen
 

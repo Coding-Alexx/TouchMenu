@@ -1,2 +1,2 @@
 
-#define BUTTON_ON_TIME 200
+#define BUTTON_ON_TIME 400
