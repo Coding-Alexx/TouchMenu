@@ -24,6 +24,22 @@ public:
         display->rect_center(posX + sizeX/2, posY + sizeY/2, sizeX - t*2, sizeY - t*2, b, r, colorBorder, colorInfill);
         display->text_center(posX + sizeX/2, posY + sizeY/2, 1, text, colorText);
     }
+        // Getter methods
+    char* getText() const {
+        return text;
+    }
+
+    Color getColorText() const {
+        return colorText;
+    }
+
+    Color getColorInfill() const {
+        return colorInfill;
+    }
+
+    Color getColorBorder() const {
+        return colorBorder;
+    }
 
 private:
     inline bool checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) override {

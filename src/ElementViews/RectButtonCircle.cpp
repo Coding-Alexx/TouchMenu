@@ -60,6 +60,13 @@ bool RectButtonCircle::checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotatio
 
     return sizeX > 50 && sizeY > 50;
 }
+uint16_t RectButtonCircle::getHeight(){
+    return sizeX;
+}
+
+uint16_t RectButtonCircle::getWidth(){
+    return sizeY;
+}
 
 void RectButtonCircle::draw() {    
     const uint8_t t = 10;
