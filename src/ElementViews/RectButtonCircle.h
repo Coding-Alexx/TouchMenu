@@ -13,6 +13,8 @@ public:
     RectButtonCircle(const RectButtonCircle& other);
     void loop();
     void draw() override;
+    uint16_t getHeight();
+    uint16_t getWidth();
 
 private:
     bool checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) override;
