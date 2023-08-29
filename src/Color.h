@@ -50,8 +50,8 @@ public:
     inline uint8_t getGreen () const {return green;}
     inline uint8_t getBlue  () const {return blue;}
 
-    inline Color& operator= (const Color& other) {
-        return *this = Color(other.red, other.green, other.blue);
+    inline Color darker(int s = 10) const {
+        return Color(max(red - s, 0), max(green - s, 0), max(blue - s, 0));
     }
 
     inline Color(const Color& other) : 

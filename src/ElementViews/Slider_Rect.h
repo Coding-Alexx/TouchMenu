@@ -53,7 +53,8 @@ public:
         } else {
             value = (x - xl) * maxValue / (xr-xl);
         }
-        *externalValue = value;
+        if (externalValue) *externalValue = value;
+        slider_callback(value);
         LOGGER(value)
 
         draw();

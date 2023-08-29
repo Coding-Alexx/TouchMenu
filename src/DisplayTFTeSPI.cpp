@@ -59,6 +59,17 @@ void DisplayTFTeSPI::circle(const uint16_t x, const uint16_t y, const uint16_t d
     tft.drawCircle(x, y, d/2, colorTo565(border_color));
 }
 
+void DisplayTFTeSPI::triangle(const uint16_t pos_x0, const uint16_t pos_y0, const uint16_t pos_x1, const uint16_t pos_y1, const uint16_t pos_x2, const uint16_t pos_y2, const uint8_t border_size, const Color& border_color, const Color& infill_color) {
+    tft.fillTriangle(pos_x0, pos_y0, pos_x1, pos_y1, pos_x2, pos_y2, colorTo565(infill_color));
+    // triangle(pos_x0, pos_y0, pos_x1, pos_y1, pos_x2, pos_y2, border_size, border_color);
+}
+
+void DisplayTFTeSPI::triangle(const uint16_t pos_x0, const uint16_t pos_y0, const uint16_t pos_x1, const uint16_t pos_y1, const uint16_t pos_x2, const uint16_t pos_y2, const uint8_t border_size, const Color& border_color) {
+    tft.drawLine(pos_x0, pos_y0, pos_x1, pos_y1, colorTo565(border_color));
+    tft.drawLine(pos_x1, pos_y1, pos_x2, pos_y2, colorTo565(border_color));
+    tft.drawLine(pos_x2, pos_y2, pos_x0, pos_y0, colorTo565(border_color));
+}
+
 // Automatisches Formatieren des Textes (Automatosche Größe und Zeilenumbrüche)
 void DisplayTFTeSPI::text(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const char* text, const Color& text_color) {
     tft.setTextColor(colorTo565(text_color));

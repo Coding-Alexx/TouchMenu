@@ -13,6 +13,7 @@
 #include "ElementViews/ToggleSwitch.h"
 #include "ElementViews/RectButtonCircle.h"
 #include "ElementViews/Slider_Rect.h"
+#include "ElementViews/Slider_Arrow.h"
 #include "ElementViews/Textbox_Rect.h"
 
 //#include "DisplayGFX.h"

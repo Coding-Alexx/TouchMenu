@@ -49,6 +49,13 @@ void setup_TML() {
     std::make_tuple(new Slider_Rect(COLOR_GREEN, COLOR_RED, COLOR_LIGHT_YELLOW, COLOR_BLACK, callbackSlider, sliderValue), 1, 0, 1, 2)
   )
 
+  CREATE_GRID_SCREEN(TML, 14, 4, 4, COLOR_LIGHT_CYAN,
+    std::make_tuple(new Slider_Arrow(COLOR_LIGHT_BLUE, COLOR_GREEN, COLOR_BLACK, true, callbackSlider), 0, 0, 2, 4),
+    std::make_tuple(new Slider_Arrow(COLOR_LIGHT_BLUE, COLOR_GREEN, COLOR_BLACK, true, callbackSlider), 2, 0, 2, 1),
+    // std::make_tuple(new RoundButton(  "+",  COLOR_GREEN, "+",  COLOR_DARK_GREEN,     COLOR_BLACK,      COLOR_BLACK,   callbackMinus), 3, 0, 1, 1)
+  )
+  TML.goTo(14);
+
   LOGGER("MAIN2")
 
   // ERROR: bei id 20 stürtzt es ab, bei id 30 geht es
