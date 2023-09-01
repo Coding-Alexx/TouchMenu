@@ -19,6 +19,7 @@
 //#include "DisplayGFX.h"
 #include "DisplayTFTeSPI.h"
 
+
 #pragma once
 
 class TouchMenuLib {
@@ -49,6 +50,8 @@ public:
     void setInputLeft();
     void setInputUp();
     void setInputDown();
+
+    Display& getDisplay();
 
 private:
     std::map<uint8_t, std::unique_ptr<Screen>> screens; // falls Referenzen nicht funktionieren sollten, kann man z.B. std::reference_wrapper<Screen> nutzen

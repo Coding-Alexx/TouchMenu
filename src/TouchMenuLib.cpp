@@ -97,3 +97,7 @@ void TouchMenuLib::setInputUp(){
 void TouchMenuLib::setInputDown(){
     input.down = true;
 }
+
+Display& TouchMenuLib::getDisplay(){
+    return *display;
+}

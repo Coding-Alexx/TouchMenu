@@ -12,7 +12,7 @@ class DisplayTFTeSPI: public Display {
 private:
   TFT_eSPI tft;
   uint16_t colorTo565(const Color& color);
-  uint16_t colorTo565(uint8_t r, uint8_t g, uint8_t b);
+  uint16_t colorTo565(const uint8_t r, const uint8_t g, const uint8_t b);
 
 public:
   DisplayTFTeSPI();
@@ -49,6 +49,9 @@ public:
 
     // color
     void fillScreen(const Color& color) override;
+
+    void drawBitmap(const uint16_t x, const uint16_t y, const uint16_t w, const uint16_t h, const uint8_t* bitmap, const Color& fgcolor) override;
+    void drawBitmap(const uint16_t x, const uint16_t y, const uint16_t w, const uint16_t h, const uint8_t* bitmap, const Color& fgcolor, const Color& bgcolor) override;
 
     /*-----------------------------------------------------------------------------------------*/
 

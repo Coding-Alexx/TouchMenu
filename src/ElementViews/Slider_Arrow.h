@@ -35,6 +35,7 @@ public:
 
         uint16_t rect1_x1, rect1_y1, rect1_x2, rect1_y2;
         uint16_t rect2_x1, rect2_y1, rect2_x2, rect2_y2;
+        auto tmp = value;
         
         if (isVertical) {
             rect1_x1 = posX + borderDistance;
@@ -61,53 +62,26 @@ public:
         if (x >= rect1_x1 && x <= rect1_x2 && y >= rect1_y1 && y <= rect1_y2) {
             LOGGER("Dreieck 1 Berührt");
             colorTriangle1 = &colorTriangleOn;
-            if (value > 0) value --;
-            if (activateAnimation) timerTriang2 = millis();
+            if (value > 0) {
+                value --;
+                if (activateAnimation) timerTriang2 = millis();
+            }
         }
 
         if (x >= rect2_x1 && x <= rect2_x2 && y >= rect2_y1 && y <= rect2_y2) {
             LOGGER("Dreieck 2 Berührt");
             colorTriangle2 = &colorTriangleOn;
-            if (value < UINT16_MAX) value ++;
-            if (activateAnimation) timerTriang1 = millis();
+            if (value < UINT16_MAX) {
+                value ++;
+                if (activateAnimation) timerTriang1 = millis();
+            }
         }
 
-        slider_callback(value);
-        if (externalValue) *externalValue = value;
-        draw();
-
-        return;
-
-
-        uint16_t xl1, xl2, xr1, xr2, yl, yr;
-
-        xl1 = posX + triangleDistance;
-        xr1 = posX + triangleHight;
-        xl2 = posX + sizeX - triangleHight;
-        xr2 = posX + sizeX - triangleDistance;
-        yl = posY + triangleDistance;
-        yr = posY - triangleDistance + sizeY;
-
-        LOGGER_PATTERN("Dreieck1 Berührt? X = _ < _ < _,    Y= _ < _ < _", xl1, x, xr1, yl, y, yr)
-        if (xl1 < x && x < xr1 && yl < y && y < yr) {
-            LOGGER("Dreieck 1 Berührt");
-            colorTriangle1 = &colorTriangleOn;
-            if (value > 0) value ++;
-            if (activateAnimation) timerTriang1 = millis();
+        if (value != tmp) {
+            slider_callback(value);
+            if (externalValue) *externalValue = value;
+            draw();
         }
-
-        LOGGER_PATTERN("Dreieck2 Berührt? X = _ < _ < _,    Y= _ < _ < _", xl2, x, xr2, yl, y, yr)
-        if (xl2 < x && x < xr2 && yl < y && y < yr) {
-            LOGGER("Dreieck 2 Berührt");
-            colorTriangle2 = &colorTriangleOn;
-            if (value < UINT16_MAX) value --;
-            if (activateAnimation) timerTriang2 = millis();
-        }
-
-        if (externalValue) *externalValue = value;
-        slider_callback(value);
-
-        draw();
     }
 
 private:
@@ -178,7 +152,7 @@ private:
     uint16_t triangleHight; 
     bool isVertical = false;
 
-    const uint16_t time = 500; // animation time
+    const uint16_t time = 300; // animation time
     bool activateAnimation = true;
 
     unsigned long timerTriang1 = 0;

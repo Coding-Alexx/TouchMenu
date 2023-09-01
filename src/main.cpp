@@ -78,6 +78,9 @@ void setup_TML() {
 void setup() {
   LOGGER_BEGIN(9600)
   setup_TML();
+
+  Item* icon = TML.getDisplay().createItem("icon:arrow_right");
+  TML.getDisplay().drawItem(20, 30, icon, COLOR_BLACK);
 }
 
 void loop() {

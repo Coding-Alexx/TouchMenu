@@ -156,11 +156,7 @@ uint16_t DisplayTFTeSPI::colorTo565(const Color& color) {
     return colorTo565(color.getRed(), color.getGreen(), color.getBlue());
 }
 
-uint16_t DisplayTFTeSPI::colorTo565(uint8_t r, uint8_t g, uint8_t b) {
-    // r = 255 - r;  // Invertierung von Rot
-    // g = 255 - g;  // Invertierung von Grün
-    // b = 255 - b;  // Invertierung von Blau
-
+uint16_t DisplayTFTeSPI::colorTo565(const uint8_t r, const uint8_t g, const uint8_t b) {
     return tft.color565(r, g, b);  // Rückgabe des Farbwerts im 565-Format
 }
 
@@ -194,4 +190,17 @@ void DisplayTFTeSPI::startTouchCalibration(){
         if (i < 4) Serial.print(", ");
     }
     Serial.println(" }");
+}
+
+void DisplayTFTeSPI::drawBitmap(const uint16_t x, const uint16_t y, const uint16_t w, const uint16_t h, const uint8_t* bitmap, const Color& fgcolor){
+    tft.drawBitmap(x, y, bitmap, w, h, colorTo565(fgcolor));
+    
+    //void TFT_eSPI::draw Bitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color)
+    //void TFT_eSPI::draw Bitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t fgcolor, uint16_t bgcolor)
+    //void TFT_eSPI::drawXBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color) // Bild ist in XBM array gespeichert
+    //void TFT_eSPI::drawXBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color, uint16_t bgcolor)
+}
+
+void DisplayTFTeSPI::drawBitmap(const uint16_t x, const uint16_t y, const uint16_t w, const uint16_t h, const uint8_t* bitmap, const Color& fgcolor, const Color& bgcolor){
+    tft.drawBitmap(x, y, bitmap, w, h, colorTo565(fgcolor), colorTo565(bgcolor));
 }

@@ -1,8 +1,13 @@
+#pragma once
+
 #include <Arduino.h>
 #include <array>
 #include "Color.h"
 
-#pragma once
+#include "Item/Item.h"
+#include "Item/Icon.h"
+#include "Item/Symbol.h"
+#include "Item/Text.h"
 
 class Display {
 public:
@@ -37,6 +42,9 @@ public:
     // color
     virtual void fillScreen(const Color& color) = 0;
 
+    virtual void drawBitmap(const uint16_t x, const uint16_t y, const uint16_t w, const uint16_t h, const uint8_t* bitmap, const Color& fgcolor) = 0;
+    virtual void drawBitmap(const uint16_t x, const uint16_t y, const uint16_t w, const uint16_t h, const uint8_t* bitmap, const Color& fgcolor, const Color& bgcolor) = 0;
+
     /*-----------------------------------------------------------------------------------------*/
 
     virtual int16_t getHeight() = 0;
@@ -45,4 +53,7 @@ public:
     virtual uint8_t getRotation() = 0;
 
     virtual bool getTouch(uint16_t* x, uint16_t* y) = 0;
+
+    void drawItem (uint16_t x, uint16_t y, Item* item, const Color& color);
+    Item* createItem(const std::string str);
 };
