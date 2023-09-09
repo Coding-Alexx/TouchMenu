@@ -35,18 +35,35 @@ const uint8_t arrow_right [] PROGMEM = {
 };
 
 
-Icon::Icon(const uint16_t w, const uint16_t h, const uint8_t* bitmap): 
-        w(w),
+Icon::Icon(const uint16_t w, const uint16_t h, const uint8_t* bitmap, Display* const display, const Color& color):
+        Item(display),
+		w(w),
         h(h),
-        bitmap(bitmap)
+        bitmap(bitmap),
+		color(color)
         {}
 
-Icon* Icon::create(const std::string str) {
-    if (str == "arrow_right") return new Icon(60, 60, arrow_right);
+Icon* Icon::create(const std::string str, Display* const display) {
+    return create(str, Color(20,20,20) + Color(230, 230, 230), display);
+}
+
+Icon* Icon::create(const std::string str, const Color& color, Display* const display) {
+    if (str == "arrow_right") return new Icon(60, 60, arrow_right, display, color);
     return nullptr;
 }
 
-void Icon::draw(uint16_t x, uint16_t y, Display* disp, const Color& color) {
-    disp->drawBitmap(x, y, w, h, bitmap, color);
+void Icon::draw(uint16_t x, uint16_t y, const Color& color) {
+    display->drawBitmap(x-w/2, y-h/2, w, h, bitmap, color);
 };
 
+void Icon::drawOn(uint16_t x, uint16_t y) {
+    draw(x, y, color);
+};
+
+void Icon::drawOff(uint16_t x, uint16_t y) {
+    draw(x, y, color.getSecondaryColor());
+};
+
+void Icon::draw(uint16_t x, uint16_t y) {
+    drawOn(x, y);
+};

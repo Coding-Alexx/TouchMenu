@@ -53,6 +53,7 @@ void DisplayTFTeSPI::circle(const uint16_t pos_x, const uint16_t pos_y, const ui
 
     if (border_size >= 2) tft.fillCircle(pos_x, pos_y, r, colorTo565(border_color));
     tft.fillCircle(pos_x, pos_y, r - (border_size/2), colorTo565(infill_color));
+    LOGGER("Ende mit Kreis Zeichnen")
 }
 
 void DisplayTFTeSPI::circle(const uint16_t x, const uint16_t y, const uint16_t d, const uint8_t border_size, const Color& border_color) {

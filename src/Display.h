@@ -5,9 +5,9 @@
 #include "Color.h"
 
 #include "Item/Item.h"
+#include "Item/Text.h"
 #include "Item/Icon.h"
 #include "Item/Symbol.h"
-#include "Item/Text.h"
 
 class Display {
 public:
@@ -56,4 +56,9 @@ public:
 
     void drawItem (uint16_t x, uint16_t y, Item* item, const Color& color);
     Item* createItem(const std::string str);
+    Item* createItem(const std::string str, const Color& color);
+private:
+    Color parseColor(const std::string& colorStr, const Color& color);
+    std::string processText(const std::string& input);
+    double parseSize(const std::string& sizeStr);
 };

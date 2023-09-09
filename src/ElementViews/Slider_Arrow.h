@@ -8,13 +8,18 @@
 
 class Slider_Arrow: public NumberInput {
 public:
+
+    // Slider_Arrow (const char* item1, const Color& itemColor1, const char* item2, const Color& itemColor2, const Color& infill_color, const Color& border_color, const bool show_number, const slider_func_ptr slider_callback, uint16_t* value=nullptr) // itemColor wird extra mit angegeben
+    // Slider_Arrow (const char* item1, const char* item2, const Color& infill_color, const Color& border_color, const bool show_number, const slider_func_ptr slider_callback, uint16_t* value=nullptr) // textColor wird als itemColor genutzt
+
     inline Slider_Arrow(const Color& infill_color, const Color& triangle_color, const Color& border_color, const bool show_number, const slider_func_ptr slider_callback, uint16_t* value=nullptr):
         NumberInput(slider_callback, value),
         colorInfill(infill_color),
-        colorTriangleOn(triangle_color.darker(120)),
+        colorTriangleOn(triangle_color),
         colorTriangleOff(triangle_color),
         colorBorder(border_color),
-        showNumber(show_number)
+        showNumber(show_number),
+        activateAnimation(infill_color.hasSecondaryColor())
     {}
 
     inline void draw() {
@@ -153,7 +158,7 @@ private:
     bool isVertical = false;
 
     const uint16_t time = 300; // animation time
-    bool activateAnimation = true;
+    const bool activateAnimation = true;
 
     unsigned long timerTriang1 = 0;
     unsigned long timerTriang2 = 0;
