@@ -11,7 +11,7 @@ public:
     inline Slider_Arrow(const Color& infill_color, const Color& triangle_color, const Color& border_color, const bool show_number, const slider_func_ptr slider_callback, uint16_t* value=nullptr):
         NumberInput(slider_callback, value),
         colorInfill(infill_color),
-        colorTriangleOn(triangle_color.darker(120)),
+        colorTriangleOn(triangle_color.getSecondaryColor()),
         colorTriangleOff(triangle_color),
         colorBorder(border_color),
         showNumber(show_number)

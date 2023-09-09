@@ -55,5 +55,5 @@ public:
     virtual bool getTouch(uint16_t* x, uint16_t* y) = 0;
 
     void drawItem (uint16_t x, uint16_t y, Item* item, const Color& color);
-    Item* createItem(const std::string str);
+    static Item* createItem(const std::string str);
 };

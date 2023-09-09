@@ -1,60 +1,51 @@
 #include "RoundButton.h"
 #include <algorithm>
+#include <WiFi.h>
 
-RoundButton::RoundButton(const char* textOn, const Color& infillOn, const char* textOff, const Color& infillOff, const Color& border, const button_func_ptr button_callback, bool* const value):
-    Button(button_callback, value),
-    colorInfillOn(infillOn),
-    colorInfillOff(infillOff),
-    colorBorderOn(border),
-    colorBorderOff(border),
-    textOn(textOn),
-    textOff(textOff)
-{}
-RoundButton::RoundButton(const char* textOn, const Color& infillOn, const char* textOff, const Color& infillOff, const Color& borderOn, const Color& borderOff, const button_func_ptr button_callback, bool* const value):
-    Button(button_callback, value),
-    colorInfillOn(infillOn),
-    colorInfillOff(infillOff),
-    colorBorderOn(borderOn),
-    colorBorderOff(borderOff),
-    textOn(textOn),
-    textOff(textOff)
-{}
-RoundButton::RoundButton(const char* textOn, const Color& infillOn, const char* textOff, const Color& infillOff, const Color& border, const switch_func_ptr switch_callback, bool* const value):
-    Button(switch_callback, value),
-    colorInfillOn(infillOn),
-    colorInfillOff(infillOff),
-    colorBorderOn(border),
-    colorBorderOff(border),
-    textOn(textOn),
-    textOff(textOff)
-{}
-RoundButton::RoundButton(const char* textOn, const Color& infillOn, const char* textOff, const Color& infillOff, const Color& borderOn, const Color& borderOff, const switch_func_ptr switch_callback, bool* const value):
-    Button(switch_callback, value),
-    colorInfillOn(infillOn),
-    colorInfillOff(infillOff),
-    colorBorderOn(borderOn),
-    colorBorderOff(borderOff),
-    textOn(textOn),
-    textOff(textOff)
-{}
+RoundButton::RoundButton(const char* itemOn, const char* itemOff, const Color& color, const button_func_ptr button_callback, bool* const value):
+    Button(button_callback, value), color(color), itemOn(Display::createItem(itemOn)), itemOff(Display::createItem(itemOff)) {}
+
+RoundButton::RoundButton(const char* itemOn, const char* itemOff, const Color& color, const switch_func_ptr switch_callback, bool* const value):
+    Button(switch_callback, value), color(color), itemOn(Display::createItem(itemOn)), itemOff(Display::createItem(itemOff)) {}
+
+RoundButton::~RoundButton () {
+    delete itemOn;
+    delete itemOff;
+}
 
 bool RoundButton::checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) {
-    // TODO: anpassen
 
+    
+    // itemOn = display->createItem(itemOnStr);
+    // itemOff = display->createItem(itemOffStr);
+
+    LOGGER_PATTERN("itemOn: _, itemOff: _", itemOn == nullptr, itemOff == nullptr)
+
+    // LOGGER("Zeichne item im Round Button als Test")
+    // if (itemOn) itemOn->draw(sizeX, sizeY, display, COLOR_GREEN);
+    // display->drawItem(50, 60, itemOn, color);
+
+    LOGGER_PATTERN("Freier RAM Platz: _", ESP.getFreeHeap())
+
+    // TODO: anpassen
     return sizeX > 50 && sizeY > 50;
 }
 
 void RoundButton::draw() {
     uint16_t d = std::min(sizeX, sizeY) * 0.9;
     LOGGER_PATTERN("Zeichne Runden Button(state=_) mit d=_, d*0.1=_", value, d, d*0.1)
-
+    LOGGER_PATTERN("Color: _, BorderColor: _, SecColor: _, SecRand: _", color.toString(), color.getBorderColor().toString(), color.getSecondaryColor().toString(), color.getSecondaryBorderColor().toString())
+ 
     if (value){
-        display->circle(posX + sizeX/2, posY + sizeY/2, d, 8, colorBorderOn, colorInfillOn);
-        display->text_center(posX + sizeX/2, posY + sizeY/2, d*0.04, textOn, colorBorderOn);
+        display->circle(posX + sizeX/2, posY + sizeY/2, d, 8, color.getBorderColor(), color);
+
+        if (itemOn) display->drawItem(posX + sizeX/2, posY + sizeY/2, itemOn, color.getItemColor());
+        else LOGGER_ERROR("itemOn ist nicht gültig!")
     } else {
-        display->circle(posX + sizeX/2, posY + sizeY/2, d, 8, colorBorderOff, colorInfillOff);
-        display->text_center(posX + sizeX/2, posY + sizeY/2, d*0.04, textOff, colorBorderOff);
-        // display->text(posX, posY, sizeX, sizeY, textOff, colorBorderOff);
+        display->circle(posX + sizeX/2, posY + sizeY/2, d, 8, color.getSecondaryBorderColor(), color.getSecondaryColor());
+        
+        if (itemOff) display->drawItem(posX + sizeX/2, posY + sizeY/2, itemOff, color.getSecondaryItemColor());
+        else LOGGER_ERROR("itemOff ist nicht gültig!")
     }
 }
 

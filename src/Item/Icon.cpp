@@ -35,10 +35,11 @@ const uint8_t arrow_right [] PROGMEM = {
 };
 
 
-Icon::Icon(const uint16_t w, const uint16_t h, const uint8_t* bitmap): 
+Icon::Icon(const uint16_t w, const uint16_t h, const uint8_t* bitmap, const Color& color):
         w(w),
         h(h),
-        bitmap(bitmap)
+        bitmap(bitmap),
+		color(color)
         {}
 
 Icon* Icon::create(const std::string str) {
@@ -47,6 +48,13 @@ Icon* Icon::create(const std::string str) {
 }
 
 void Icon::draw(uint16_t x, uint16_t y, Display* disp, const Color& color) {
-    disp->drawBitmap(x, y, w, h, bitmap, color);
+    disp->drawBitmap(x-w/2, y-h/2, w, h, bitmap, color);
 };
 
+inline void Icon::drawOn(uint16_t x, uint16_t y, Display* disp) {
+    draw(x, y, disp, color);
+}
+
+inline void Icon::drawOff(uint16_t x, uint16_t y, Display* disp) {
+    draw(x, y, disp, color.getSecondaryColor());
+}
