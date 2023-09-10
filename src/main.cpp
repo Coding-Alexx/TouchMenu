@@ -50,8 +50,8 @@ void setup_TML() {
   // )
 
   CREATE_GRID_SCREEN(TML, 14, 4, 4, COLOR_LIGHT_CYAN,
-    std::make_tuple(new Slider_Arrow(COLOR_LIGHT_BLUE, COLOR_GREEN, COLOR_BLACK, true, callbackSlider), 0, 0, 2, 4),
-    std::make_tuple(new Slider_Arrow(COLOR_LIGHT_BLUE, COLOR_GREEN, COLOR_BLACK, true, callbackSlider), 2, 0, 2, 1),
+    std::make_tuple(new Slider_Arrow("symb:TriangleUp color:yellow", "symb:TriangleDown", (COLOR_LIGHT_BLUE|COLOR_GREEN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_RED), true, callbackSlider), 0, 0, 2, 4),
+    std::make_tuple(new Slider_Arrow("symb:TriangleLeft color:yellow", "symb:TriangleRight color:0,50,25", (COLOR_LIGHT_BLUE|COLOR_GREEN|Color(255, 255, 0)) + (COLOR_LIGHT_BLUE|COLOR_RED), true, callbackSlider), 2, 0, 2, 1),
     std::make_tuple(new RoundButton(  "Hello", "icon:arrow_right",  (COLOR_GREEN|COLOR_GRAY|COLOR_DARK_RED) + (COLOR_RED|COLOR_DARK_CYAN|COLOR_DARK_GREEN),   callbackSwitch), 2, 2, 2, 2)
   )
   TML.goTo(14);
@@ -79,8 +79,17 @@ void setup() {
   LOGGER_BEGIN(9600)
   setup_TML();
 
-  // Item* icon = TML.getDisplay().createItem("icon:arrow_right");
-  // TML.getDisplay().drawItem(20, 30, icon, COLOR_BLACK);
+  // Item* icon1 = TML.getDisplay().createItem("symb:TriangleUp size:1 width:20 height:30");
+  // TML.getDisplay().drawItem(20, 30, icon1);
+
+  // Item* icon2 = TML.getDisplay().createItem("symb:TriangleDown size:0 width:20 height:30 color:gray");
+  // TML.getDisplay().drawItem(70, 30, icon2);
+
+  // Item* icon3 = TML.getDisplay().createItem("symb:TriangleRight width:20 height:30 color:yellow");
+  // TML.getDisplay().drawItem(120, 30, icon3);
+
+  // Item* icon4 = TML.getDisplay().createItem("symb:TriangleLeft size:2 width:20 height:30 color:red, border:0,255,255");
+  // TML.getDisplay().drawItem(170, 30, icon4);
 }
 
 void loop() {

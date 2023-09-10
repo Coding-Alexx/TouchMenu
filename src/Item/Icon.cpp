@@ -42,8 +42,8 @@ Icon::Icon(const uint16_t w, const uint16_t h, const uint8_t* bitmap, const Colo
 		color(color)
         {}
 
-Icon* Icon::create(const std::string str) {
-    if (str == "arrow_right") return new Icon(60, 60, arrow_right);
+Icon* Icon::create(const std::string str, const Color& color) {
+    if (str == "arrow_right") return new Icon(60, 60, arrow_right, color);
     return nullptr;
 }
 
@@ -51,10 +51,14 @@ void Icon::draw(uint16_t x, uint16_t y, Display* disp, const Color& color) {
     disp->drawBitmap(x-w/2, y-h/2, w, h, bitmap, color);
 };
 
-inline void Icon::drawOn(uint16_t x, uint16_t y, Display* disp) {
+void Icon::draw(uint16_t x, uint16_t y, Display* disp) {
     draw(x, y, disp, color);
 }
 
-inline void Icon::drawOff(uint16_t x, uint16_t y, Display* disp) {
+void Icon::drawOn(uint16_t x, uint16_t y, Display* disp) {
+    draw(x, y, disp, color);
+}
+
+void Icon::drawOff(uint16_t x, uint16_t y, Display* disp) {
     draw(x, y, disp, color.getSecondaryColor());
 }

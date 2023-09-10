@@ -142,12 +142,19 @@ public:
     
     // setter
 
-    inline Color setSecondaryColor(const Color& color)       { return Color(getPrimColor(), getItemColor(), getBorderColor(), color); }
-    inline Color setItemColor(const Color& color)            { return Color(getPrimColor(), color, getBorderColor(), secondaryColor); }
-    inline Color setBorderColor(const Color& color)          { return Color(getPrimColor(), getItemColor(), color, secondaryColor); }
-    inline Color setPrimaryColor(const Color& color)         { return Color(color, color, getBorderColor(), secondaryColor); }
-    inline Color setSecondaryItemColor(const Color& color)   { return Color(color, color, getBorderColor(), Color(*secondaryColor, color, secondaryColor->getBorderColor())); }
-    inline Color setSecondaryBorderColor(const Color& color) { return Color(color, color, getBorderColor(), Color(*secondaryColor, color, secondaryColor->getBorderColor())); }
+    inline Color setPrimaryColor(const Color& color)         const { return Color(color, getItemColor(), getBorderColor(), secondaryColor); }
+    inline Color setItemColor(const Color& color)            const { return Color(getPrimColor(), color, getBorderColor(), secondaryColor); }
+    inline Color setBorderColor(const Color& color)          const { return Color(getPrimColor(), getItemColor(), color, secondaryColor); }
+    inline Color setSecondaryColor(const Color& color)       const { return Color(getPrimColor(), getItemColor(), getBorderColor(), color); }
+    inline Color setSecondaryItemColor(const Color& color)   const { return Color(*this, getItemColor(), getBorderColor(), Color(*secondaryColor, secondaryColor->getItemColor(), color)); }
+    inline Color setSecondaryBorderColor(const Color& color) const { return Color(*this, getItemColor(), getBorderColor(), Color(*secondaryColor, color, secondaryColor->getBorderColor())); }
+
+    inline void setPrimaryColor(const Color& color)          { LOGGER(toString()); r_prim = color.r_prim; g_prim = color.g_prim; b_prim = color.b_prim; LOGGER(toString()) }
+    inline void setItemColor(const Color& color)             { r_item = color.r_prim; g_item = color.g_prim; b_item = color.b_prim; }
+    inline void setBorderColor(const Color& color)           { r_border = color.r_prim; g_border = color.g_prim; b_border = color.b_prim; }
+    inline void setSecondaryColor(const Color& color)        { secondaryColor->r_prim = color.r_prim; secondaryColor->g_prim = color.g_prim; secondaryColor->b_prim = color.b_prim; }
+    inline void setSecondaryItemColor(const Color& color)    { secondaryColor->r_item = color.r_prim; secondaryColor->g_item = color.g_prim; secondaryColor->b_item = color.b_prim; }
+    inline void setSecondaryBorderColor(const Color& color)  { secondaryColor->r_border = color.r_prim; secondaryColor->g_border = color.g_prim; secondaryColor->b_border = color.b_prim; }
 
     // toString
     inline String toString() const {
