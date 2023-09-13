@@ -55,15 +55,16 @@ public:
 
     /*-----------------------------------------------------------------------------------------*/
 
-    int16_t getHeight() override;
-    int16_t getWidth() override;
+    uint16_t getHeight() override;
+    uint16_t getWidth() override;
 
     uint8_t getRotation() override;
+    void setRotation(uint8_t rotation) override;
 
     bool getTouch(uint16_t* x, uint16_t* y) override;
 
     TFT_eSPI& getTFTObjekt();
-    void startTouchCalibration();
+    void startTouchCalibration() override;
 
 private:
     uint8_t rotation = 0;

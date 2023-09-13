@@ -1,5 +1,4 @@
 #include "Textbox.h"
-#include "../Config.h"
 
 Textbox::Textbox(char* const value) 
     {}

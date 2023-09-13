@@ -47,12 +47,14 @@ public:
 
     /*-----------------------------------------------------------------------------------------*/
 
-    virtual int16_t getHeight() = 0;
-    virtual int16_t getWidth() = 0;
+    virtual uint16_t getHeight() = 0;
+    virtual uint16_t getWidth() = 0;
 
     virtual uint8_t getRotation() = 0;
+    virtual void setRotation(uint8_t rotation) = 0;
 
     virtual bool getTouch(uint16_t* x, uint16_t* y) = 0;
+    virtual void startTouchCalibration() {};
 
     void drawItem (uint16_t x, uint16_t y, Item* item, const Color& color);
     void drawItem (uint16_t x, uint16_t y, Item* item);

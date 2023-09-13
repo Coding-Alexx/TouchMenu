@@ -37,6 +37,9 @@ void callbackSlider (int16_t) {
 void setup_TML() {
 
   TML.init();
+  TML.getDisplay().setRotation(2);
+  // TML.getDisplay().startTouchCalibration();
+  // return;
 
   GridScreen* g;
   g = new GridScreen(1, 3, COLOR_LIGHT_RED);
@@ -61,7 +64,7 @@ void setup_TML() {
   )
 
   g = new GridScreen(4, 4, COLOR_LIGHT_BLUE);
-  TML.add (11, g, 1);
+  TML.add (11, g);
   (*g) 
     << AddElement{new Slider_Arrow("symb:TriangleUp color:yellow", "symb:TriangleDown", (COLOR_LIGHT_BLUE|COLOR_GREEN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_RED), true, callbackSlider), 0, 0, 2, 4}
     << AddElement{new Slider_Arrow("symb:TriangleLeft color:yellow", "symb:TriangleRight color:0,50,25", (COLOR_LIGHT_BLUE|COLOR_GREEN|Color(255, 255, 0)) + (COLOR_LIGHT_BLUE|COLOR_RED), true, callbackSlider), 2, 0, 2, 1}

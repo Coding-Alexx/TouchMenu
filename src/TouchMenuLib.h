@@ -28,7 +28,7 @@ public:
     ~TouchMenuLib ();
 
     // init menu and display
-    void init();
+    void init(uint8_t rotation = 1);
 
     // füge neues Screen mit der Kennung id hinzu
     void add (const uint8_t id, Screen* screen);
