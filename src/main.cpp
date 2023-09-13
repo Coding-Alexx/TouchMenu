@@ -38,6 +38,11 @@ void setup_TML() {
 
   TML.init();
 
+  GridScreen* g;
+  g = new GridScreen(1, 3, COLOR_LIGHT_RED);
+  TML.addSitebar (1, g, TML.getDisplay().getWidth()/5); // für Doku: diese Zele muss immer vor dem hinzufügen von Elementen stehen! -> sonst gibt es einen abbruch!
+  g->add(new RoundButton("Hello", "World", (COLOR_GREEN|COLOR_GRAY|COLOR_DARK_RED) + (COLOR_RED|COLOR_DARK_CYAN|COLOR_DARK_GREEN), callbackSwitch), 1, 1, 1, 1);
+
   // disp->startTouchCalibration();
 
   //GridScreen* testRoundBottonScreen = TestGridScreenFactory::create(TML, 2, COLOR_LIGHT_CYAN, new RoundButton(  "Ein",  COLOR_YELLOW, "Aus",  COLOR_DARK_GREEN,     COLOR_GRAY,      COLOR_BLACK,   callback));
@@ -49,12 +54,21 @@ void setup_TML() {
   //   std::make_tuple(new Slider_Rect(COLOR_GREEN, COLOR_RED, COLOR_LIGHT_YELLOW, COLOR_BLACK, callbackSlider, sliderValue), 1, 0, 1, 2)
   // )
 
-  CREATE_GRID_SCREEN(TML, 14, 4, 4, COLOR_LIGHT_CYAN,
-    std::make_tuple(new Slider_Arrow("symb:TriangleUp color:yellow", "symb:TriangleDown", (COLOR_LIGHT_BLUE|COLOR_GREEN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_RED), true, callbackSlider), 0, 0, 2, 4),
-    std::make_tuple(new Slider_Arrow("symb:TriangleLeft color:yellow", "symb:TriangleRight color:0,50,25", (COLOR_LIGHT_BLUE|COLOR_GREEN|Color(255, 255, 0)) + (COLOR_LIGHT_BLUE|COLOR_RED), true, callbackSlider), 2, 0, 2, 1),
-    std::make_tuple(new RoundButton(  "Hello", "icon:arrow_right",  (COLOR_GREEN|COLOR_GRAY|COLOR_DARK_RED) + (COLOR_RED|COLOR_DARK_CYAN|COLOR_DARK_GREEN),   callbackSwitch), 2, 2, 2, 2)
+  CREATE_GRID_SCREEN(TML, 14, 4, 4, COLOR_GRAY,
+    // std::make_tuple(new Slider_Arrow("symb:TriangleUp color:yellow", "symb:TriangleDown", (COLOR_LIGHT_BLUE|COLOR_GREEN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_RED), true, callbackSlider), 0, 0, 2, 4),
+    // std::make_tuple(new Slider_Arrow("symb:TriangleLeft color:yellow", "symb:TriangleRight color:0,50,25", (COLOR_LIGHT_BLUE|COLOR_GREEN|Color(255, 255, 0)) + (COLOR_LIGHT_BLUE|COLOR_RED), true, callbackSlider), 2, 0, 2, 1),
+    std::make_tuple(new RoundButton(  "Screensaver", "Bildschirmschoner",  (COLOR_GREEN|COLOR_GRAY|COLOR_DARK_RED) + (COLOR_RED|COLOR_DARK_CYAN|COLOR_DARK_GREEN),   callbackSwitch), 2, 2, 2, 2)
   )
-  TML.goTo(14);
+
+  g = new GridScreen(4, 4, COLOR_LIGHT_BLUE);
+  TML.add (11, g, 1);
+  (*g) 
+    << AddElement{new Slider_Arrow("symb:TriangleUp color:yellow", "symb:TriangleDown", (COLOR_LIGHT_BLUE|COLOR_GREEN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_RED), true, callbackSlider), 0, 0, 2, 4}
+    << AddElement{new Slider_Arrow("symb:TriangleLeft color:yellow", "symb:TriangleRight color:0,50,25", (COLOR_LIGHT_BLUE|COLOR_GREEN|Color(255, 255, 0)) + (COLOR_LIGHT_BLUE|COLOR_RED), true, callbackSlider), 2, 0, 2, 1}
+    << AddElement{new RoundButton("Hello", "icon:arrow_right", (COLOR_GREEN|COLOR_GRAY|COLOR_DARK_RED) + (COLOR_RED|COLOR_DARK_CYAN|COLOR_DARK_GREEN), callbackSwitch), 2, 2, 2, 2};
+
+  TML.goTo(11);
+  TML.setScreensaver(14, 10*1000);
 
   LOGGER("MAIN2")
 

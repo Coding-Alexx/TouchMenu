@@ -27,11 +27,14 @@ public:
     TouchMenuLib (Display* disp);
     ~TouchMenuLib ();
 
-    // inizialisiere das Menü mit der gewünschten ausgabe
+    // init menu and display
     void init();
 
     // füge neues Screen mit der Kennung id hinzu
-    void add (uint8_t id, Screen* screen);
+    void add (const uint8_t id, Screen* screen);
+    void add (const uint8_t id, Screen* screen, const uint8_t sitebarID);
+
+    void addSitebar (const uint8_t id, Screen* sitear, uint16_t size, uint8_t site = 0);
 
     // aktualisiere das Menü
     void loop();
@@ -39,10 +42,10 @@ public:
     void draw();
 
     // gehe ein Screen in der History 1 oder mehrere shritte zurück zurück -> bei back(0) -> gehe zum zuletzt gespeicherten Screen (falls man die History zwischendurch deaktiviert hat)
-    void back(size_t i = 1);
+    void back(const uint8_t i = 1);
 
     // gehe zum Screen mit kennung id, man kann es auch deaktivieren, dass dieser Screen auf dem Stabel der Historys gelegt wird
-    bool goTo(size_t id, bool toHistory = true);
+    bool goTo(const uint8_t id, const bool toHistory = true);
 
     // Inputs:
     void setInputEnter();
@@ -51,19 +54,33 @@ public:
     void setInputUp();
     void setInputDown();
 
+    void setScreensaver(const uint8_t screenID, unsigned long time, bool backOnInput = true);
+    bool enableScreenSaver ();
+    void disableScreenSaver ();
+
     Display& getDisplay();
 
 private:
-    std::map<uint8_t, std::unique_ptr<Screen>> screens; // falls Referenzen nicht funktionieren sollten, kann man z.B. std::reference_wrapper<Screen> nutzen
-    std::stack<size_t> screenHistory;
+
+    // storage screen
+    std::map<uint8_t, std::unique_ptr<Screen>> screens;
+    std::stack<uint8_t> screenHistory;
+
+    // storage sitebar (is also a type of screen)
+    std::map<uint8_t, std::unique_ptr<Screen>> sitebars;
+    std::map<uint8_t, uint8_t> sitebarConnector;
 
     Display* display;
 
     bool isDisplayInit = false;
 
-    void setAutoResolution(Screen* screen);
-
-    uint8_t screenHistoryLevel = 0;
-
     Inputs input = {};
+
+    bool screensaverBackOnInput = false;
+    bool isScreensaverEnable = false;
+    unsigned long screensaverTime = 0;  // time to waiting for screensaver
+    unsigned long screensaverTimer = 0; // time counter
+    uint8_t screensaverID = UINT8_MAX;
+
+    unsigned long inputTimer = 0;
 };

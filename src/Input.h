@@ -14,4 +14,18 @@ struct Inputs {
     bool isTouched = false;
 
     bool update = false;
+
+    void reset() {
+        enter = false;
+        right = false;
+        left = false;
+        up = false;
+        down = false;
+        isTouched = false;
+        update = false;
+    }
+
+    bool hasInput() {
+        return isTouched || enter || right || left || up || down;
+    }
 };

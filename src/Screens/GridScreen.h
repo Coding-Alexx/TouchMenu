@@ -11,6 +11,7 @@
 #pragma once
 
 #define CREATE_GRID_SCREEN(TML, screenID, col, row, color, ...) \
+    /* Check parameters for correctness */ \
     static_assert(std::is_integral<decltype(screenID)>::value && screenID >= 0 && screenID <= UINT8_MAX, "screenID must be of type uint8_t"); \
     static_assert(std::is_integral<decltype(col)>::value && col >= 0 && col <= UINT8_MAX, "col must be of type uint8_t"); \
     static_assert(std::is_integral<decltype(row)>::value && row >= 0 && row <= UINT8_MAX, "row must be of type uint8_t"); \
@@ -31,6 +32,14 @@
         screen##screenID->add(element, arg1, arg2, arg3, arg4); \
     }
 
+struct AddElement {
+    Element* element;
+    const uint16_t posX;
+    const uint16_t posY;
+    const uint16_t sizeX;
+    const uint16_t sizeY;
+};
+
 class GridScreen: public Screen {
 public:
     GridScreen(const uint8_t col, const uint8_t raw, const Color& background);
@@ -40,6 +49,8 @@ public:
 
 
     bool add(Element* element, const uint16_t posX, const uint16_t posY, const uint16_t sizeX, const uint16_t sizeY);
+    bool add(const AddElement& screen);
+    GridScreen& operator<<(const AddElement& screen);
     
     // Entweder mit Template, wo alle T Kind von Element sein müssen (static_assert(std::is_base_of<Element, T>::value, "T must be a derived class of Element"); // statische Überprüfung)
     // Oder mit Macros arbeiten

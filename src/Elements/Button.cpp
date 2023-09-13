@@ -1,5 +1,8 @@
 #include "Button.h"
-#include "../Config.h"
+
+#ifndef BUTTON_ON_TIME
+    #define BUTTON_ON_TIME 400
+#endif
 
 Button::Button(button_func_ptr button_callback, bool* externalValue) : 
     button_callback(button_callback), 

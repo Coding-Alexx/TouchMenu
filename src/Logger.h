@@ -74,8 +74,8 @@ inline void __logger_print_pattern(const char* str, T arg, Args... args) {
 }
 
 #else
-    #define LOGGER(param)
-    #define LOGGER_BEGIN(bound) 
-    #define LOGGER_PATTERN(str, ...)
-    #define LOGGER_BEGIN(bound)
+    #define LOGGER(param) ;
+    #define LOGGER_BEGIN(bound) ;
+    #define LOGGER_ERROR(text) ;
+    #define LOGGER_PATTERN(str, ...) ;
 #endif

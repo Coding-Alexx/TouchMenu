@@ -15,11 +15,16 @@ public:
 
     void setDisplay(Display* const display);
     virtual void setResolution(int16_t height, int16_t width);
-    const int16_t getResolutionHeight();
-    const int16_t getResolutionWidth();
+    virtual void setOffsetPosition(int16_t x, int16_t y);
+    const int16_t getResolutionHeight() const;
+    const int16_t getResolutionWidth() const;
+    const int16_t getOffsetX() const;
+    const int16_t getOffsetY() const;
 
 protected:
     int16_t height = 0;
     int16_t width = 0;
-    Display* display;
+    int16_t offsetX = 0;
+    int16_t offsetY = 0;
+    Display* display = nullptr;
 };
