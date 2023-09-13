@@ -14,19 +14,6 @@ RoundButton::~RoundButton () {
 }
 
 bool RoundButton::checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) {
-
-    
-    // itemOn = display->createItem(itemOnStr);
-    // itemOff = display->createItem(itemOffStr);
-
-    LOGGER_PATTERN("itemOn: _, itemOff: _", itemOn == nullptr, itemOff == nullptr)
-
-    // LOGGER("Zeichne item im Round Button als Test")
-    // if (itemOn) itemOn->draw(sizeX, sizeY, display, COLOR_GREEN);
-    // display->drawItem(50, 60, itemOn, color);
-
-    LOGGER_PATTERN("Freier RAM Platz: _", ESP.getFreeHeap())
-
     // TODO: anpassen
     return sizeX > 50 && sizeY > 50;
 }

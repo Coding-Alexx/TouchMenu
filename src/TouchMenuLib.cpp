@@ -136,23 +136,6 @@ void TouchMenuLib::loop(){
     if (inputTimer < millis()) {
         // set touch coordinates 
         input.isTouched = display->getTouch(&input.touchX, &input.touchY);
-        
-        // calculate Coordinates depending on the rotation 
-        if (display->getRotation() == 0) {
-            uint16_t tmpY = map(input.touchX, 0, display->getWidth(), 0, display->getHeight());
-            uint16_t tmpX = map(input.touchY, 0, display->getHeight(), 0, display->getWidth());
-            input.touchY = tmpY;
-            input.touchX = tmpX;
-        } else if (display->getRotation() == 1) {
-            input.touchY = display->getHeight() - input.touchY;
-        } else if (display->getRotation() == 2) {
-            uint16_t tmpY = map(input.touchX, 0, display->getWidth(), 0, display->getHeight());
-            uint16_t tmpX = map(input.touchY, 0, display->getHeight(), 0, display->getWidth());
-            input.touchY = display->getHeight() - tmpY;
-            input.touchX = display->getWidth() - tmpX;
-        } else if (display->getRotation() == 3) {
-            input.touchX = display->getWidth() - input.touchX;
-        }
 
         if (input.isTouched) display->circle(input.touchX, input.touchY, 4, 0, COLOR_BLACK, COLOR_BLACK);
 

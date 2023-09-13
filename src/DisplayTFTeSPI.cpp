@@ -179,7 +179,27 @@ void DisplayTFTeSPI::setRotation(uint8_t rotation) {
 
 bool DisplayTFTeSPI::getTouch(uint16_t* x, uint16_t* y) {
     if (!x || !y) LOGGER_ERROR("x oder y ist ein Null Pointer")
-    return (tft.getTouch(x, y) != 0);
+    bool isTouched = tft.getTouch(x, y) != 0;
+    
+    // calculate Coordinates depending on the rotation
+    if (!isTouched);
+    else if (getRotation() == 0) {
+        uint16_t tmpY = map(*x, 0, getWidth(), 0, getHeight());
+        uint16_t tmpX = map(*y, 0, getHeight(), 0, getWidth());
+        *y = tmpY;
+        *x = tmpX;
+    } else if (getRotation() == 1) {
+        *y = getHeight() - *y;
+    } else if (getRotation() == 2) {
+        uint16_t tmpY = map(*x, 0, getWidth(), 0, getHeight());
+        uint16_t tmpX = map(*y, 0, getHeight(), 0, getWidth());
+        *y = getHeight() - tmpY;
+        *x = getWidth() - tmpX;
+    } else if (getRotation() == 3) {
+        *x = getWidth() - *x;
+    }
+
+    return isTouched;
 }
 
 TFT_eSPI& DisplayTFTeSPI::getTFTObjekt() {
