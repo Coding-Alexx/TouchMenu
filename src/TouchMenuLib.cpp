@@ -6,20 +6,19 @@
 #endif
 
 TouchMenuLib::TouchMenuLib (Display* disp): 
-    display(disp)
-{
-    disp = nullptr;
-}
+    display(disp) {
+        disp = nullptr;
+    }
 
 TouchMenuLib::~TouchMenuLib (){
     delete display;
 }
 
-
 void TouchMenuLib::init(uint8_t rotation) {
     display->init();
     display->setRotation(rotation);
     isDisplayInit = true;
+    LOGGER("Touch Menu is initialized")
 }
 
 void TouchMenuLib::add (const uint8_t id, Screen* screen) {
@@ -48,6 +47,11 @@ void TouchMenuLib::add (const uint8_t id, Screen* screen, const uint8_t sitebarI
     if (!screen) return;
     LOGGER("Füge neuen Schreen + Sitebar hinzu")
     add (id, screen);
+    if (!setSitebar(sitebarID)) {
+        LOGGER_ERROR_PATTERN("Sitebar id _ doesn't exists", sitebarID)
+        return;
+    }
+    
     Screen* sitebar = sitebars[sitebarID].get();
     
     // calculate the size of the Screen
@@ -83,7 +87,7 @@ void TouchMenuLib::addSitebar (const uint8_t id, Screen* sitebar, uint16_t size,
     LOGGER("berechne größen")
 
     // Sitebar is right
-    if (site == 0 || size > 3) {
+    if (site == 0 || site > 3) {
         sitebar->setResolution(size, display->getHeight());
         sitebar->setOffsetPosition(display->getWidth()-size, 0);
 
@@ -113,6 +117,7 @@ void TouchMenuLib::back(const uint8_t i){
     for(int j = i; j > 0 && screenHistory.size() > 1; j--) {
         screenHistory.pop();
     }
+    enableSitebar(0);
     draw();
 }
 
@@ -122,13 +127,14 @@ bool TouchMenuLib::goTo(const uint8_t id, const bool toHistory){
 
     if (!toHistory) screenHistory.pop();
     screenHistory.push(id);
+    enableSitebar(0);
     draw();
     return true;
 }
 
 void TouchMenuLib::loop(){
-    if (screenHistory.empty()) {
-        LOGGER_ERROR("No Screen found")
+    if (screens.size() == 0) {
+        // LOGGER_ERROR("No Screen found")
         return;
     }
 
@@ -137,7 +143,7 @@ void TouchMenuLib::loop(){
         // set touch coordinates 
         input.isTouched = display->getTouch(&input.touchX, &input.touchY);
 
-        if (input.isTouched) display->circle(input.touchX, input.touchY, 4, 0, COLOR_BLACK, COLOR_BLACK);
+        // if (input.isTouched) display->circle(input.touchX, input.touchY, 4, 0, COLOR_BLACK, COLOR_BLACK);
 
         if (input.isTouched) inputTimer = millis() + TOUCH_INPUT_TIMER;
     }
@@ -163,8 +169,8 @@ void TouchMenuLib::loop(){
     }
 
     screens[screenHistory.top()]->loop(input);
-    if (sitebarConnector.count(screenHistory.top())) 
-        sitebars[sitebarConnector[screenHistory.top()]]->loop(input);
+    if (currentSitebar != UINT8_MAX)
+        sitebars[currentSitebar]->loop(input);
 
     // If an element or screen wants a rebuild of the menu
     if (input.update) {
@@ -181,8 +187,8 @@ void TouchMenuLib::draw() {
     screens[screenHistory.top()]->draw(); // draw current Screen
     
     // if sitebar is available, draw this too
-    if (sitebarConnector.count(screenHistory.top())) 
-        sitebars[sitebarConnector[screenHistory.top()]]->draw();
+    if (currentSitebar != UINT8_MAX)
+        sitebars[currentSitebar]->draw();
 }
 
 void TouchMenuLib::setInputEnter(){
@@ -218,6 +224,38 @@ bool TouchMenuLib::enableScreenSaver () {
     if (screensaverID != UINT8_MAX) isScreensaverEnable = true;
     return isScreensaverEnable;
 }
+
 void TouchMenuLib::disableScreenSaver () {
     isScreensaverEnable = false;
+}
+
+bool TouchMenuLib::setSitebar (const uint8_t sitebarID) {
+    if (deactivateSitebar) return true;
+    if (sitebars.count(sitebarID) != 0)
+        currentSitebar = sitebarID;
+    else {
+        disableSitebar();
+        return false;
+    }
+    return true;
+}
+
+bool TouchMenuLib::enableSitebar (bool) {
+    if (sitebarConnector.count(screenHistory.top()));
+        return setSitebar(sitebarConnector.count(screenHistory.top()));
+    return false;
+}
+
+bool TouchMenuLib::enableSitebar () {
+    deactivateSitebar = false;
+    if (enableSitebar(0)) {
+        draw();
+        return true;
+    }
+    return false;
+}
+
+void TouchMenuLib::disableSitebar (const bool deactivate) {
+    currentSitebar = UINT8_MAX;
+    deactivateSitebar = deactivate;
 }

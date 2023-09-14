@@ -69,4 +69,6 @@ public:
 private:
     uint8_t rotation = 0;
     std::array<uint16_t, 5> calData;
+
+    bool containsInvalidCharacters(const char* input);
 };

@@ -71,67 +71,67 @@ void DisplayTFTeSPI::triangle(const uint16_t pos_x0, const uint16_t pos_y0, cons
     tft.drawLine(pos_x2, pos_y2, pos_x0, pos_y0, colorTo565(border_color));
 }
 
+bool DisplayTFTeSPI::containsInvalidCharacters(const char* input) {
+    while (*input) {
+        char currentChar = *input;
+        // Überprüfe, ob das aktuelle Zeichen kein gültiger Buchstabe ist
+        if (!isdigit(currentChar) && currentChar != '.' && currentChar != '-' && currentChar != ':') {
+                return true;
+        }
+        input++;
+    }
+    return false;
+}
+
 // Automatisches Formatieren des Textes (Automatosche Größe und Zeilenumbrüche)
-void DisplayTFTeSPI::text(const uint16_t pos_x, const uint16_t pos_y, const uint16_t width, const uint16_t height, const char* text, const Color& text_color) {
+void DisplayTFTeSPI::text(const uint16_t posX, const uint16_t posY, const uint16_t width, const uint16_t height, const char* text, const Color& text_color) {
     tft.setTextColor(colorTo565(text_color));
-    tft.setCursor(pos_x, pos_y);
+    
+    const uint8_t num = 22;
+    const uint16_t fontSize[num] = {16, 16, 16, 26, 32, 48, 52, 64, 75, 78, 80, 96, 104, 112, 128, 130, 144, 146, 150, 160, 156, 182};
+    const uint8_t fonts[num]     = {2 , 2 , 2 , 4 , 2 , 6 , 4 , 2 , 8 , 4 , 2 , 6 , 4  , 2  , 2  , 4  , 6  , 4  , 8  , 2  , 4  , 4  };
+    const uint8_t size[num]      = {1 , 1 , 1 , 1 , 2 , 1 , 2 , 4 , 1 , 3 , 5 , 2 , 4  , 7  , 8  , 5  , 3  , 6  , 2  , 10 , 6  , 7  };
+
+    tft.drawRect(posX - width/2, posY - height/2 - 2, width, height, TFT_WHITE);
+    tft.setTextDatum(4);
+
+    if (height < 16) {
+        tft.setTextFont(1);
+        tft.setTextSize(1);
+
+        tft.drawString(text, posX, posY);
+        return;
+    }
+
+    bool isDigit = !containsInvalidCharacters(text);
+    for(uint8_t i = 2; i < num; i++) {
+        tft.setTextSize(size[i]);
+        if ((fontSize[i] > height || tft.textWidth(text, fonts[i]) > width)) {
+            // LOGGER(i);
+            for (; i > 0 && !(isDigit || fonts[i] <= 3); i--);
+            tft.setTextFont(fonts[i]);
+            tft.setTextSize(size[i]);
+            // tft.fontHeight(fonts[i]);
+
+            LOGGER_PATTERN("_: schreibe text '_' (_) in Schriftart _, höhe _, breite _ und multiplikator _ in w:_, h:_", i, text, isDigit? "nur Zahlen" : "mit Buchstaben", fonts[i], fontSize[i], tft.textWidth(text, fonts[i]), size[i], width, height)
+
+            // Zeichne den Text auf dem Display
+            tft.drawString(text, posX, posY);
+            return;
+        }
+    }
+    tft.setTextFont(1);
     tft.setTextSize(1);
-    tft.println(text);
-    return;
-    // // Kopie des Textes erstellen
-    // std::string text_copy = text;
-    
-    // // Schriftgröße ermitteln
-    // uint8_t text_size = 1;
-    // tft.setTextSize(text_size);
-    // int16_t text_width = tft.textWidth(text); // geht nicht (DS3231 Libary hat einen Bug, die den ESP32 abstürtzen lässt): https://github.com/Bodmer/TFT_eSPI/issues/275
-    
-    // // Text in Zeilen aufteilen
-    // int16_t max_text_width = width - 2; // Breite des Rechtecks mit Rand
-    // uint16_t num_lines = 1;
-    // if (text_width > max_text_width) {
-    //     text_size = 2;
-    //     tft.setTextSize(text_size);
-    //     text_width = tft.textWidth(text);
-    //     num_lines = 2;
-    // }
-    
-    // if (text_width > max_text_width) {
-    //     // Versuche, den Text in drei Zeilen aufzuteilen
-    //     text_size = 1;
-    //     tft.setTextSize(text_size);
-    //     int16_t max_line_width = max_text_width / 3;
-    //     // uint16_t text_length = text_copy.length();
-    //     // uint16_t line_break_index = 0;
-    //     int16_t line_width = 0;
-        
-    //     for (uint16_t i = 0; i < text_copy.length(); i++) {
-    //         char current_char = text_copy[i];
-    //         int16_t char_width = tft.textWidth(&current_char, 1);
-            
-    //         if (line_width + char_width > max_line_width) {
-    //             text_copy.insert(i, "\n"); // Zeilenumbruch einfügen
-    //             line_width = 0;
-    //             num_lines++;
-    //         }
-            
-    //         line_width += char_width;
-    //     }
-    // }
-    
-    // // Text zeichnen
-    // tft.setTextColor(colorTo565(text_color));
-    // tft.setCursor(pos_x, pos_y + (height - (text_size * 8 * num_lines)) / 2);
-    // tft.setTextSize(text_size);
-    // tft.println(text_copy.c_str());
+    tft.setTextDatum(4);
+
+    LOGGER_PATTERN("zu klein: schreibe text '_' (_) in Schriftart _, höhe _, breite _ und multiplikator _ in w:_, h:_", text, isDigit? "nur Zahlen" : "mit Buchstaben", fonts[num-1], fontSize[num-1], tft.textWidth(text, fonts[num-1]), size[num-1], width, height)
+
+    // Zeichne den Text auf dem Display
+    tft.drawString(text, posX, posY);
 }
 
 
-void DisplayTFTeSPI::text_center(const uint16_t pos_x, const uint16_t pos_y, const uint8_t text_size, const char* text, const Color& text_color) {
-    uint16_t size = 1;
-    if (text_size > 1 && text_size <= 10) size = text_size;
-    LOGGER(size)
-
+void DisplayTFTeSPI::text_center(const uint16_t pos_x, const uint16_t pos_y, const uint8_t size, const char* text, const Color& text_color) {
     tft.setTextSize(size); // Textgröße festlegen
     tft.setTextDatum(MC_DATUM); // Mittelpunkt als Bezugspunkt für den Text setzen
     //tft.setCursor(pos_x, pos_y); // Textposition festlegen

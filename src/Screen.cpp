@@ -6,12 +6,12 @@ void Screen::setDisplay(Display* const disp) {
     display = disp;
 }
 
-void Screen::setResolution(const int16_t w, const int16_t h) {
+void Screen::setResolution(const uint16_t w, const uint16_t h) {
     height = h;
     width = w;
 }
 
-void Screen::setOffsetPosition(int16_t x, int16_t y) {
+void Screen::setOffsetPosition(uint16_t x, uint16_t y) {
     offsetX = x;
     offsetY = y;
 }

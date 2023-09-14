@@ -16,6 +16,8 @@ public:
     uint16_t getMidX() const { return posX + sizeX/2; }
     uint16_t getMidY() const { return posY + sizeY/2; }
 
+    void setTouch(uint16_t x, uint16_t y) override;
+
 private:
     bool checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) override;
     const Color color;

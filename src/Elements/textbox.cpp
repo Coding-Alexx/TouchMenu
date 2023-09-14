@@ -1,6 +1,8 @@
 #include "Textbox.h"
 
-Textbox::Textbox(char* const value) 
+Textbox::Textbox(char* text, char* const value):
+    text(text),
+    value(value)
     {}
 
 Textbox::~Textbox(){};

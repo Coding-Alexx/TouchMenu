@@ -13,13 +13,14 @@ protected:
     bool value = false;
     const bool* externalValue;
 
+    void setTouch(uint16_t x, uint16_t y) override;
+
 private:
     // TODO: Smartpointer nutzen
     unsigned long timer = 0; // für eine kleine Animation
 
     void loop(Inputs& input) override;
     void loop() override;
-    void setTouch(uint16_t x, uint16_t y) override;
 
 public:
     bool getValue() const { return value; }

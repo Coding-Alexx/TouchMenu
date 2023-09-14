@@ -57,18 +57,25 @@ public:
     void setScreensaver(const uint8_t screenID, unsigned long time, bool backOnInput = true);
     bool enableScreenSaver ();
     void disableScreenSaver ();
+    
+    bool setSitebar (const uint8_t sitebarID);                  // set Sitebar to ID, if sitebar feature is activated
+    bool enableSitebar ();                                      // activate Sitebar Feature, go to default Sitebar for current screen and draw
+    void disableSitebar (const bool deactivateSitebar = false); // disable Sitebar Feature
 
     Display& getDisplay();
 
 private:
+    bool enableSitebar (bool);
 
     // storage screen
     std::map<uint8_t, std::unique_ptr<Screen>> screens;
-    std::stack<uint8_t> screenHistory;
+    std::stack<uint8_t> screenHistory {};
 
     // storage sitebar (is also a type of screen)
     std::map<uint8_t, std::unique_ptr<Screen>> sitebars;
     std::map<uint8_t, uint8_t> sitebarConnector;
+    uint8_t currentSitebar = UINT8_MAX;
+    bool deactivateSitebar = false;
 
     Display* display;
 

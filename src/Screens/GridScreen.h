@@ -32,6 +32,24 @@
         screen##screenID->add(element, arg1, arg2, arg3, arg4); \
     }
 
+#define CREATE_GRID_SCREEN_SITEBAR(TML, sitebarID, size, side, col, row, color, ...) \
+    /* Check parameters for correctness */ \
+    static_assert(std::is_integral<decltype(sitebarID)>::value && sitebarID >= 0 && sitebarID <= UINT8_MAX, "sitebarID must be of type uint8_t"); \
+    static_assert(std::is_integral<decltype(col)>::value && col >= 0 && col <= UINT8_MAX, "col must be of type uint8_t"); \
+    static_assert(std::is_integral<decltype(row)>::value && row >= 0 && row <= UINT8_MAX, "row must be of type uint8_t"); \
+    static_assert(std::is_integral<decltype(side)>::value && side >= 0 && side <= UINT8_MAX, "side must be of type uint8_t"); \
+    static_assert(std::is_integral<decltype(size)>::value && size >= 0 && size <= UINT16_MAX, "size must be of type uint16_t"); \
+    static_assert(std::is_same<decltype(color), Color>::value, "color must be of type Color"); \
+    static_assert(std::is_same<decltype(TML), TouchMenuLib>::value, "TML must be of type TouchMenuLib"); \
+    /* TODO: überprüfen, ob screenID bereits genutzt wurde*/ \
+    \
+    GridScreen* screen##sitebarID = new GridScreen(col, row, color); \
+    TML.addSitebar(sitebarID, screen##sitebarID, size, side); \
+    std::vector<AddElement> elements##sitebarID {__VA_ARGS__}; \
+    for (const auto& element : elements##sitebarID) { \
+        screen##sitebarID->add(element); \
+    }
+
 struct AddElement {
     Element* element;
     const uint16_t posX;

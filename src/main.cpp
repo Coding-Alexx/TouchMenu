@@ -36,15 +36,14 @@ void callbackSlider (int16_t) {
 
 void setup_TML() {
 
-  TML.init();
-  TML.getDisplay().setRotation(2);
+  TML.init(2);
   // TML.getDisplay().startTouchCalibration();
   // return;
 
   GridScreen* g;
   g = new GridScreen(1, 3, COLOR_LIGHT_RED);
   TML.addSitebar (1, g, TML.getDisplay().getWidth()/5); // für Doku: diese Zele muss immer vor dem hinzufügen von Elementen stehen! -> sonst gibt es einen abbruch!
-  g->add(new RoundButton("Hello", "World", (COLOR_GREEN|COLOR_GRAY|COLOR_DARK_RED) + (COLOR_RED|COLOR_DARK_CYAN|COLOR_DARK_GREEN), callbackSwitch), 1, 1, 1, 1);
+  g->add(new RoundButton("Hello", "World", (COLOR_GREEN|COLOR_GRAY|COLOR_DARK_RED) + (COLOR_RED|COLOR_DARK_CYAN|COLOR_DARK_GREEN), callbackSwitch), 0, 1, 1, 1);
 
   // disp->startTouchCalibration();
 
@@ -63,15 +62,15 @@ void setup_TML() {
     std::make_tuple(new RoundButton(  "Screensaver", "Bildschirmschoner",  (COLOR_GREEN|COLOR_GRAY|COLOR_DARK_RED) + (COLOR_RED|COLOR_DARK_CYAN|COLOR_DARK_GREEN),   callbackSwitch), 2, 2, 2, 2)
   )
 
-  g = new GridScreen(4, 4, COLOR_LIGHT_BLUE);
-  TML.add (11, g);
+  g = new GridScreen(4, 3, COLOR_LIGHT_BLUE);
+  TML.add (11, g, 1);
   (*g) 
-    << AddElement{new Slider_Arrow("symb:TriangleUp color:yellow", "symb:TriangleDown", (COLOR_LIGHT_BLUE|COLOR_GREEN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_RED), true, callbackSlider), 0, 0, 2, 4}
-    << AddElement{new Slider_Arrow("symb:TriangleLeft color:yellow", "symb:TriangleRight color:0,50,25", (COLOR_LIGHT_BLUE|COLOR_GREEN|Color(255, 255, 0)) + (COLOR_LIGHT_BLUE|COLOR_RED), true, callbackSlider), 2, 0, 2, 1}
-    << AddElement{new RoundButton("Hello", "icon:arrow_right", (COLOR_GREEN|COLOR_GRAY|COLOR_DARK_RED) + (COLOR_RED|COLOR_DARK_CYAN|COLOR_DARK_GREEN), callbackSwitch), 2, 2, 2, 2};
+    << AddElement{new Slider_Arrow("symb:TriangleUp color:yellow", "symb:TriangleDown", (COLOR_LIGHT_BLUE|COLOR_GREEN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_RED), true, callbackSlider), 0, 0, 2, 3}
+    // << AddElement{new Slider_Arrow("symb:TriangleLeft color:yellow", "symb:TriangleRight color:0,50,25", (COLOR_LIGHT_BLUE|COLOR_GREEN|Color(255, 255, 0)) + (COLOR_LIGHT_BLUE|COLOR_RED), true, callbackSlider), 2, 0, 2, 1}
+    << AddElement{new RoundButton("Hello", "icon:arrow_right", (COLOR_GREEN|COLOR_GRAY|COLOR_DARK_RED) + (COLOR_RED|COLOR_DARK_CYAN|COLOR_DARK_GREEN), callbackSwitch), 2, 1, 2, 2};
 
   TML.goTo(11);
-  TML.setScreensaver(14, 10*1000);
+  TML.setScreensaver(14, 50*1000);
 
   LOGGER("MAIN2")
 
@@ -88,13 +87,25 @@ void setup_TML() {
   //TML.goTo(30);
 
   TML.draw();
+
+  TML.getDisplay().text(150, 100, 100, 50, "Hello!", COLOR_BROWN);
+  TML.getDisplay().text(150, 200, 250, 150, "World", COLOR_BROWN);
+  TML.getDisplay().text(150, 260, 100, 20, "dud", COLOR_BROWN);
+  TML.getDisplay().text(150, 50, 250, 100, "-12", COLOR_BROWN);
 }
 
 #ifndef PIO_UNIT_TESTING
 
 void setup() {
   LOGGER_BEGIN(9600)
-  setup_TML();
+  // setup_TML();
+
+    TML.init(2);
+
+    TML.getDisplay().text(150, 100, 100, 50, "Hello!", COLOR_BROWN);
+    TML.getDisplay().text(120, 200, 200, 150, "World", COLOR_BROWN);
+    TML.getDisplay().text(150, 260, 100, 20, "dud", COLOR_BROWN);
+    TML.getDisplay().text(150, 50, 250, 100, "-12", COLOR_BROWN);
 
   // Item* icon1 = TML.getDisplay().createItem("symb:TriangleUp size:1 width:20 height:30");
   // TML.getDisplay().drawItem(20, 30, icon1);

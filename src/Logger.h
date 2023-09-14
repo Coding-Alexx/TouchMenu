@@ -1,9 +1,15 @@
 #include <Arduino.h>
 
+#define LOGGER(param) ;
+#define LOGGER_BEGIN(bound) ;
+#define LOGGER_ERROR(text) ;
+#define LOGGER_ERROR_PATTERN(str, ...) ;
+#define LOGGER_ERROR(text) ;
+#define LOGGER_PATTERN(str, ...) ;
+#define DEBUG_LEVEL DEBUG
 #ifdef DEBUG
 
-    #define LOGGER(param) LOGGER_VALUE(param)
-
+    #undef LOGGER_BEGIN
     #define LOGGER_BEGIN(bound) Serial.begin(bound);
     #define LOGGER_VALUE(param) do { \
         __logger_print_head(__LINE__, __FILE__, __func__); \
@@ -12,18 +18,40 @@
         Serial.println(param); \
     } while (0);
 
-    #define LOGGER_PATTERN(str, ...) do { \
+    #ifndef DEBUG_LEVEL
+        #define DEBUG_LEVEL ERROR
+    #endif
+
+    #if DEBUG_LEVEL == ERROR || DEBUG_LEVEL == DEBUG
+    #undef LOGGER_ERROR
+    #undef LOGGER_ERROR_PATTERN
+
+    #define LOGGER_ERROR(text) \
+    do { \
+        Serial.print("Error: "); \
+        LOGGER_VALUE(text); \
+    } while(0);
+
+    #define LOGGER_ERROR_PATTERN(str, ...) do { \
+        Serial.print("Error: "); \
         __logger_print_head(__LINE__, __FILE__, __func__); \
         __logger_print_pattern(str, __VA_ARGS__); \
         Serial.println();\
     } while(0);
     
-    #define LOGGER_ERROR(text) \
-    do { \
-        Serial.print("\x1b[31m"); \
-        LOGGER_VALUE(text); \
-        Serial.print("\x1b[0m"); \
+    #endif
+    #if DEBUG_LEVEL == DEBUG
+    #undef LOGGER
+    #undef LOGGER_PATTERN
+    #define LOGGER(param) LOGGER_VALUE(param)
+
+    #define LOGGER_PATTERN(str, ...) do { \
+        __logger_print_head(__LINE__, __FILE__, __func__); \
+        __logger_print_pattern(str, __VA_ARGS__); \
+        Serial.println();\
     } while(0);
+
+    #endif
 
     inline void __logger_print_head(uint16_t line, const char* file, const char* func) {
             const char* fileName = file;
@@ -50,12 +78,7 @@
 
 // Basisfall der rekursiven Variadic Template Function
 inline void __logger_print_pattern(const char* str) {
-//   while (*str != '\0') {
-//     if (*str != '_')
-//       Serial.print(*str);
-//     str++;
-//   }
-  Serial.print(str);
+    Serial.print(str);
 }
 
 // Rekursiver Fall der Variadic Template Function
@@ -72,10 +95,4 @@ inline void __logger_print_pattern(const char* str, T arg, Args... args) {
     str++;
   }
 }
-
-#else
-    #define LOGGER(param) ;
-    #define LOGGER_BEGIN(bound) ;
-    #define LOGGER_ERROR(text) ;
-    #define LOGGER_PATTERN(str, ...) ;
 #endif

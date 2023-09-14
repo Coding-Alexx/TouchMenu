@@ -6,6 +6,7 @@
 class Textbox: public Element {
 protected:
     char* text;
+    char* value = nullptr;
 
 private:
     void loop(Inputs& input) override;
@@ -13,7 +14,7 @@ private:
     void setTouch(uint16_t x, uint16_t y) override;
 
 public:
-    Textbox(char* const value = nullptr);
+    Textbox(char* text, char* const value = nullptr);
     virtual ~Textbox();
     bool select() override;
 };

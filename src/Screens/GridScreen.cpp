@@ -25,12 +25,12 @@ bool GridScreen::add(Element* element, const uint16_t posX, const uint16_t posY,
 
     if (col == 0 || row == 0) {
         // Fehlerbehandlung für ungültige Werte von col und row
-        LOGGER_ERROR("Zeilen oder Spalten sind 0!!!")
+        LOGGER_ERROR("col or wor are NULL")
         return false;
     }
 
-    if (posX > col || posY > row) {
-        LOGGER_ERROR("Element außerhalb des Rasters")
+    if (posX + sizeX > col || posY + sizeY > row) {
+        LOGGER_ERROR("Element are outsite of the Screen")
         return false;
     }
 
@@ -58,7 +58,6 @@ bool GridScreen::add(Element* element, const uint16_t posX, const uint16_t posY,
 
     // abort, if the size does not fit the element 
     if (!element->setSize(w, h, display->getRotation())) {
-        LOGGER("Element hat falsche größe und kann daher nicht hinzugefügt werden")
         LOGGER_ERROR("Element hat falsche größe und kann daher nicht hinzugefügt werden")
         return false;
     }
@@ -93,16 +92,24 @@ GridScreen& GridScreen::operator<<(const AddElement& element) {
 void GridScreen::loop(Inputs& input) {
     if (input.isTouched) {
 
-        uint16_t x = input.touchX;
-        uint16_t y = input.touchY;
+        const uint16_t x = input.touchX;
+        const uint16_t y = input.touchY;
 
-        uint8_t grid_x = x / (width / row);
-        uint8_t grid_y = y / (height / col);
+        if (x < offsetX || y < offsetY || x > offsetX + width || y > offsetY + height) {
+            LOGGER_PATTERN("Touchpunkt (_/_) liegt außerhalb dieses Gridscreens", x, y)
+            return;
+        }
 
-        if (grid_x >= row || grid_y >= col) LOGGER("rx oder ry sind zu groß")
+        const uint8_t grid_x = (x-offsetX) / (width / col);
+        const uint8_t grid_y = (y-offsetY) / (height / row);
+
+        if (grid_x >= col || grid_y >= row) {
+            LOGGER_PATTERN("Feld (_/_) liegt außerhalb dieses Gridscreens", grid_x, grid_y)
+            return;
+        }
         
         LOGGER("")
-        LOGGER_PATTERN("Aktualisiere Element im Feld _/_ (Berührt bei [_,_])", grid_x, grid_y, x, y)
+        LOGGER_PATTERN("Aktualisiere Element im Feld _/_ (Berührt bei [_,_] mit höhe _/_ und spalten: _/_)", grid_x, grid_y, (x-offsetX), (y-offsetY), width, height, col, row)
 
         uint8_t e = matrix[col*grid_y + grid_x];
         if (e != UINT8_MAX) elements[e]->setTouch(x, y);
@@ -125,14 +132,14 @@ void GridScreen::draw() {
     
     // Vertikale Linien zeichnen -> Spalten
     for (int i = 1; i <= col; i++) {
-        int x = i * columnSpacing;
-        display->line(x, offsetY, x, height, !color_background);
+        int x = offsetX + i * columnSpacing;
+        display->line(x, offsetY, x, offsetY + height, !color_background);
     }
 
     // Horizontale Linien zeichnen -> Zeilen
     for (int j = 1; j <= row; j++) {
-        int y = j * rowSpacing;
-        display->line(offsetX, y, width, y, !color_background);
+        int y = offsetY + j * rowSpacing;
+        display->line(offsetX, y, offsetX + width, y, !color_background);
     }
     #endif
 

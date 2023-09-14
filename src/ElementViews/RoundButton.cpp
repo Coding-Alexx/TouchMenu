@@ -15,7 +15,17 @@ RoundButton::~RoundButton () {
 
 bool RoundButton::checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) {
     // TODO: anpassen
-    return sizeX > 50 && sizeY > 50;
+    return sizeX > 30 && sizeY > 30;
+}
+
+void RoundButton::setTouch(uint16_t x, uint16_t y) {
+    uint16_t d = std::min(sizeX, sizeY);
+    const uint16_t xr = posX + sizeX/2 - d/2;
+    const uint16_t yr = posY + sizeY/2 - d/2;
+    const uint16_t xl = posX + sizeX/2 + d/2;
+    const uint16_t yl = posY + sizeY/2 + d/2;
+    if (x > xr && x < xl && y > yr && y < yl) Button::setTouch(x, y);
+    else LOGGER_PATTERN("Touch punkt bei Runden Button liegt außerhalb: _<_<_, _<_<_", xr, x, xl, yr, y, yl)
 }
 
 void RoundButton::draw() {
