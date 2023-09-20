@@ -14,6 +14,7 @@ TouchMenuLib::~TouchMenuLib (){
     delete display;
 }
 
+// init menu and display
 void TouchMenuLib::init(uint8_t rotation) {
     display->init();
     display->setRotation(rotation);
@@ -45,7 +46,7 @@ void TouchMenuLib::add (const uint8_t id, Screen* screen) {
 
 void TouchMenuLib::add (const uint8_t id, Screen* screen, const uint8_t sitebarID) {
     if (!screen) return;
-    LOGGER("Füge neuen Schreen + Sitebar hinzu")
+    // LOGGER("Füge neuen Schreen + Sitebar hinzu")
     add (id, screen);
     if (!setSitebar(sitebarID)) {
         LOGGER_ERROR_PATTERN("Sitebar id _ doesn't exists", sitebarID)
@@ -60,18 +61,16 @@ void TouchMenuLib::add (const uint8_t id, Screen* screen, const uint8_t sitebarI
     uint16_t x = (sitebar->getOffsetX() == 0 && w != display->getWidth()) ? sitebar->getResolutionWidth() : 0;
     uint16_t y = (sitebar->getOffsetY() == 0 && h != display->getHeight()) ? sitebar->getResolutionHeight() : 0;
 
-    LOGGER_PATTERN("Berechnete größen: x:_, y:_, w:_, h:_", x, y, w, h)
+    // LOGGER_PATTERN("Berechnete größen: x:_, y:_, w:_, h:_", x, y, w, h)
     
     screens[id].get()->setResolution(w, h);
     screens[id].get()->setOffsetPosition(x, y);
 
     sitebarConnector[id] = sitebarID;
-
-    LOGGER("ADD ENDE")
 }
 
 void TouchMenuLib::addSitebar (const uint8_t id, Screen* sitebar, uint16_t size, uint8_t site) {
-    LOGGER("füge neue Sitebar hinzu")
+    // LOGGER("füge neue Sitebar hinzu")
     if (!isDisplayInit) init();
 
     if (!sitebar) {
@@ -84,29 +83,27 @@ void TouchMenuLib::addSitebar (const uint8_t id, Screen* sitebar, uint16_t size,
     std::unique_ptr<Screen> uptr (sitebar);
     sitebars[id] = std::move(uptr);
 
-    LOGGER("berechne größen")
-
-    // Sitebar is right
-    if (site == 0 || site > 3) {
-        sitebar->setResolution(size, display->getHeight());
-        sitebar->setOffsetPosition(display->getWidth()-size, 0);
-
-        LOGGER("Sitebar is right")
-
-    // Sitebar is left
-    } else if (site == 1) {
-        sitebar->setResolution(size, display->getHeight());
-        sitebar->setOffsetPosition(0, 0);
+    // LOGGER("berechne größen")
 
     // Sitebar is up
-    } else if (site == 2) {
+    if (site == 0  || site > 3) {
         sitebar->setResolution(display->getWidth(), size);
         sitebar->setOffsetPosition(0, 0);
 
+    // Sitebar is right
+    } else if (site == 1) {
+        sitebar->setResolution(size, display->getHeight());
+        sitebar->setOffsetPosition(display->getWidth()-size, 0);
+
     // Sitebar is down
-    } else if (site == 3) {
+    } else if (site == 2) {
         sitebar->setResolution(size, display->getHeight());
         sitebar->setOffsetPosition(0, display->getHeight()-size);
+
+    // Sitebar is left
+    } else if (site == 3) {
+        sitebar->setResolution(size, display->getHeight());
+        sitebar->setOffsetPosition(0, 0);
     }
 }
 
@@ -133,19 +130,25 @@ bool TouchMenuLib::goTo(const uint8_t id, const bool toHistory){
 }
 
 void TouchMenuLib::loop(){
+
+    if (input.update) {
+        LOGGER("zeichne Screen und Sitebar")
+        draw();
+    }
+
     if (screens.size() == 0) {
         // LOGGER_ERROR("No Screen found")
         return;
     }
 
+    // set touch coordinates 
+    input.isTouched = display->getTouch(&input.touchX, &input.touchY);
+
     // touch input counter
-    if (inputTimer < millis()) {
-        // set touch coordinates 
-        input.isTouched = display->getTouch(&input.touchX, &input.touchY);
-
+    if (input.isTouched && inputTimer < millis()) {
+        input.updateTouchPoint = true;
         // if (input.isTouched) display->circle(input.touchX, input.touchY, 4, 0, COLOR_BLACK, COLOR_BLACK);
-
-        if (input.isTouched) inputTimer = millis() + TOUCH_INPUT_TIMER;
+        inputTimer = millis() + TOUCH_INPUT_TIMER;
     }
 
     // reset Screensaver time on input
@@ -168,14 +171,23 @@ void TouchMenuLib::loop(){
         return;
     }
 
+    // Update main Screen
     screens[screenHistory.top()]->loop(input);
-    if (currentSitebar != UINT8_MAX)
-        sitebars[currentSitebar]->loop(input);
+    if (input.back > 0) back(input.back);
+    else if (input.update) {
+        LOGGER("Zeichne Screen neu")
+        screens[screenHistory.top()]->draw();
+        input.update = false;
+    }
 
-    // If an element or screen wants a rebuild of the menu
-    if (input.update) {
-        draw(); 
-        LOGGER("Update Menu")
+    // Update Sitebar
+    if (currentSitebar != UINT8_MAX) {
+        sitebars[currentSitebar]->loop(input);
+        if (input.back > 0) back(input.back);
+        else if (input.update) {
+            LOGGER("Zeichne Sitebar neu")
+            sitebars[currentSitebar]->draw();
+        }
     }
 
     input.reset();
@@ -189,6 +201,8 @@ void TouchMenuLib::draw() {
     // if sitebar is available, draw this too
     if (currentSitebar != UINT8_MAX)
         sitebars[currentSitebar]->draw();
+
+    input.update = false;
 }
 
 void TouchMenuLib::setInputEnter(){
@@ -258,4 +272,8 @@ bool TouchMenuLib::enableSitebar () {
 void TouchMenuLib::disableSitebar (const bool deactivate) {
     currentSitebar = UINT8_MAX;
     deactivateSitebar = deactivate;
+}
+
+uint8_t TouchMenuLib::getScreenID() {
+    return screenHistory.top();
 }

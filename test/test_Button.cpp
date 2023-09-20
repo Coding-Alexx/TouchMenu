@@ -10,7 +10,7 @@ TestButton::TestButton(switch_func_ptr switch_callback, bool* const value) : But
 
 void TestButton::draw() {}
 void TestButton::loop(Inputs& input) {}
-void TestButton::setTouch(uint16_t x, uint16_t y) {}
+void TestButton::setTouch(Inputs& input) {}
 bool TestButton::checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) { return true; }
 
 TestButton* button1;

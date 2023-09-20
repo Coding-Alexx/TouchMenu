@@ -37,7 +37,7 @@ public:
         drawItems();
     }
 
-    inline void setTouch(uint16_t x, uint16_t y) override {
+    inline void setTouch(Inputs& input) override {
 
         uint16_t rect1_x1, rect1_y1, rect1_x2, rect1_y2;
         uint16_t rect2_x1, rect2_y1, rect2_x2, rect2_y2;
@@ -65,7 +65,7 @@ public:
             rect2_y2 = rect1_y2;
         }
         
-        if (x >= rect1_x1 && x <= rect1_x2 && y >= rect1_y1 && y <= rect1_y2) {
+        if (input.touchX >= rect1_x1 && input.touchX <= rect1_x2 && input.touchY >= rect1_y1 && input.touchY <= rect1_y2) {
             LOGGER("Dreieck 1 Berührt");
             if (value > 0) {
                 value --;
@@ -73,7 +73,7 @@ public:
             }
         }
 
-        if (x >= rect2_x1 && x <= rect2_x2 && y >= rect2_y1 && y <= rect2_y2) {
+        if (input.touchX >= rect2_x1 && input.touchX <= rect2_x2 && input.touchY >= rect2_y1 && input.touchY <= rect2_y2) {
             LOGGER("Dreieck 2 Berührt");
             if (value < UINT16_MAX) {
                 value ++;
@@ -150,8 +150,8 @@ private:
         else item2->draw(x2, y2, display);
     }
 
-    inline void loop () override {
-        NumberInput::loop();
+    inline void loop (Inputs& input) override {
+        NumberInput::loop(input);
         // LOGGER_PATTERN("LOOP - _ < _", timerTriang2, millis() + time)
 
         if (!activateAnimation) return;

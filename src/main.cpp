@@ -1,11 +1,8 @@
-#include <Arduino.h>
-#include <algorithm>
+#include "../examples/Calculator/Calculator.ino"
 
 /*
-  Simple "Hello World" for ILI9341 LCD
-
-  https://wokwi.com/arduino/projects/308024602434470466
-*/
+#include <Arduino.h>
+#include <algorithm>
 
 #include "TouchMenuLib.h"
 #include "Screens/TestGridScreen.h"
@@ -125,3 +122,5 @@ void loop() {
 }
 
 #endif
+
+*/

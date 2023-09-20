@@ -26,7 +26,7 @@ Color Display::parseColor(const std::string& str, const Color& color) {
         rgb[arrayPos++] = std::atoi(token.c_str());
         if (arrayPos > 3) break;
     }
-    LOGGER_PATTERN("_ wird zu r:_, g:_, b:_", str.c_str(), rgb[0], rgb[1], rgb[2])
+    // LOGGER_PATTERN("_ wird zu r:_, g:_, b:_", str.c_str(), rgb[0], rgb[1], rgb[2])
     if (arrayPos != 0) return Color(rgb[0], rgb[1], rgb[2]);
 
     // else return default color
@@ -85,6 +85,8 @@ Item* Display::createItem(const std::string str, const Color& defaultColor) {
     Color color = Color(defaultColor);
     std::istringstream iss(str);
     std::string word;
+    
+    if (str == "") return new Text("", size);
 
     while (iss >> word) {
         size_t colonPos = word.find(':');
@@ -92,7 +94,7 @@ Item* Display::createItem(const std::string str, const Color& defaultColor) {
             std::string key = word.substr(0, colonPos);
             std::string value = word.substr(colonPos + 1);
 
-            LOGGER_PATTERN("String _ hat im moment key=_, value=_", str.c_str(), key.c_str(), value.c_str())
+            // LOGGER_PATTERN("String _ hat im moment key=_, value=_", str.c_str(), key.c_str(), value.c_str())
 
             if (type == "" && (key == "icon" || key == "file" || key == "symb" || key == "text")) {
                 type = key;
@@ -103,10 +105,10 @@ Item* Display::createItem(const std::string str, const Color& defaultColor) {
 
             else if (key == "color") {
                 color.setPrimaryColor(parseColor(value, color));
-                LOGGER_PATTERN("edit color to _", color.toString())
+                // LOGGER_PATTERN("edit color to _", color.toString())
             } else if (key == "border") {
                 color.setBorderColor(parseColor(value, color.getBorderColor()));
-                LOGGER_PATTERN("edit border color to _", color.getBorderColor().toString())
+                // LOGGER_PATTERN("edit border color to _", color.getBorderColor().toString())
             } else if (key == "size") {
                 size = stringToNumber(value, size );
             } else if (key == "height") {
@@ -123,7 +125,7 @@ Item* Display::createItem(const std::string str, const Color& defaultColor) {
         }
     }
 
-    LOGGER_PATTERN("String _ hat type _ mit dem namen '_' und: size=_, color=_, borderColor=_, width=_, height=_", str.c_str(), type.c_str(), name.c_str(), size, color.toString(), color.getBorderColor().toString(), width, height)
+    // LOGGER_PATTERN("String _ hat type _ mit dem namen '_' und: size=_, color=_, borderColor=_, width=_, height=_", str.c_str(), type.c_str(), name.c_str(), size, color.toString(), color.getBorderColor().toString(), width, height)
 
     if (name == "") return new Text("No Name", size, COLOR_RED);
     else if (type == "") return new Text("No type", size, COLOR_RED);

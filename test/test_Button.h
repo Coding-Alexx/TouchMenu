@@ -11,7 +11,7 @@ public:
     
     void draw() override;
     void loop(Inputs& input) override;
-    void setTouch(uint16_t x, uint16_t y) override;
+    void setTouch(Inputs& input) override;
     bool checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) override;
 };
 

@@ -12,8 +12,10 @@ struct Inputs {
     uint16_t touchX = 0;
     uint16_t touchY = 0;
     bool isTouched = false;
+    bool updateTouchPoint = false;
 
-    bool update = false;
+    bool update = true;
+    uint8_t back = 0;
 
     void reset() {
         enter = false;
@@ -23,9 +25,11 @@ struct Inputs {
         down = false;
         isTouched = false;
         update = false;
+        back = 0;
+        updateTouchPoint = false;
     }
 
     bool hasInput() {
-        return isTouched || enter || right || left || up || down;
+        return (updateTouchPoint && isTouched) || enter || right || left || up || down;
     }
 };

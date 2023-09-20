@@ -6,8 +6,7 @@
 #define LOGGER_ERROR_PATTERN(str, ...) ;
 #define LOGGER_ERROR(text) ;
 #define LOGGER_PATTERN(str, ...) ;
-#define DEBUG_LEVEL DEBUG
-#ifdef DEBUG
+#ifdef TML_DEBUG
 
     #undef LOGGER_BEGIN
     #define LOGGER_BEGIN(bound) Serial.begin(bound);
@@ -18,11 +17,11 @@
         Serial.println(param); \
     } while (0);
 
-    #ifndef DEBUG_LEVEL
-        #define DEBUG_LEVEL ERROR
+    #ifndef TML_DEBUG_LEVEL
+        #define TML_DEBUG_LEVEL ERROR
     #endif
 
-    #if DEBUG_LEVEL == ERROR || DEBUG_LEVEL == DEBUG
+    #if TML_DEBUG_LEVEL == ERROR || TML_DEBUG_LEVEL == INFO
     #undef LOGGER_ERROR
     #undef LOGGER_ERROR_PATTERN
 
@@ -40,7 +39,7 @@
     } while(0);
     
     #endif
-    #if DEBUG_LEVEL == DEBUG
+    #if TML_DEBUG_LEVEL == INFO
     #undef LOGGER
     #undef LOGGER_PATTERN
     #define LOGGER(param) LOGGER_VALUE(param)

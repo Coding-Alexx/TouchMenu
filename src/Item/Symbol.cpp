@@ -22,7 +22,6 @@ static void drawTriangleLeft(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uin
 }
 
 static void drawRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t borderSize, Display* display, const Color& color) {
-    LOGGER("Zeichne Rechteck")
     display->rect(x - w/2, y - h/2, w, h, borderSize, 0, color.getBorderColor(), color);
 }
 

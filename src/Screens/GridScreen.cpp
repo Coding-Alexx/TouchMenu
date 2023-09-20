@@ -35,7 +35,7 @@ bool GridScreen::add(Element* element, const uint16_t posX, const uint16_t posY,
     }
 
     // Check for overlap with other elements 
-    LOGGER("Prüfe ob überlappunen mit anderen Elementen auftreten")
+    // LOGGER("Prüfe ob überlappunen mit anderen Elementen auftreten")
     for (int x = posX; x < posX + sizeX; x++) {
         for (int y = posY; y < posY + sizeY; y++) {
             // If any of the cells are already occupied, we have an overlap
@@ -54,7 +54,7 @@ bool GridScreen::add(Element* element, const uint16_t posX, const uint16_t posY,
     uint16_t y = rowSpacing * posY + offsetY;
     uint16_t w = columnSpacing * sizeX;
     uint16_t h = rowSpacing * sizeY;
-    LOGGER_PATTERN("Berechnete größen: x:_, y:_, w:_, h:_, display: _", x, y, w, h, display != nullptr)
+    // LOGGER_PATTERN("Berechnete größen: x:_, y:_, w:_, h:_, display: _", x, y, w, h, display != nullptr)
 
     // abort, if the size does not fit the element 
     if (!element->setSize(w, h, display->getRotation())) {
@@ -64,14 +64,14 @@ bool GridScreen::add(Element* element, const uint16_t posX, const uint16_t posY,
     element->setPosition(x, y);
     element->setDisplay(display);
 
-    LOGGER_PATTERN("Füge neues Element an Stelle x=_, y=_ mit sizeX=_, sizeY=_ hinzu", posX, posY, sizeX, sizeY)
+    // LOGGER_PATTERN("Füge neues Element an Stelle x=_, y=_ mit sizeX=_, sizeY=_ hinzu", posX, posY, sizeX, sizeY)
 
     // save the element in elements and depending on the enlarge in matrix
     std::unique_ptr<Element> uptr (element);
     elements.push_back(std::move(uptr));
     for (int x = posX; x < posX+sizeX; x++) {
         for (int y = posY; y < posY+sizeY; y++) {
-            LOGGER(elements.size()-1)
+            // LOGGER(elements.size()-1)
             matrix[y*col + x] = elements.size() - 1;
         }
     }
@@ -90,13 +90,13 @@ GridScreen& GridScreen::operator<<(const AddElement& element) {
 }
 
 void GridScreen::loop(Inputs& input) {
-    if (input.isTouched) {
+    if (input.updateTouchPoint && input.isTouched) {
 
         const uint16_t x = input.touchX;
         const uint16_t y = input.touchY;
 
         if (x < offsetX || y < offsetY || x > offsetX + width || y > offsetY + height) {
-            LOGGER_PATTERN("Touchpunkt (_/_) liegt außerhalb dieses Gridscreens", x, y)
+            // LOGGER_PATTERN("Touchpunkt (_/_) liegt außerhalb dieses Gridscreens", x, y)
             return;
         }
 
@@ -104,27 +104,27 @@ void GridScreen::loop(Inputs& input) {
         const uint8_t grid_y = (y-offsetY) / (height / row);
 
         if (grid_x >= col || grid_y >= row) {
-            LOGGER_PATTERN("Feld (_/_) liegt außerhalb dieses Gridscreens", grid_x, grid_y)
+            // LOGGER_PATTERN("Feld (_/_) liegt außerhalb dieses Gridscreens", grid_x, grid_y)
             return;
         }
         
-        LOGGER("")
-        LOGGER_PATTERN("Aktualisiere Element im Feld _/_ (Berührt bei [_,_] mit höhe _/_ und spalten: _/_)", grid_x, grid_y, (x-offsetX), (y-offsetY), width, height, col, row)
+        // LOGGER("")
+        // LOGGER_PATTERN("Aktualisiere Element im Feld _/_ (Berührt bei [_,_] mit höhe _/_ und spalten: _/_)", grid_x, grid_y, (x-offsetX), (y-offsetY), width, height, col, row)
 
         uint8_t e = matrix[col*grid_y + grid_x];
-        if (e != UINT8_MAX) elements[e]->setTouch(x, y);
+        if (e != UINT8_MAX) elements[e]->setTouch(input);
     }
 
     for (const auto& element : elements) {
-        if (element) element->loop();
+        if (element) element->loop(input);
     }
 }
 
 void GridScreen::draw() {
-    LOGGER_PATTERN("Zeichne GridScreeen an (_, _) mit sizeX=_, sizeY_ in der Hindergrundfarbe _", offsetX, offsetY, width, height, color_background.toString())
+    // LOGGER_PATTERN("Zeichne GridScreeen an (_, _) mit sizeX=_, sizeY_ in der Hindergrundfarbe _", offsetX, offsetY, width, height, color_background.toString())
     display->rect(offsetX, offsetY, width, height, 0, 0, Color(0,0,0), color_background);
 
-    #ifdef DEBUG
+    #ifdef TML_DEBUG
 
     // Abstand zwichen den Linien
     const uint16_t columnSpacing = width / (col);

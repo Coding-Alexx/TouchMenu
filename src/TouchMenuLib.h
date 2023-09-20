@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Arduino.h>
 #include <map>
 #include <stack>
@@ -10,18 +12,14 @@
 #include "Screens/GridScreen.h"
 #include "Screens/ErrorScreen.h"
 #include "ElementViews/RoundButton.h"
-#include "ElementViews/ToggleSwitch.h"
-#include "ElementViews/RectButtonCircle.h"
+#include "ElementViews/RectButton.h"
 #include "ElementViews/Slider_Rect.h"
 #include "ElementViews/Slider_Arrow.h"
 #include "ElementViews/Textbox_Rect.h"
+#include "ElementViews/Textbox_Blank.h"
 
 //#include "DisplayGFX.h"
 #include "DisplayTFTeSPI.h"
-
-
-#pragma once
-
 class TouchMenuLib {
 public:
     TouchMenuLib (Display* disp);
@@ -64,6 +62,8 @@ public:
 
     Display& getDisplay();
 
+    uint8_t getScreenID();
+
 private:
     bool enableSitebar (bool);
 
@@ -81,7 +81,7 @@ private:
 
     bool isDisplayInit = false;
 
-    Inputs input = {};
+    Inputs input;
 
     bool screensaverBackOnInput = false;
     bool isScreensaverEnable = false;

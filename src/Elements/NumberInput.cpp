@@ -10,17 +10,24 @@ bool NumberInput::select() {
     return false;
 }
 
-void NumberInput::loop(){
+// void NumberInput::loop(){
+//     if (externalValue && *externalValue != value) {
+//         // if (*externalValue < 0) * externalValue = 0;
+//         if (*externalValue > maxValue) *externalValue = maxValue;
+//         value = *externalValue;
+//         draw();
+//     }
+// }
+
+void NumberInput::loop(Inputs& input) {
+    if (input.enter) {
+        LOGGER("Enter")
+    }
+
     if (externalValue && *externalValue != value) {
         // if (*externalValue < 0) * externalValue = 0;
         if (*externalValue > maxValue) *externalValue = maxValue;
         value = *externalValue;
         draw();
-    }
-}
-
-void NumberInput::loop(Inputs& input) {
-    if (input.enter) {
-        LOGGER("Enter")
     }
 }

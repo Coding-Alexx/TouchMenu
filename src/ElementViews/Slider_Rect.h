@@ -37,8 +37,8 @@ public:
         }
     }
 
-    inline void setTouch(uint16_t x, uint16_t y) override {
-        LOGGER_PATTERN("slider Berührt: X = _ < _ < _,     _ < _ < _", posX, x, posX + sizeX, posY, y, posY + sizeY)
+    inline void setTouch(Inputs& input) override {
+        LOGGER_PATTERN("slider Berührt: X = _ < _ < _,     _ < _ < _", posX, input.touchX, posX + sizeX, posY, input.touchY, posY + sizeY)
 
         uint16_t xl = posX + t + b;
         uint16_t xr = xl + sizeX - (2*b) - (2*t);
@@ -46,12 +46,12 @@ public:
         uint16_t yl = posY + t + b;
         uint16_t yr = yl + sizeY - (2*b) - (2*t);
 
-        if (!(yl < y && y < yr)) return;
-        if (!(xl < x && x < xr)) return;
+        if (!(xl < input.touchX && input.touchX < xr)) return;
+        if (!(yl < input.touchY && input.touchY < yr)) return;
         if (isVertical) {
-            value = (y - yl) * maxValue / (yr-yl);
+            value = (input.touchY - yl) * maxValue / (yr-yl);
         } else {
-            value = (x - xl) * maxValue / (xr-xl);
+            value = (input.touchX - xl) * maxValue / (xr-xl);
         }
         if (externalValue) *externalValue = value;
         slider_callback(value);

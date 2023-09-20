@@ -48,7 +48,7 @@ void DisplayTFTeSPI::rect_center(const uint16_t x, const uint16_t y, const uint1
 }
 
 void DisplayTFTeSPI::circle(const uint16_t pos_x, const uint16_t pos_y, const uint16_t d, const uint8_t border_size, const Color& border_color, const Color& infill_color) {
-    LOGGER_PATTERN("border=_, d=_", border_size, d)
+    // LOGGER_PATTERN("border=_, d=_", border_size, d)
     uint16_t r = 0;
     if (d >= 2) r = d/2;
 
@@ -113,7 +113,7 @@ void DisplayTFTeSPI::text(const uint16_t posX, const uint16_t posY, const uint16
             tft.setTextSize(size[i]);
             // tft.fontHeight(fonts[i]);
 
-            LOGGER_PATTERN("_: schreibe text '_' (_) in Schriftart _, höhe _, breite _ und multiplikator _ in w:_, h:_", i, text, isDigit? "nur Zahlen" : "mit Buchstaben", fonts[i], fontSize[i], tft.textWidth(text, fonts[i]), size[i], width, height)
+            // LOGGER_PATTERN("_: schreibe text '_' (_) in Schriftart _, höhe _, breite _ und multiplikator _ in w:_, h:_", i, text, isDigit? "nur Zahlen" : "mit Buchstaben", fonts[i], fontSize[i], tft.textWidth(text, fonts[i]), size[i], width, height)
 
             // Zeichne den Text auf dem Display
             tft.drawString(text, posX, posY);
@@ -124,7 +124,7 @@ void DisplayTFTeSPI::text(const uint16_t posX, const uint16_t posY, const uint16
     tft.setTextSize(1);
     tft.setTextDatum(4);
 
-    LOGGER_PATTERN("zu klein: schreibe text '_' (_) in Schriftart _, höhe _, breite _ und multiplikator _ in w:_, h:_", text, isDigit? "nur Zahlen" : "mit Buchstaben", fonts[num-1], fontSize[num-1], tft.textWidth(text, fonts[num-1]), size[num-1], width, height)
+    // LOGGER_PATTERN("zu klein: schreibe text '_' (_) in Schriftart _, höhe _, breite _ und multiplikator _ in w:_, h:_", text, isDigit? "nur Zahlen" : "mit Buchstaben", fonts[num-1], fontSize[num-1], tft.textWidth(text, fonts[num-1]), size[num-1], width, height)
 
     // Zeichne den Text auf dem Display
     tft.drawString(text, posX, posY);

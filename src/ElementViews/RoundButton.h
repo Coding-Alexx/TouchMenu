@@ -6,8 +6,8 @@
 
 class RoundButton: public Button {
 public:
-    RoundButton(const char* itemOn, const char* itemOff, const Color& color, const button_func_ptr button_callback, bool* const value = nullptr);
-    RoundButton(const char* itemOn, const char* itemOff, const Color& color, const switch_func_ptr switch_callback, bool* const value = nullptr);
+    RoundButton(const char* itemOn, const char* itemOff, const Color& color, const std::function<void()> button_callback, ExternalButtonValue* const value = nullptr);
+    RoundButton(const char* itemOn, const char* itemOff, const Color& color, const std::function<void(bool)> switch_callback, ExternalButtonValue* const value = nullptr);
     ~RoundButton ();
 
     void draw() override;
@@ -16,7 +16,7 @@ public:
     uint16_t getMidX() const { return posX + sizeX/2; }
     uint16_t getMidY() const { return posY + sizeY/2; }
 
-    void setTouch(uint16_t x, uint16_t y) override;
+    void setTouch(Inputs& input) override;
 
 private:
     bool checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) override;
@@ -25,4 +25,5 @@ private:
     // const char* itemOffStr;
     Item* itemOn = nullptr;
     Item* itemOff = nullptr;
+    const uint16_t d;
 };

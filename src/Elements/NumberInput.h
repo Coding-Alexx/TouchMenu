@@ -5,7 +5,7 @@
 
 class NumberInput: public Element {
 protected:  
-    virtual void loop() override;
+    // virtual void loop() override;
     typedef void (*slider_func_ptr) (int16_t);
     
     const slider_func_ptr slider_callback;
@@ -15,13 +15,12 @@ protected:
 
 private:
     // TODO: Smartpointer nutzen
-    unsigned long timer = 0; // für eine kleine Animation
-
-    void loop(Inputs& input) override;
-    virtual void setTouch(uint16_t x, uint16_t y) = 0;
+    // unsigned long timer = 0; // für eine kleine Animation
+    virtual void setTouch(Inputs& input) = 0;
 
 public:
     NumberInput(slider_func_ptr slider_callback, uint16_t* externalValue = nullptr);
     virtual ~NumberInput();
     bool select() override;
+    void loop(Inputs& input) override;
 };

@@ -115,11 +115,24 @@ public:
     inline Color operator!()                       const { return Color(255-r_prim, 255-g_prim, 255-b_prim); }
     inline Color operator+(const Color& secondary) const { return Color(*this, getItemColor(), getBorderColor(), secondary); }
     inline Color operator|(const Color& other)     const {
-        LOGGER_PATTERN("isBorderSet: _, prim: (_, _, _)|(_, _, _)|(_, _, _), other: (_, _, _)|(_, _, _)|(_, _, _)", isBorderSet, r_prim, g_prim, b_prim, r_item, g_item, b_item, r_border, g_border, b_border, other.r_prim, other.g_prim, other.b_prim, other.r_item, other.g_item, other.b_item, other.r_border, other.g_border, other.b_border)
+        // LOGGER_PATTERN("isBorderSet: _, prim: (_, _, _)|(_, _, _)|(_, _, _), other: (_, _, _)|(_, _, _)|(_, _, _)", isBorderSet, r_prim, g_prim, b_prim, r_item, g_item, b_item, r_border, g_border, b_border, other.r_prim, other.g_prim, other.b_prim, other.r_item, other.g_item, other.b_item, other.r_border, other.g_border, other.b_border)
         if (!isBorderSet) return Color(*this, other, getBorderColor(), secondaryColor, true);   // 1. add item color
         else return Color(*this, getItemColor(), other, secondaryColor);                        // 2. add border color
     }
-
+    inline Color& operator=(const Color& other) {
+        if (this != &other) { // Selbstzuweisung vermeiden
+            r_prim = other.r_prim;     g_prim = other.g_prim;     b_prim = other.b_prim;
+            r_item = other.r_item;     g_item = other.g_item;     b_item = other.b_item; 
+            r_border = other.r_border; g_border = other.g_border; b_border = other.b_border;
+            
+            delete secondaryColor;
+            secondaryColor = nullptr;
+            
+            if (other.secondaryColor != nullptr)
+                secondaryColor = new Color(*other.secondaryColor);
+        }
+        return *this;
+    }
 
     // getter:
 
@@ -149,7 +162,7 @@ public:
     inline Color setSecondaryItemColor(const Color& color)   const { return Color(*this, getItemColor(), getBorderColor(), Color(*secondaryColor, secondaryColor->getItemColor(), color)); }
     inline Color setSecondaryBorderColor(const Color& color) const { return Color(*this, getItemColor(), getBorderColor(), Color(*secondaryColor, color, secondaryColor->getBorderColor())); }
 
-    inline void setPrimaryColor(const Color& color)          { LOGGER(toString()); r_prim = color.r_prim; g_prim = color.g_prim; b_prim = color.b_prim; LOGGER(toString()) }
+    inline void setPrimaryColor(const Color& color)          { r_prim = color.r_prim; g_prim = color.g_prim; b_prim = color.b_prim; }
     inline void setItemColor(const Color& color)             { r_item = color.r_prim; g_item = color.g_prim; b_item = color.b_prim; }
     inline void setBorderColor(const Color& color)           { r_border = color.r_prim; g_border = color.g_prim; b_border = color.b_prim; }
     inline void setSecondaryColor(const Color& color)        { secondaryColor->r_prim = color.r_prim; secondaryColor->g_prim = color.g_prim; secondaryColor->b_prim = color.b_prim; }

@@ -1,12 +1,21 @@
 #include "RoundButton.h"
 #include <algorithm>
-#include <WiFi.h>
 
-RoundButton::RoundButton(const char* itemOn, const char* itemOff, const Color& color, const button_func_ptr button_callback, bool* const value):
-    Button(button_callback, value), color(color), itemOn(Display::createItem(itemOn)), itemOff(Display::createItem(itemOff)) {}
+RoundButton::RoundButton(const char* itemOn, const char* itemOff, const Color& color, const std::function<void()> button_callback, ExternalButtonValue* const value):
+    Button(button_callback, value),
+    color(color), 
+    itemOn(Display::createItem(itemOn)), 
+    itemOff(Display::createItem(itemOff)),
+    d(std::min(sizeX, sizeY) * 0.9) 
+    {}
 
-RoundButton::RoundButton(const char* itemOn, const char* itemOff, const Color& color, const switch_func_ptr switch_callback, bool* const value):
-    Button(switch_callback, value), color(color), itemOn(Display::createItem(itemOn)), itemOff(Display::createItem(itemOff)) {}
+RoundButton::RoundButton(const char* itemOn, const char* itemOff, const Color& color, const std::function<void(bool)> switch_callback, ExternalButtonValue* const value):
+    Button(switch_callback, value), 
+    color(color), 
+    itemOn(Display::createItem(itemOn)), 
+    itemOff(Display::createItem(itemOff)),
+    d(std::min(sizeX, sizeY) * 0.9) 
+    {}
 
 RoundButton::~RoundButton () {
     delete itemOn;
@@ -15,23 +24,26 @@ RoundButton::~RoundButton () {
 
 bool RoundButton::checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) {
     // TODO: anpassen
+    itemOn->setWith(d);
+    itemOn->setHeight(d);
+
+    itemOff->setWith(d);
+    itemOff->setHeight(d);
     return sizeX > 30 && sizeY > 30;
 }
 
-void RoundButton::setTouch(uint16_t x, uint16_t y) {
+void RoundButton::setTouch(Inputs& input) {
     uint16_t d = std::min(sizeX, sizeY);
     const uint16_t xr = posX + sizeX/2 - d/2;
     const uint16_t yr = posY + sizeY/2 - d/2;
     const uint16_t xl = posX + sizeX/2 + d/2;
     const uint16_t yl = posY + sizeY/2 + d/2;
-    if (x > xr && x < xl && y > yr && y < yl) Button::setTouch(x, y);
-    else LOGGER_PATTERN("Touch punkt bei Runden Button liegt außerhalb: _<_<_, _<_<_", xr, x, xl, yr, y, yl)
+    if (input.touchX > xr && input.touchX < xl && input.touchY > yr && input.touchY < yl) Button::setTouch(input);
+    else LOGGER_PATTERN("Touch punkt bei Runden Button liegt außerhalb: _<_<_, _<_<_", xr, input.touchX, xl, yr, input.touchY, yl)
 }
 
 void RoundButton::draw() {
     uint16_t d = std::min(sizeX, sizeY) * 0.9;
-    LOGGER_PATTERN("Zeichne Runden Button(state=_) mit d=_, d*0.1=_", value, d, d*0.1)
-    LOGGER_PATTERN("Color: _, BorderColor: _, SecColor: _, SecRand: _", color.toString(), color.getBorderColor().toString(), color.getSecondaryColor().toString(), color.getSecondaryBorderColor().toString())
  
     if (value){
         display->circle(posX + sizeX/2, posY + sizeY/2, d, 8, color.getBorderColor(), color);
