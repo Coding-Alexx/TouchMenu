@@ -3,14 +3,17 @@
 #include <array>
 #include <sstream>
 
+// alias to item->draw(x, y, *display, color)
 void Display::drawItem (uint16_t x, uint16_t y, Item* item, const Color& color) {
     item->draw(x, y, this, color);
 }
 
+// alias to item->draw(x, y, *display)
 void Display::drawItem (uint16_t x, uint16_t y, Item* item) {
     item->draw(x, y, this);
 }
 
+// con'vert rgb colour values or color names into a color instance
 Color Display::parseColor(const std::string& str, const Color& color) {
     
     if (str == "yellow") return Color(255, 255, 0);
@@ -26,13 +29,14 @@ Color Display::parseColor(const std::string& str, const Color& color) {
         rgb[arrayPos++] = std::atoi(token.c_str());
         if (arrayPos > 3) break;
     }
-    // LOGGER_PATTERN("_ wird zu r:_, g:_, b:_", str.c_str(), rgb[0], rgb[1], rgb[2])
+    
     if (arrayPos != 0) return Color(rgb[0], rgb[1], rgb[2]);
 
     // else return default color
     return color;
 }
 
+// convert '_' to space and '__' to '_'
 std::string Display::processText(const std::string& input) {
     std::string result = input;
 
@@ -43,7 +47,6 @@ std::string Display::processText(const std::string& input) {
     }
 
     // 2. replace '_' with ' '
-    // Ersetze alle verbleibenden einzelnen Unterstriche am Ende durch Leerzeichen
     size_t underscorePos;
     while ((underscorePos = result.find("_")) != std::string::npos) {
         result.replace(underscorePos, 1, " ");
@@ -58,29 +61,54 @@ std::string Display::processText(const std::string& input) {
     return result;
 }
 
-template <typename T>
-T Display::stringToNumber(const std::string& str, const T& value) {
-    try {
-        std::istringstream ss(str);
-        T result;
-        if (!(ss >> result)) {
-            throw std::invalid_argument("Invalid conversion");
-        }
-        return result;
-    } catch (const std::invalid_argument&) {
-        return value;
+// Convert string to a uint16_t safely
+uint16_t Display::stringToNumber(const std::string& str, const uint16_t& value) {
+    if (str == "") return value;
+
+    uint16_t result = 0;
+    for (char c : str) {
+        if (c >= '0' && c <= '9') {
+            result *= 10;
+            result += (c - '0');
+        } 
+        else if (c == '.') break;
+        else return value;
     }
+
+    return result;
 }
 
+// Convert string to a douple safely
+double Display::stringToNumber(const std::string& str, const double& value) {
+    size_t dotPos = str.find('.');
 
+    if (dotPos == std::string::npos) {
+        auto number = stringToNumber(str, static_cast<double>(UINT16_MAX));
+        if (number == UINT16_MAX) return value;
+        else return static_cast<double>(number);
+    }
+    
+    uint16_t intResult = stringToNumber(str.substr(0, dotPos), static_cast<double>(UINT16_MAX));
+    uint16_t decimalResult = stringToNumber(str.substr(dotPos + 1), static_cast<double>(UINT16_MAX));
+    double result = 0.0;
+
+    if (intResult == UINT16_MAX && decimalResult == UINT16_MAX) return value;
+    if (intResult != UINT16_MAX) result += intResult;
+    if (decimalResult != UINT16_MAX) result += static_cast<float>(decimalResult) / std::pow(10, (int) log10(decimalResult));
+
+    return result;
+}
+
+// create an instance of an item from a string with default color black
 Item* Display::createItem(const std::string str) {
     return createItem(str, Color(0,0,0));
 }
 
+// create an instance of an item from a string with specified default color
 Item* Display::createItem(const std::string str, const Color& defaultColor) {
     std::string type, name;
-    double size = 0.0;
-    int width = 2, height = 2;
+    double size = 0.0, scale = 1;
+    uint16_t width = 2, height = 2;
 
     Color color = Color(defaultColor);
     std::istringstream iss(str);
@@ -94,38 +122,36 @@ Item* Display::createItem(const std::string str, const Color& defaultColor) {
             std::string key = word.substr(0, colonPos);
             std::string value = word.substr(colonPos + 1);
 
-            // LOGGER_PATTERN("String _ hat im moment key=_, value=_", str.c_str(), key.c_str(), value.c_str())
-
+            // set type and his name (e.g. icon:settings)
             if (type == "" && (key == "icon" || key == "file" || key == "symb" || key == "text")) {
                 type = key;
                 name = (key == "text") ? processText(value) : value; 
-
-            // without a type it is a text
             }
 
+
+            // Find and set other parameters
             else if (key == "color") {
                 color.setPrimaryColor(parseColor(value, color));
-                // LOGGER_PATTERN("edit color to _", color.toString())
             } else if (key == "border") {
                 color.setBorderColor(parseColor(value, color.getBorderColor()));
-                // LOGGER_PATTERN("edit border color to _", color.getBorderColor().toString())
             } else if (key == "size") {
-                size = stringToNumber(value, size );
+                // size = stringToNumber(value, size );
             } else if (key == "height") {
-                height = stringToNumber(value, height );
+                // height = stringToNumber(value, height );
             } else if (key == "width") {
-                width = stringToNumber(value, width );
+                // width = stringToNumber(value, width );
+            } else if (key == "scale") {
+                // scale = stringToNumber(value, scale );
             }
         }
         
+        // if no type was defined at the beginning, set type to text and end search for other parameters 
         if (type == "") {
             type = "text";
             name = str;
             break;
         }
     }
-
-    // LOGGER_PATTERN("String _ hat type _ mit dem namen '_' und: size=_, color=_, borderColor=_, width=_, height=_", str.c_str(), type.c_str(), name.c_str(), size, color.toString(), color.getBorderColor().toString(), width, height)
 
     if (name == "") return new Text("No Name", size, COLOR_RED);
     else if (type == "") return new Text("No type", size, COLOR_RED);
@@ -134,14 +160,14 @@ Item* Display::createItem(const std::string str, const Color& defaultColor) {
         return new Text(name.c_str(), size, color);
 
     else if (type=="icon") {
-        auto* icon = Icon::create(name, color);
+        auto* icon = Icon::create(name, scale, color);
         if (icon) return icon;
         else return new Text("NOT FOUND", size, COLOR_RED);
 
-    // } else if (type == "file") {
+    // } else if (type == "file") { // TODO: implement loading and displaying bitmaps from memory
         	
     } else if (type == "symb") {
-        return Symbol::create(name, (uint16_t) height, (uint16_t) width, color, size);
+        return Symbol::create(name, (uint16_t) height, (uint16_t) width, color, size, scale);
     }
     
     return new Text("ERR", 2, COLOR_RED);

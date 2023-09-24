@@ -8,7 +8,7 @@ class Element {
 public:
     Element ();
     virtual ~Element();
-    virtual bool select() = 0;
+    virtual bool select(Inputs& input) = 0;
     virtual void loop(Inputs& input) = 0;
     // virtual void loop() = 0;
     virtual void draw() = 0;

@@ -106,5 +106,5 @@ public:
     Textbox(Item* item, const uint8_t textsize, ExternalTextboxValue* value = nullptr);
     virtual bool checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) override;
     virtual ~Textbox();
-    bool select() override;
+    bool select(Inputs& input) override;
 };

@@ -27,12 +27,11 @@ void Text::drawOff(uint16_t x, uint16_t y, Display* disp) {
 }
 
 // TODO mechanismus ausdenken, wie man überschreiben von selbst gesetzten Werten verfindert
-void Text::setWith(const uint16_t _width, const bool override) {
-    if (!override) width = _width;
-}
-
-void Text::setHeight(const uint16_t _height, const bool override) {
-    if (!override) height = _height;
+void Text::setResolution(const uint16_t w, const uint16_t h, const bool override) {
+    if (!override) {
+        width = w;
+        height = h;
+    }
 }
 
 void Text::setSize(const uint8_t _size, const bool override) {

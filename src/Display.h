@@ -66,6 +66,6 @@ private:
     static Color parseColor(const std::string& colorStr, const Color& color);
     static std::string processText(const std::string& input);
     
-    template <typename T>
-    static T stringToNumber(const std::string& str, const T& value);
+    static uint16_t stringToNumber(const std::string& str, const uint16_t& value);
+    static double stringToNumber(const std::string& str, const double& value);
 };

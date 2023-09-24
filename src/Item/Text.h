@@ -18,7 +18,6 @@ public:
     void drawOn(uint16_t x, uint16_t y, Display* disp) override;
     void drawOff(uint16_t x, uint16_t y, Display* disp) override;
 
-    void setWith(const uint16_t width, const bool override) override;
-    void setHeight(const uint16_t height, const bool override) override;
+    void setResolution(const uint16_t width, const uint16_t height, const bool override = false) override;
     void setSize(const uint8_t borderSize, const bool override) override;
 };

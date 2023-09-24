@@ -6,19 +6,17 @@
 
 #pragma once
 
-class Slider_Arrow: public NumberInput {
+class Number_Counter: public NumberInput {
 public:
-
-
-    inline Slider_Arrow(const char* item1, const char* item2, const Color& color, const bool show_number, const slider_func_ptr slider_callback, uint16_t* value=nullptr):
+    inline Number_Counter(const char* item1, const char* item2, const Color& color, const bool show_number, const slider_func_ptr slider_callback, uint16_t* value=nullptr):
         NumberInput(slider_callback, value),
         color(color),
         item1(Display::createItem(item1, Color(color.getItemColor(), -80))),
         item2(Display::createItem(item2, Color(color.getSecondaryItemColor(), -80))),
         showNumber(show_number)
-    {}
+        {}
 
-    inline ~Slider_Arrow() {
+    inline ~Number_Counter() {
         delete item1;
         delete item2;
     }
@@ -93,11 +91,8 @@ private:
         double x = 1.2;
         if (showNumber) x = 1.4;
 
-        item1->setWith(sizeX - triangleDistance*2);
-        item1->setHeight(sizeY - triangleDistance*2);
-
-        item2->setWith(sizeX - triangleDistance*2);
-        item2->setHeight(sizeY - triangleDistance*2);
+        item1->setResolution(sizeX, sizeY);
+        item2->setResolution(sizeX, sizeY);
 
         if (sizeY >= x * sizeX) {
             isVertical = true;
@@ -105,8 +100,9 @@ private:
             triangleHight = (sizeY-triangleDistance)/2;
             if (showNumber) triangleHight -= fontSize*10;
 
-            item1->setHeight(triangleHight);
-            item2->setHeight(triangleHight);
+            item1->setResolution(sizeX, triangleHight);
+            item2->setResolution(sizeX, triangleHight);
+
             LOGGER("Slider ist Vertikal")
             return true;
         }
@@ -117,8 +113,9 @@ private:
             triangleHight = (sizeX-triangleDistance)/2;
             if (showNumber) triangleHight -= fontSize*10;
 
-            item1->setWith(triangleHight);
-            item2->setWith(triangleHight);
+            item1->setResolution(triangleHight, sizeY);
+            item2->setResolution(triangleHight, sizeY);
+
             return true;
         }
 

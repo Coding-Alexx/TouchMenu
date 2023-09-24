@@ -103,8 +103,6 @@ void setup() {
     // initialise the serial interface -> can also be done manually by you
     LOGGER_BEGIN(9600)
 
-    String test = "hello world";
-
     // Log something via the serial interface if the DEBUG flag is set and DEBBUG_LEVEL is set to INFO
     LOGGER("Starting Programm ...")
 
@@ -116,7 +114,8 @@ void setup() {
     // First possibility to create a screen: using the macro
     CREATE_GRID_SCREEN_SITEBAR(TML, 1, 60, 0, 4, 1, COLOR_DARK_BLUE, 
         AddElement(new Textbox_Blank("GLEICHUNG", 2, COLOR_BLACK, &textvalue), 0, 0, 3, 1),
-        AddElement(new RoundButton("<-", "->", COLOR_RED, switchScreen), 3, 0, 1, 1)
+        AddElement(new Button_Round("icon:back", "icon:reload", COLOR_RED, 2, switchScreen), 3, 0, 1, 1)
+        // AddElement(new Button_Round("->", "<-", COLOR_RED, 2, switchScreen), 3, 0, 1, 1)
     )
 
     // for a sitebar GridScreen the macro is called: CREATE_GRID_SCREEN_SITEBAR (TML, id, size, site, col, row, elements...)
@@ -131,36 +130,36 @@ void setup() {
     g = new GridScreen(4, 5, COLOR_LIGHT_CYAN);
     TML.add(1, g, 1); // Attention: always add the GridScreen first before adding elements!
     (*g)
-        << AddElement(new RectButton("text:7 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'7'>), 0, 0, 1, 1)
-        << AddElement(new RectButton("text:8 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'8'>), 1, 0, 1, 1)
-        << AddElement(new RectButton("text:9 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'9'>), 2, 0, 1, 1)
-        << AddElement(new RectButton("text:+ size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  addChar<'+'>), 3, 0, 1, 1)
-        << AddElement(new RectButton("text:4 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'4'>), 0, 1, 1, 1)
-        << AddElement(new RectButton("text:5 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'5'>), 1, 1, 1, 1)
-        << AddElement(new RectButton("text:6 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'6'>), 2, 1, 1, 1)
-        << AddElement(new RectButton("text:- size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  addChar<'-'>), 3, 1, 1, 1)
-        << AddElement(new RectButton("text:1 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'1'>), 0, 2, 1, 1)
-        << AddElement(new RectButton("text:2 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'2'>), 1, 2, 1, 1)
-        << AddElement(new RectButton("text:3 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'3'>), 2, 2, 1, 1)
-        << AddElement(new RectButton("text:* size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  addChar<'*'>), 3, 2, 1, 1)
-        << AddElement(new RectButton("text:. size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  addChar<'.'>), 0, 3, 1, 1)
-        << AddElement(new RectButton("text:0 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'0'>), 1, 3, 1, 1)
-        << AddElement(new RectButton("text:% size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  addChar<'%'>), 2, 3, 1, 1)
-        << AddElement(new RectButton("text:: size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  addChar<'/'>), 3, 3, 1, 1)
-        << AddElement(new RectButton("text:( size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  addChar<'('>), 0, 4, 1, 1)
-        << AddElement(new RectButton("text:) size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  addChar<')'>), 1, 4, 1, 1)
-        << AddElement(new RectButton("text:<- size:2", (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  deleteLast),   2, 4, 1, 1)
-        << AddElement(new RectButton("text:= size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_RED) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_DARK_RED),2, 3, calculate),    3, 4, 1, 1)
+        << AddElement(new Button_Rect("text:7 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'7'>), 0, 0, 1, 1)
+        << AddElement(new Button_Rect("text:8 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'8'>), 1, 0, 1, 1)
+        << AddElement(new Button_Rect("text:9 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'9'>), 2, 0, 1, 1)
+        << AddElement(new Button_Rect("text:+ size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  addChar<'+'>), 3, 0, 1, 1)
+        << AddElement(new Button_Rect("text:4 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'4'>), 0, 1, 1, 1)
+        << AddElement(new Button_Rect("text:5 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'5'>), 1, 1, 1, 1)
+        << AddElement(new Button_Rect("text:6 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'6'>), 2, 1, 1, 1)
+        << AddElement(new Button_Rect("text:- size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  addChar<'-'>), 3, 1, 1, 1)
+        << AddElement(new Button_Rect("text:1 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'1'>), 0, 2, 1, 1)
+        << AddElement(new Button_Rect("text:2 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'2'>), 1, 2, 1, 1)
+        << AddElement(new Button_Rect("text:3 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'3'>), 2, 2, 1, 1)
+        << AddElement(new Button_Rect("text:* size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  addChar<'*'>), 3, 2, 1, 1)
+        << AddElement(new Button_Rect("text:. size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  addChar<'.'>), 0, 3, 1, 1)
+        << AddElement(new Button_Rect("text:0 size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_ORANGE) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_RED), 2, 3,  addChar<'0'>), 1, 3, 1, 1)
+        << AddElement(new Button_Rect("text:% size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  addChar<'%'>), 2, 3, 1, 1)
+        << AddElement(new Button_Rect("text:: size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  addChar<'/'>), 3, 3, 1, 1)
+        << AddElement(new Button_Rect("text:( size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  addChar<'('>), 0, 4, 1, 1)
+        << AddElement(new Button_Rect("text:) size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  addChar<')'>), 1, 4, 1, 1)
+        << AddElement(new Button_Rect("text:<- size:2", (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  deleteLast),   2, 4, 1, 1)
+        << AddElement(new Button_Rect("text:= size:2",  (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_RED) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_DARK_RED),2, 3, calculate),    3, 4, 1, 1)
     ;
 
 
     // third way to create a GridScreen: use the add function
     g = new GridScreen(1, 4, COLOR_LIGHT_CYAN);
     TML.add(2, g, 1);
-    g->add(new RectButton("text:Leer size:2", (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  loadFormula<0>, saveFormula<0>, &saveButton[0]), 0, 0, 1, 1);
-    g->add(new RectButton("text:Leer size:2", (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  loadFormula<1>, saveFormula<1>, &saveButton[1]), 0, 1, 1, 1);
-    g->add(new RectButton("text:Leer size:2", (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  loadFormula<2>, saveFormula<2>, &saveButton[2]), 0, 2, 1, 1);
-    g->add(new RectButton("text:Leer size:2", (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  loadFormula<3>, saveFormula<3>, &saveButton[3]), 0, 3, 1, 1);
+    g->add(new Button_Rect("text:Leer size:2", (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  loadFormula<0>, saveFormula<0>, &saveButton[0]), 0, 0, 1, 1);
+    g->add(new Button_Rect("text:Leer size:2", (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  loadFormula<1>, saveFormula<1>, &saveButton[1]), 0, 1, 1, 1);
+    g->add(new Button_Rect("text:Leer size:2", (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  loadFormula<2>, saveFormula<2>, &saveButton[2]), 0, 2, 1, 1);
+    g->add(new Button_Rect("text:Leer size:2", (COLOR_LIGHT_BLUE|COLOR_DARK_CYAN|COLOR_BLACK) + (COLOR_LIGHT_BLUE|COLOR_LIGHT_CYAN|COLOR_GRAY), 2, 3,  loadFormula<3>, saveFormula<3>, &saveButton[3]), 0, 3, 1, 1);
 
 }
 

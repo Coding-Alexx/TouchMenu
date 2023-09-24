@@ -21,6 +21,6 @@ private:
 public:
     NumberInput(slider_func_ptr slider_callback, uint16_t* externalValue = nullptr);
     virtual ~NumberInput();
-    bool select() override;
+    bool select(Inputs& input) override;
     void loop(Inputs& input) override;
 };

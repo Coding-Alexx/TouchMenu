@@ -41,21 +41,25 @@ Button::Button(std::function<void()> button_callback, std::function<void(bool)> 
 
 Button::~Button(){};
 
-bool Button::select() {
+bool Button::select(Inputs& input) {
     if (isButton) {
-        value = false;
+        if (hasButtonAnimation) {
+            animationTimer = millis();
+            value = false;
+        }
         button_callback();
-        animationTimer = millis();
         if (externalValue) externalValue->setValue(value);
     } else {
         value = !value;
         switch_callback(value);
     }
-    draw();
+    if (reDrawOnUpdate) draw();
+    else input.update = true;
+
     return false;
 }
 
-bool isInsideHitbox(uint16_t x, uint16_t y, uint16_t posX, uint16_t posY, uint16_t sizeX, uint16_t sizeY) {
+bool Button::isInsideHitbox(uint16_t x, uint16_t y, uint16_t posX, uint16_t posY, uint16_t sizeX, uint16_t sizeY) {
   return (x >= posX && x <= posX + sizeX && y >= posY && y <= posY + sizeY);
 }
 
@@ -110,7 +114,7 @@ void Button::loop(Inputs& input) {
     } else if (hasLongPress && !input.isTouched && longPressTimer > 0) {
         LOGGER("Short Press")
         longPressTimer = 0;
-        select();
+        select(input);
         blocked = true;
     } 
 }
@@ -120,21 +124,7 @@ void Button::setTouch(Inputs& input) {
         LOGGER("Aktiviere long press timer")
         longPressTimer = millis();
     } else if (!hasLongPress && !blocked) {
-        select();
+        select(input);
         blocked = true;
     }
-
-    // if (isButton && value) {
-    //     LOGGER("Es wurde auf Button getippt")
-    //     button_callback();
-    //     animationTimer = millis();
-    //     value = false;
-    //     if (externalValue) externalValue->setValue(value);
-    // }
-
-    // if (!isButton) {
-    //     LOGGER("Es wurde auf Switch getippt")
-    //     value = !value;
-    //     switch_callback(value);
-    // }
 }

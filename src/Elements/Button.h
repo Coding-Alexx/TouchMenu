@@ -4,9 +4,9 @@
 #include <functional>
 #include "../Element.h"
 
-#define TML_goTo (tml, id) [](){tml.goTo(id);}
-#define TML_goTo_without_History (tml, id) [](){tml.goTo(id, false);}
-#define TML_back (tml) [](){tml.back();}
+#define TML_goTo(tml, id) [](){tml.goTo(id);}
+#define TML_goTo_without_History(tml, id) [](){tml.goTo(id, false);}
+#define TML_back(tml) [](){tml.back();}
 #define TML_empty_button [](){}
 #define TML_empty_switch [](bool){}
 
@@ -82,16 +82,18 @@ protected:
     const bool hasLongPress = false;
     bool value = false;
     bool blocked = false;
+    bool reDrawOnUpdate = true;
+    bool hasButtonAnimation = true;
 
     void setTouch(Inputs& input) override;
 
 private:
     // TODO: Smartpointer nutzen
-    unsigned long animationTimer = 0; // für eine kleine Animation
-    unsigned long longPressTimer = 0; // für eine kleine Animation
+    unsigned long animationTimer = 0;
+    unsigned long longPressTimer = 0;
 
     void loop(Inputs& input) override;
-    // void loop() override;
+    bool isInsideHitbox(uint16_t x, uint16_t y, uint16_t posX, uint16_t posY, uint16_t sizeX, uint16_t sizeY);
 
 public:
     bool getValue() const { return value; }
@@ -103,5 +105,5 @@ public:
     
     Button(std::function<void()> button_callback, std::function<void(bool)> swich_callback, std::function<void()> longpress_callback, const bool isButton, const bool hasLongPress, ExternalButtonValue* externalValue = nullptr);
     virtual ~Button();
-    bool select() override;
+    bool select(Inputs& input) override;
 };

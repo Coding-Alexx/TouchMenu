@@ -6,13 +6,13 @@ Textbox::Textbox(Item* item, ExternalTextboxValue* value):
 
 Textbox::Textbox(Item* item, const uint8_t textsize, ExternalTextboxValue* value):
     item(item), externalValue(value) {
-        externalValue->setup(textsize);
+        if (externalValue) externalValue->setup(textsize);
         item->setSize(textsize);
     }
 
 Textbox::~Textbox(){};
 
-bool Textbox::select() {
+bool Textbox::select(Inputs& input) {
     return false;
 }
 
@@ -30,6 +30,7 @@ void Textbox::setTouch(Inputs& input) {}
 
 bool Textbox::checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) {
     if (externalValue && externalValue->getSize() == 0) externalValue->setup(sizeX, sizeY);
+    item->setResolution(sizeX, sizeY);
     return true;
 }
 

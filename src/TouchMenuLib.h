@@ -11,10 +11,11 @@
 #include "Input.h"
 #include "Screens/GridScreen.h"
 #include "Screens/ErrorScreen.h"
-#include "ElementViews/RoundButton.h"
-#include "ElementViews/RectButton.h"
-#include "ElementViews/Slider_Rect.h"
-#include "ElementViews/Slider_Arrow.h"
+#include "ElementViews/Button_Rect.h"
+#include "ElementViews/Button_Blank.h"
+#include "ElementViews/Button_Round.h"
+#include "ElementViews/Number_Slider.h"
+#include "ElementViews/Number_Counter.h"
 #include "ElementViews/Textbox_Rect.h"
 #include "ElementViews/Textbox_Blank.h"
 
@@ -23,6 +24,7 @@
 class TouchMenuLib {
 public:
     TouchMenuLib (Display* disp);
+    TouchMenuLib ();
     ~TouchMenuLib ();
 
     // init menu and display
@@ -52,21 +54,20 @@ public:
     void setInputUp();
     void setInputDown();
 
-    void setScreensaver(const uint8_t screenID, unsigned long time, bool backOnInput = true);
+    void setScreensaver(const uint8_t screenID, unsigned long time, bool backOnInput = false);
     bool enableScreenSaver ();
     void disableScreenSaver ();
     
-    bool setSitebar (const uint8_t sitebarID);                  // set Sitebar to ID, if sitebar feature is activated
-    bool enableSitebar ();                                      // activate Sitebar Feature, go to default Sitebar for current screen and draw
-    void disableSitebar (const bool deactivateSitebar = false); // disable Sitebar Feature
+    bool setSitebar (const uint8_t sitebarID, const bool disableAutomatic = true);  // set Sitebar to ID, if sitebar feature is activated
+    bool enableSitebar ();                                                          // activate Sitebar Feature, go to default Sitebar for current screen and draw
+    void disableSitebar (const bool deactivateSitebar = false);                     // disable Sitebar Feature
 
     Display& getDisplay();
 
     uint8_t getScreenID();
+    uint8_t getScreensNumber();
 
 private:
-    bool enableSitebar (bool);
-
     // storage screen
     std::map<uint8_t, std::unique_ptr<Screen>> screens;
     std::stack<uint8_t> screenHistory {};
@@ -74,14 +75,15 @@ private:
     // storage sitebar (is also a type of screen)
     std::map<uint8_t, std::unique_ptr<Screen>> sitebars;
     std::map<uint8_t, uint8_t> sitebarConnector;
-    uint8_t currentSitebar = UINT8_MAX;
-    bool deactivateSitebar = false;
+    uint8_t currentSitebar = UINT8_MAX;     // aktuelle Sitebar -> UINT8_MAX = aus
+    bool disableSitebarAutomatic = false;   // deaktiviere automatisches Setzen der Sitebar
 
     Display* display;
 
     bool isDisplayInit = false;
 
     Inputs input;
+    bool updateAll = true;
 
     bool screensaverBackOnInput = false;
     bool isScreensaverEnable = false;

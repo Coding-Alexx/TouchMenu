@@ -5,9 +5,9 @@
 
 #pragma once
 
-class Slider_Rect: public NumberInput {
+class Number_Slider: public NumberInput {
 public:
-    inline Slider_Rect(const Color& infillOn_color, const Color& infillOff_color, const Color& slider_color, const Color& border_color, const slider_func_ptr slider_callback, uint16_t* value=nullptr):
+    inline Number_Slider(const Color& infillOn_color, const Color& infillOff_color, const Color& slider_color, const Color& border_color, const slider_func_ptr slider_callback, uint16_t* value=nullptr):
         NumberInput(slider_callback, value),
         colorInfillOn(infillOn_color),
         colorInfillOff(infillOff_color),

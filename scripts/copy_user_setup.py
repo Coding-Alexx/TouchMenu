@@ -19,8 +19,8 @@ def copy_user_setup():
                 target_path = os.path.join(target_dir, 'User_Setup.h')
 
                 shutil.copyfile(source_path, target_path)
-                print(f'PYTHON SCRIPT: Copied {file_name} to {target_path}')
+                print(f'[copy_user_setup] Copied {file_name} to {target_path}')
             else:
-                print(f'PYTHON SCRIPT: Target directory not found for {file_name}: {target_dir}')
+                print(f'[copy_user_setup] Target directory not found for {file_name}: {target_dir}')
 
 copy_user_setup()

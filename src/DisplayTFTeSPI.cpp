@@ -130,7 +130,6 @@ void DisplayTFTeSPI::text(const uint16_t posX, const uint16_t posY, const uint16
     tft.drawString(text, posX, posY);
 }
 
-
 void DisplayTFTeSPI::text_center(const uint16_t pos_x, const uint16_t pos_y, const uint8_t size, const char* text, const Color& text_color) {
     tft.setTextSize(size); // Textgröße festlegen
     tft.setTextDatum(MC_DATUM); // Mittelpunkt als Bezugspunkt für den Text setzen

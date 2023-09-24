@@ -6,7 +6,7 @@ NumberInput::NumberInput(slider_func_ptr slider_callback, uint16_t* externalValu
 }
 NumberInput::~NumberInput(){};
 
-bool NumberInput::select() {
+bool NumberInput::select(Inputs& input) {
     return false;
 }
 

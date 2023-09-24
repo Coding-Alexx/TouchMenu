@@ -5,10 +5,13 @@
     #define TOUCH_INPUT_TIMER 300
 #endif
 
+TouchMenuLib::TouchMenuLib (): 
+    display(new DisplayTFTeSPI())
+    {}
+
 TouchMenuLib::TouchMenuLib (Display* disp): 
-    display(disp) {
-        disp = nullptr;
-    }
+    display(disp) 
+    {}
 
 TouchMenuLib::~TouchMenuLib (){
     delete display;
@@ -48,7 +51,7 @@ void TouchMenuLib::add (const uint8_t id, Screen* screen, const uint8_t sitebarI
     if (!screen) return;
     // LOGGER("Füge neuen Schreen + Sitebar hinzu")
     add (id, screen);
-    if (!setSitebar(sitebarID)) {
+    if (sitebars.count(sitebarID) == 0) {
         LOGGER_ERROR_PATTERN("Sitebar id _ doesn't exists", sitebarID)
         return;
     }
@@ -114,26 +117,27 @@ void TouchMenuLib::back(const uint8_t i){
     for(int j = i; j > 0 && screenHistory.size() > 1; j--) {
         screenHistory.pop();
     }
-    enableSitebar(0);
-    draw();
+    updateAll = true;
 }
 
 // jehe zum Screen id, wenn toHistory=false, dann will man keine neue Ebene in der History
 bool TouchMenuLib::goTo(const uint8_t id, const bool toHistory){
+    LOGGER_PATTERN("goTo Screen _", id)
     if (screens.count(id) == 0) return false;
 
     if (!toHistory) screenHistory.pop();
     screenHistory.push(id);
-    enableSitebar(0);
-    draw();
+    updateAll = true;
     return true;
 }
 
 void TouchMenuLib::loop(){
 
-    if (input.update) {
-        LOGGER("zeichne Screen und Sitebar")
+    if (updateAll) {
+        // if (currentSitebar == UINT8_MAX) LOGGER_PATTERN("zeichne Screen _ und keine Sitebar", screenHistory.top())
+        // else LOGGER_PATTERN("zeichne Screen _ und Sitebar _", screenHistory.top(), currentSitebar)
         draw();
+        updateAll = false;
     }
 
     if (screens.size() == 0) {
@@ -163,12 +167,16 @@ void TouchMenuLib::loop(){
         return;
     }
 
-    // go back from screensaver screen on input
-    if (isScreensaverEnable && input.hasInput() && screensaverTimer == 0 && screensaverBackOnInput) {
-        LOGGER("gehe zurück zum Standartscreen")
-        back();
+    // Exit screensaver: reset Screensaver timer
+    if (isScreensaverEnable && input.hasInput() && screensaverTimer == 0) {
+        LOGGER("reset Screensaver timer")
         screensaverTimer = millis() + screensaverTime;
-        return;
+
+        // go back if this option is active
+        if (screensaverBackOnInput) {
+            back();
+            return;
+        }
     }
 
     // Update main Screen
@@ -194,15 +202,19 @@ void TouchMenuLib::loop(){
 }
 
 void TouchMenuLib::draw() {
-    LOGGER("Zeichne Menu")
+    // LOGGER("Zeichne Menu")
     if (screenHistory.empty()) return;
     screens[screenHistory.top()]->draw(); // draw current Screen
+
+    if (!disableSitebarAutomatic && sitebarConnector.count(screenHistory.top()) != 0) 
+        currentSitebar = sitebarConnector[screenHistory.top()];
+    
+    if (!disableSitebarAutomatic && sitebarConnector.count(screenHistory.top()) == 0)
+        currentSitebar = UINT8_MAX;
     
     // if sitebar is available, draw this too
     if (currentSitebar != UINT8_MAX)
         sitebars[currentSitebar]->draw();
-
-    input.update = false;
 }
 
 void TouchMenuLib::setInputEnter(){
@@ -243,37 +255,32 @@ void TouchMenuLib::disableScreenSaver () {
     isScreensaverEnable = false;
 }
 
-bool TouchMenuLib::setSitebar (const uint8_t sitebarID) {
-    if (deactivateSitebar) return true;
-    if (sitebars.count(sitebarID) != 0)
-        currentSitebar = sitebarID;
-    else {
-        disableSitebar();
-        return false;
-    }
+// set Sitebar for curent Screen
+bool TouchMenuLib::setSitebar (const uint8_t sitebarID, const bool disableAutomatic) {
+    if (sitebars.count(sitebarID) == 0) return false;
+    
+    disableSitebarAutomatic = disableAutomatic;
+    currentSitebar = sitebarID;
+    updateAll = true;
     return true;
 }
 
-bool TouchMenuLib::enableSitebar (bool) {
-    if (sitebarConnector.count(screenHistory.top()));
-        return setSitebar(sitebarConnector.count(screenHistory.top()));
-    return false;
-}
-
 bool TouchMenuLib::enableSitebar () {
-    deactivateSitebar = false;
-    if (enableSitebar(0)) {
-        draw();
-        return true;
-    }
+    disableSitebarAutomatic = false;
+    updateAll = true;
     return false;
 }
 
 void TouchMenuLib::disableSitebar (const bool deactivate) {
     currentSitebar = UINT8_MAX;
-    deactivateSitebar = deactivate;
+    disableSitebarAutomatic = true;
+    updateAll = true;
 }
 
 uint8_t TouchMenuLib::getScreenID() {
     return screenHistory.top();
+}
+
+uint8_t TouchMenuLib::getScreensNumber() {
+    return screens.size();
 }
