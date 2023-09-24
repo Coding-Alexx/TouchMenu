@@ -7,6 +7,7 @@ Beschreibung
 =============
 | Elemente sind vordefinierte Funktionseinheiten, die auf einem :ref:`Screen <screen>` eingefügt werden können.
 | Dazu gehören 
+
 * :ref:`Buttons <button>`
 * :ref:`Slider <slider>`
 
@@ -22,23 +23,31 @@ relevant für eigenes Menü
 .. csv-table:: 
     :widths: 100 1000
 
-     void, ":ref:`setPosition <elementsetpostion>` (const uint16_t posX, const uint16_t posY)"
+     void, ":ref:`setPosition <elementsetposition>` (const uint16_t posX, const uint16_t posY)"
      bool, ":ref:`setsize <elementsetsize>` (const uint16_t sizeX, const uint16_t sizeY, const uint8_t rotation)"
-     void, ":ref:`setDisplay <elementsetdisplay>` (Display* const display)"
+     void, ":ref:`setDisplay <elementsetdisplay>` (Display* const disp)"
+     , :ref:`Element <elementelementconstructor>` ()
+     virtual, :ref:`~Element <elementelementdenstructor>` ()
+     virtual bool, :ref:`select <elementselect>` () = 0
+     virtual void, ":ref:`loop <elementloopinput>` (Inputs& input) = 0"
+     virtual void, ":ref:`draw <elementdraw>` () = 0"
+     virtual void, ":ref:`checkSize <elementchecksize>` (uint16_t sizeX, uint16_t sizeY, uint8_t rotation) = 0"
+     virtual void, ":ref:`setTouch <elementsettouch>` (Inputs& input) = 0"
 
 
 
-sonstige 
+Variablen und Konstanten
+==========================
 
 .. csv-table:: 
     :widths: 100 1000
 
-    , :ref:`Element <elementelementconstructor>` ()
-    virtual, :ref:`~Element <elementelementdenstructor>` ()
-    virtual bool, :ref:`select <elementselect>` () = 0
-    virtual void, ":ref:`loop <elementloop>` (uint16_t touchX, uint16_t touchY) = 0"
-    virtual void, ":ref:`draw <elementdraw>` () = 0"
-    virtual void, ":ref:`checkSize <elementchecksize>` (uint16_t sizeX, uint16_t sizeY, uint8_t rotation) = 0"
+     uint16_t, ":ref:`posX <elementvposx>`"
+     uint16_t, ":ref:`posY <elementvposy>`"
+     uint16_t, ":ref:`sizeX <elementvsizex>`"
+     uint16_t, ":ref:`sizeY <elementvsizeY>`"
+     uint16_t, ":ref:`rotation <elementvrotation>`"
+     ":ref:`Display* <display>`", ":ref:`display <elementvdisplay>`"
 
 Funktionen Beschreibung
 =========================
@@ -48,13 +57,21 @@ Funktionen Beschreibung
 
 Element ()
 ~~~~~~~~~~~~
+.. literalinclude:: ../../src/Element.cpp
+    :lines: 24
+    :linenos:
 
+Der Konstruktor wird bei der Erzeugung eines neuen Objekts der ``Element`` Klasse aufgerufen.
 
 .. _elementElementDenstructor:
 
 virtual ~Element ()
 ~~~~~~~~~~~~~~~~~~~~~
+.. literalinclude:: ../../src/Element.cpp
+    :lines: 23
+    :linenos:
 
+Der Destruktor wird bei der Zerstörung eines Objekts der ``Element`` Klasse aufgerufen.
 
 
 .. _elementSelect:
@@ -62,11 +79,16 @@ virtual ~Element ()
 virtual bool select () = 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Diese virtuelle Funktion muss von einer abgeleiteten Klasse überschrieben werden.
+(Siehe ":ref:`Button <buttonselect>`", ":ref:`NumberInput <numberinputselect>`", ":ref:`Textbox <textboxselect>`")
 
-.. _elementLoop:
+.. _elementLoopInput:
 
-virtual void loop (uint16_t touchX, uint16_t touchY) = 0
+virtual void loop(Inputs& input) = 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Diese virtuelle Funktion muss von einer abgeleiteten Klasse überschrieben werden.
+(Siehe ":ref:`Button <buttonloopinput>`", ":ref:`NumberInput <numberinputloopinputs>`", ":ref:`Textbox <textboxloopinput>`")
 
 
 .. _elementDraw:
@@ -74,21 +96,20 @@ virtual void loop (uint16_t touchX, uint16_t touchY) = 0
 virtual void draw () = 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Diese virtuelle Funktion muss von einer abgeleiteten Klasse überschrieben werden.
+(Siehe ":ref:`RoundButton <roundbuttondraw>`", ":ref:`RectButtonCircle <rectbuttoncircledraw>`", ":ref:`ToggleSwitch <toggleswitchdraw>`")
 
-.. _elementSetPostion:
+.. _elementSetTouch:
 
-void setPosition (const uint16_t posX, const uint16_t posY)
+virtual void setTouch(Inputs& input) = 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: ../../src/Element.cpp
-    :lines: 4-7
-    :linenos:
-    
-Die x und y Koordinaten des Elements auf dem Bildschirm werden festgelegt.  
+Diese virtuelle Funktion muss von einer abgeleiteten Klasse überschrieben werden.
+(Siehe ":ref:`Button <buttonsettouch>`", ":ref:`NumberInput <numberinputsettouch>`", ":ref:`Textbox <textboxsettouch>`")
 
 .. _elementSetSize:
 
-bool setSize (const uint16_t sizeX, const uint16_t sizeY, const uint8_t rotation)
+bool setSize(const uint16_t sizeX, const uint16_t sizeY, const uint8_t rotation)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Element.cpp
@@ -96,20 +117,81 @@ bool setSize (const uint16_t sizeX, const uint16_t sizeY, const uint8_t rotation
     :linenos:
 
 Die Funktion gibt aus, ob das Element zeichenbar ist oder nicht. Gibt sie "true" zurück lässt sich das Element zeichnen, bei "false" ist das Element zu groß bzw. zu klein zum zeichnen. 
-Hierbei wird zuerst :ref:`checkSize <elementchecksize>` ausgeführt.
-
-TODO Continue
+Hierbei wird zuerst :ref:`checkSize <elementchecksize>` ausgeführt. Gibt dieser Funktionsaufruf "false" zurück, so gibt auch die ``setSize`` Funktion false zurück und das Element ist nicht zeichenbar.
+Andernfalls erfolgt die Zuweisung der Werte der Parameter ``posX``, ``posY`` und ``rotation`` zu den entsprechenden Membervariablen des aktuellen Objektes. Danach gibt die Funktion ``true`` zurück, das Element lässt sich zeichnen.
 
 .. _elementSetDisplay:
 
-void setDisplay (Display* const display)
+void setDisplay(Display* const dis)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Element.cpp
     :lines: 19-21
     :linenos:
 
+Diese Funktion weist :ref:`display <elementvdisplay>` des aktuellen ``Element`` Objekts den Wert des übergebenen ``disp`` zu.
+
 .. _elementCheckSize:
 
-virtual bool checkSize (uint16_t sizeX, uint16_t sizeY, uint8_t rotation) = 0
+virtual bool checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) = 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Diese virtuelle Funktion muss von einer abgeleiteten Klasse überschrieben werden.
+(Siehe ":ref:`RoundButton <roundbuttonchecksize>`", ":ref:`RectButtonCircle <rectbuttoncirclechecksize>`", ":ref:`ToggleSwitch <toggleswitchchecksize>`", ":ref:`Slider_Rect <sliderrectchecksize>`", ":ref:`ToggleSwitch <toggleswitchchecksize>`", ":ref:`Textbox_rect <textbox_rectchecksize>`",  ":ref:`Slider_Arrow <slider_arrowchecksize>`")
+
+.. _elementSetPosition:
+
+void setPosition(const uint16_t posX, const uint16_t posY);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../../src/Element.cpp
+    :lines: 4-7
+    :linenos:
+
+Diese Funktion legt die Position des ``Element`` Objektes auf dem Display fest. Dafür erfolgt die Zuweisung der Werte der Parameter ``posX`` und ``posY`` zu den entsprechenden Membervariablen des aktuellen Objektes.
+
+
+Variablen und Konstanten Beschreibung
+=====================================
+.. _elementVPosX:
+
+uint16_t posX
+~~~~~~~~~~~~~~
+
+Gibt die X-Koordinate eines ``Element`` Objektes an.
+
+.. _elementVPosY:
+
+uint16_t posY
+~~~~~~~~~~~~~~
+
+Gibt die Y-Koordinate eines ``Element`` Objektes an.
+
+.. _elementVSizeX:
+
+uint16_t sizeX
+~~~~~~~~~~~~~~
+
+Gibt die Höhe eines ``Element`` Objektes an, bzw. die Größe des Objektes in X-Richtung.
+
+.. _elementVSizeY:
+
+uint16_t sizeY
+~~~~~~~~~~~~~~
+
+Gibt die Breite eines ``Element`` Objektes an, bzw. die Größe des Objektes in Y-Richtung.
+
+.. _elementVRotation:
+
+uint8_t rotation
+~~~~~~~~~~~~~~~~~~
+
+Gibt an, ob das Element hochkant oder seitwärts dargestellt werden soll. Rotation kann die Werte von 0 bis 3 annehmen, da es je zwei mögliche Darstellungsformen vom Hoch- und Querformat gibt ("normal" und auf dem Kopf).
+
+.. _elementVDisplay:
+
+Display* display
+~~~~~~~~~~~~~~~~~~
+
+Ein Pointer auf ein :ref:`Display <display>` Objekt. Auf ``display`` lassen sich neben einem konkreten ``Screen`` auch diverse ":ref:`Elemente<element>`" zeichnen bzw. anzeigen. 
+Somit ist ``display`` von großer Wichtigkeit für das gesamte Projekt.
