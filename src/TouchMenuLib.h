@@ -58,9 +58,10 @@ public:
     bool enableScreenSaver ();
     void disableScreenSaver ();
     
-    bool setSitebar (const uint8_t sitebarID, const bool disableAutomatic = true);  // set Sitebar to ID, if sitebar feature is activated
-    bool enableSitebar ();                                                          // activate Sitebar Feature, go to default Sitebar for current screen and draw
-    void disableSitebar (const bool deactivateSitebar = false);                     // disable Sitebar Feature
+    // wird so nicht funktionieren, da der Hauptscreen eine andere Größe benötigt
+    // bool setSitebar (const uint8_t sitebarID, const bool disableAutomatic = true);  // set Sitebar to ID, if sitebar feature is activated
+    // bool enableSitebar ();                                                          // activate Sitebar Feature, go to default Sitebar for current screen and draw
+    // void disableSitebar (const bool deactivateSitebar = false);                     // disable Sitebar Feature
 
     Display& getDisplay();
 

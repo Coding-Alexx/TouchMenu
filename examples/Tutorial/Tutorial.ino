@@ -73,8 +73,8 @@ void setup() {
     // Mian Screen
     CREATE_GRID_SCREEN(TML, 0, 1, 3, Color(200, 200, 255),
         AddElement(new Button_Rect("icon:ButtonClick", COLOR_LIGHT_BLUE, 1, 1, TML_goTo(TML, 1)), 0, 0, 1, 1),
-        AddElement(new Button_Rect("icon:number",      COLOR_LIGHT_BLUE, 1, 1, TML_goTo(TML, 1)), 0, 1, 1, 1),
-        AddElement(new Button_Rect("icon:text",        COLOR_LIGHT_BLUE, 1, 1, TML_goTo(TML, 1)), 0, 2, 1, 1)
+        AddElement(new Button_Rect("Item System",      COLOR_LIGHT_BLUE, 1, 1, TML_goTo(TML, 4)), 0, 1, 1, 1),
+        AddElement(new Button_Rect("icon:number",      COLOR_LIGHT_BLUE, 1, 1, TML_goTo(TML, 1)), 0, 2, 1, 1)
     )
 
     // structure of this library:
@@ -102,11 +102,31 @@ void setup() {
         AddElement(new Button_Blank ("icon:text", COLOR_BLACK + COLOR_DARK_BLUE, TML_empty_button), 2, 2, 1, 2)
     )
 
-    // Round Buttons
+    // Button Modes
     CREATE_GRID_SCREEN_WITH_SITEBAR(TML, 3, 0, 4, 6, Color(200, 200, 255),
         AddElement(new Textbox_Blank("one button has 2 modes:", 1, COLOR_BLACK),                    0, 0, 4, 1),
         AddElement(new Button_Rect("Button Mode", COLOR_GREEN + COLOR_RED, 1, 1, TML_empty_button), 0, 2, 2, 1),
         AddElement(new Button_Rect("Switch Mode", COLOR_GREEN + COLOR_RED, 1, 1, TML_empty_switch), 2, 2, 2, 1)
+    )
+
+    // Item System
+    CREATE_GRID_SCREEN_WITH_SITEBAR(TML, 4, 0, 4, 6, Color(200, 200, 255),
+        AddElement(new Textbox_Blank("Item System", 1, COLOR_BLACK),    0, 0, 4, 1),
+        
+        // Icon parameter: scale: double (reduces the highest possible resolution),   color: rbg or Color name
+        AddElement(new Textbox_Blank("Icons:", 1, COLOR_BLACK),               0, 1, 2, 1),  // Icons are bitmaps (pixel graphics)
+        AddElement(new Textbox_Blank("icon:settings", 1, COLOR_BLACK),        2, 1, 1, 1),  // for a list of all icons see src/Item/icon_templates.h
+        AddElement(new Textbox_Blank("icon:back color:red", 1, COLOR_BLACK),  3, 1, 1, 1),  // rotate overwrite the default colour of each item -> the RGB variant with colour:20,20,30 is also possible
+
+        // Symbol parameter: scale: double,   color: rbg or Color name,     bordersize: int     borderColor: rgb or Color name      itemColor
+        AddElement(new Textbox_Blank("Symbol:", 1, COLOR_BLACK),              0, 2, 2, 1),  // Symbols are created through shapes
+        AddElement(new Textbox_Blank("symb:ToggleSwitch", 1, COLOR_BLACK),    2, 2, 1, 1),  // it can also be multicoloured. Currently you can only give a complete colour object in Textbox_Blank or Button_Blank.
+        AddElement(new Textbox_Blank("icon:Plus scale:.75", 1, COLOR_BLACK),  3, 2, 1, 1),  // scale scales an item up or down. 1 is the normal state
+        
+        // Text: Parameter: size
+        AddElement(new Textbox_Blank("Text:", 1, COLOR_BLACK),                0, 3, 2, 1),  // text is normal text. 
+        AddElement(new Textbox_Blank("text:Hello size:1", 1, COLOR_BLACK),    2, 3, 1, 1),  // If you want to specify parameters, you have to write the keyword in front of it.
+        AddElement(new Textbox_Blank("World", 1, COLOR_BLACK),                3, 3, 1, 1),  // Otherwise the whole string is displayed
     )
     
     LOGGER("T6")

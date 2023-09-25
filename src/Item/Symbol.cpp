@@ -81,7 +81,7 @@ Symbol* Symbol::create(const std::string& symbol, uint16_t width, uint16_t heigh
     if (symbol == "TriangleRight") return new Symbol(drawTriangleRight, w, h, symbolColor, borderSize);
     if (symbol == "TriangleLeft")  return new Symbol(drawTriangleLeft, w, h, symbolColor, borderSize);
     if (symbol == "Rect")          return new Symbol(drawRect, w, h, symbolColor, borderSize);
-    if (symbol == "toggleSwitch")  return new Symbol(drawToggleSwitch, w, h, symbolColor, borderSize);
+    if (symbol == "ToggleSwitch")  return new Symbol(drawToggleSwitch, w, h, symbolColor, borderSize);
     if (symbol == "Plus")          return new Symbol(drawPlus, w, h, symbolColor, borderSize);
     if (symbol == "Minus")         return new Symbol(drawMinus, w, h, symbolColor, borderSize);
 

@@ -255,27 +255,27 @@ void TouchMenuLib::disableScreenSaver () {
     isScreensaverEnable = false;
 }
 
-// set Sitebar for curent Screen
-bool TouchMenuLib::setSitebar (const uint8_t sitebarID, const bool disableAutomatic) {
-    if (sitebars.count(sitebarID) == 0) return false;
+// // set Sitebar for curent Screen
+// bool TouchMenuLib::setSitebar (const uint8_t sitebarID, const bool disableAutomatic) {
+//     if (sitebars.count(sitebarID) == 0) return false;
     
-    disableSitebarAutomatic = disableAutomatic;
-    currentSitebar = sitebarID;
-    updateAll = true;
-    return true;
-}
+//     disableSitebarAutomatic = disableAutomatic;
+//     currentSitebar = sitebarID;
+//     updateAll = true;
+//     return true;
+// }
 
-bool TouchMenuLib::enableSitebar () {
-    disableSitebarAutomatic = false;
-    updateAll = true;
-    return false;
-}
+// bool TouchMenuLib::enableSitebar () {
+//     disableSitebarAutomatic = false;
+//     updateAll = true;
+//     return false;
+// }
 
-void TouchMenuLib::disableSitebar (const bool deactivate) {
-    currentSitebar = UINT8_MAX;
-    disableSitebarAutomatic = true;
-    updateAll = true;
-}
+// void TouchMenuLib::disableSitebar (const bool deactivate) {
+//     currentSitebar = UINT8_MAX;
+//     disableSitebarAutomatic = true;
+//     updateAll = true;
+// }
 
 uint8_t TouchMenuLib::getScreenID() {
     return screenHistory.top();
