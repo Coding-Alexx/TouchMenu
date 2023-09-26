@@ -1,33 +1,27 @@
 #include "NumberInput.h"
 
-NumberInput::NumberInput(slider_func_ptr slider_callback, uint16_t* externalValue) : slider_callback(slider_callback), externalValue(externalValue) {
-    if (externalValue) value = *externalValue;
-    else externalValue = new uint16_t;
-}
+NumberInput::NumberInput(std::function<void(int)> callback, ExternalNumberValue* const externalValue) : 
+    callback(callback), 
+    externalValue(externalValue) 
+    {}
+
 NumberInput::~NumberInput(){};
 
 bool NumberInput::select(Inputs& input) {
     return false;
 }
 
-// void NumberInput::loop(){
-//     if (externalValue && *externalValue != value) {
-//         // if (*externalValue < 0) * externalValue = 0;
-//         if (*externalValue > maxValue) *externalValue = maxValue;
-//         value = *externalValue;
-//         draw();
-//     }
-// }
-
 void NumberInput::loop(Inputs& input) {
     if (input.enter) {
         LOGGER("Enter")
     }
 
-    if (externalValue && *externalValue != value) {
-        // if (*externalValue < 0) * externalValue = 0;
-        if (*externalValue > maxValue) *externalValue = maxValue;
-        value = *externalValue;
-        draw();
-    }
+    if (!externalValue) return; // if there is no external Value
+    else if (externalValue->getValue() != value) value = externalValue->getValue();
+    else if (externalValue->getMinValue() != minValue) minValue = externalValue->getMinValue();
+    else if (externalValue->getMaxValue() != maxValue) maxValue = externalValue->getMaxValue();
+    else if (externalValue->getSteps() != steps) steps = externalValue->getSteps();
+    else return; // if there is no update
+    
+    draw();
 }
