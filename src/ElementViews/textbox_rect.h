@@ -7,13 +7,13 @@
 
 class Textbox_Rect: public Textbox {
 public:
-    inline Textbox_Rect(char* itemStr, const Color& color, ExternalTextboxValue* value=nullptr):
+    inline Textbox_Rect(const char* itemStr, const Color& color, ExternalTextboxValue* value=nullptr):
         Textbox(Display::createItem(itemStr, color.getItemColor()), value), color(color) {}
 
     inline Textbox_Rect(Item* item, const Color& color, ExternalTextboxValue* value=nullptr):
         Textbox(item, value), color(color) {}
 
-    inline Textbox_Rect(char* itemStr, const uint8_t textsize, const Color& color, ExternalTextboxValue* value=nullptr):
+    inline Textbox_Rect(const char* itemStr, const uint8_t textsize, const Color& color, ExternalTextboxValue* value=nullptr):
         Textbox(Display::createItem(itemStr, color.getItemColor()), textsize, value), color(color) {}
 
     inline Textbox_Rect(Item* item, const uint8_t textsize, const Color& color, ExternalTextboxValue* value=nullptr):

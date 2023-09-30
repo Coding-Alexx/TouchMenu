@@ -79,11 +79,11 @@ void setup() {
 
     // All Buttons
     CREATE_GRID_SCREEN_WITH_SITEBAR(TML, 1, 0, 4, 3, Color(200, 200, 255),
-        AddElement(new Button_Rect("icon:text", COLOR_GREEN + COLOR_RED, 2, 4, TML_empty_button), 0, 0, 2, 2),
+        AddElement(new Button_Rect("icon:text", COLOR_GREEN + COLOR_RED, 2, 4, TML_empty_switch), 0, 0, 2, 2),
         AddElement(new Button_Round("icon:text", COLOR_GREEN + COLOR_RED, 4, TML_empty_button),   2, 0, 2, 2),
         AddElement(new Button_Round("icon:text", COLOR_GREEN + COLOR_RED, 4, TML_empty_button),   0, 2, 2, 1),
         AddElement(new Button_Blank("icon:text", COLOR_GREEN + COLOR_RED, TML_empty_button),      2, 2, 1, 1),
-        AddElement(new Button_Rect("icon:text", COLOR_GREEN + COLOR_RED, 2, 4, TML_empty_button), 3, 2, 1, 1)
+        AddElement(new Button_Rect("icon:text", COLOR_GREEN + COLOR_RED, 2, 4, TML_empty_switch), 3, 2, 1, 1)
     )
 
     // All NumberInputs

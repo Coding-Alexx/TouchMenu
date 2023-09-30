@@ -82,9 +82,9 @@ protected:
     const bool hasLongPress = false;
     bool value = false;
     bool blocked = false;
-    bool reDrawOnUpdate = true;
     bool hasButtonAnimation = true;
 
+    void loop(Inputs& input) override;
     void setTouch(Inputs& input) override;
 
 private:
@@ -92,7 +92,6 @@ private:
     unsigned long animationTimer = 0;
     unsigned long longPressTimer = 0;
 
-    void loop(Inputs& input) override;
     bool isInsideHitbox(uint16_t x, uint16_t y, uint16_t posX, uint16_t posY, uint16_t sizeX, uint16_t sizeY);
 
 public:

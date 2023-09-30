@@ -53,8 +53,7 @@ bool Button::select(Inputs& input) {
         value = !value;
         switch_callback(value);
     }
-    if (reDrawOnUpdate) draw();
-    else input.update = true;
+    draw();
 
     return false;
 }

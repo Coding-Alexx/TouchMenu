@@ -20,7 +20,7 @@ public:
     uint16_t getHeight();
     uint16_t getWidth();
 
-    void setTouch(Inputs& input) override;
+    void loop(Inputs& input) override;
 
 private:
     bool checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) override;
