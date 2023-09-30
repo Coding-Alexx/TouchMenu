@@ -1,30 +1,10 @@
-import os
-import sys
-import re
-from PIL import Image
-from io import BytesIO
-
 # solution for an error:
 # .\pip3.8.exe install pipwin
 #  pipwin install cairocffi
 
-
 def logging (str):
     # print(f"[{__file__.split('/')[-1].split(chr(92))[-1].split('.')[-2]}] {str}")
     print(f"[convert_icons_to_code] {str}")
-
-# Check whether cairosvg is installed
-try:
-    import cairosvg
-except ImportError:
-    logging("Error: The library 'cairosvg' is not installed. Please install it with 'pip install cairosvg' and run the programme again.")
-    sys.exit(0)
-
-try:
-    import numpy as np
-except ImportError:
-    logging("Error: The library 'numpy' is not installed. Please install it with 'pip install numpy' and run the programme again.")
-    sys.exit(0)
 
 base_folder = "icon_templates"
 output_folder = "src/Item/"
@@ -94,7 +74,12 @@ def main():
     # Check if the input folder exists
     if not os.path.exists(base_folder):
         logging(f"Error: The base folder {base_folder} does not exist.")
-        sys.exit(0)
+        return
+
+    # Check if subfolders exist -> serve as separation of the icon packages
+    if len(os.listdir(base_folder)) == 0:
+        logging(f"Error: no subfolder found in {base_folder}")
+        return
 
     # Öffnen Sie die Ausgabedatei im Schreibmodus
     output_file_path = os.path.join(output_folder, "icon_bitmaps.h")
@@ -162,5 +147,18 @@ def main():
 
     logging(f"The SVG files from the subfolders of {base_folder} were successfully saved in a single icon_templates.h file")
 
-# if __name__ == '__main__':
-main()
+# Check whether cairosvg is installed
+try:
+    import os
+    import re
+    from io import BytesIO
+
+    from PIL import Image
+    import cairosvg
+    import numpy as np
+
+    main()
+except ImportError:
+    logging("ERROR: To convert icons into C-Code you need the Python packages PIL, cairosvg and numpy")
+except Exception as ex:
+    logging(f"ERROR: {ex}")

@@ -11,8 +11,8 @@ public:
     inline Number_Counter(const char* item1, const char* item2, const Color& color, const bool show_number, const std::function<void(int)> slider_callback, ExternalNumberValue* value=nullptr):
         NumberInput(slider_callback, value),
         color(color),
-        item1(Display::createItem(item1, color.getItemColor() + Color(color.getItemColor(), -100))),    //Second color is by default a funkier variant of the main item colour
-        item2(Display::createItem(item2, color.getSecondaryItemColor() + Color(color.getSecondaryItemColor(), -100))), 
+        item1(Display::createItem(item1, color.getItemColor() + Color(color.getItemColor(), -50))),    //Second color is by default a funkier variant of the main item colour
+        item2(Display::createItem(item2, color.getSecondaryItemColor() + Color(color.getSecondaryItemColor(), -50))), 
         showNumber(show_number)
         {}
 
@@ -136,11 +136,11 @@ private:
 
         LOGGER_PATTERN("Zeichne Slider _ mit item1: (_/_) in der größe _,_ und item2: (_/_) in der größe _,_", isVertical? "vertikal":"Horrizontal", x1, y1, item1->getWith(), item1->getHeight(), x2, y2, item2->getWith(), item2->getHeight())
 
-        if ((isVertical && timerTriang1 == 0) || (!isVertical && timerTriang2 == 0)) item1->draw(x1, y1, display, color.getItemColor());
-        else item1->draw(x1, y1, display);
+        if ((isVertical && timerTriang1 == 0) || (!isVertical && timerTriang2 == 0)) item1->drawOn(x1, y1, display);
+        else item1->drawOff(x1, y1, display);
 
-        if ((isVertical && timerTriang2 == 0) || (!isVertical && timerTriang1 == 0)) item2->draw(x2, y2, display, color.getSecondaryItemColor());
-        else item2->draw(x2, y2, display);
+        if ((isVertical && timerTriang2 == 0) || (!isVertical && timerTriang1 == 0)) item2->drawOn(x2, y2, display);
+        else item2->drawOff(x2, y2, display);
     }
 
     inline void loop (Inputs& input) override {
@@ -178,7 +178,7 @@ private:
     uint16_t triangleHight; 
     bool isVertical = false;
 
-    const uint16_t time = 300; // animation time
+    const uint16_t time = 200; // animation time
     bool activateAnimation = true;
 
     unsigned long timerTriang1 = 0;

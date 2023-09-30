@@ -25,6 +25,11 @@ static void drawRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t bor
     display->rect(x - w/2, y - h/2, w, h, borderSize, 0, color.getBorderColor(), color);
 }
 
+static void drawCrosslines(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t borderSize, Display* display, const Color& color) {
+    display->line(x - w/2, y - h/2, x + w/2, y + h/2, color);
+    display->line(x + w/2, y - h/2, x - w/2, y + h/2, color);
+}
+
 static void drawToggleSwitch(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t borderSize, Display* display, const Color& color) {
     uint16_t switchX = x + w/2;
     uint16_t switchHeight = h / 2;
@@ -76,14 +81,15 @@ Symbol* Symbol::create(const std::string& symbol, uint16_t width, uint16_t heigh
     const uint16_t w = width*scale;
     const uint16_t h = width*scale;
 
-    if (symbol == "TriangleUp")    return new Symbol(drawTriangleUp, w, h, symbolColor, borderSize);
-    if (symbol == "TriangleDown")  return new Symbol(drawTriangleDown, w, h, symbolColor, borderSize);
+    if (symbol == "TriangleUp")    return new Symbol(drawTriangleUp,    w, h, symbolColor, borderSize);
+    if (symbol == "TriangleDown")  return new Symbol(drawTriangleDown,  w, h, symbolColor, borderSize);
     if (symbol == "TriangleRight") return new Symbol(drawTriangleRight, w, h, symbolColor, borderSize);
-    if (symbol == "TriangleLeft")  return new Symbol(drawTriangleLeft, w, h, symbolColor, borderSize);
-    if (symbol == "Rect")          return new Symbol(drawRect, w, h, symbolColor, borderSize);
-    if (symbol == "ToggleSwitch")  return new Symbol(drawToggleSwitch, w, h, symbolColor, borderSize);
-    if (symbol == "Plus")          return new Symbol(drawPlus, w, h, symbolColor, borderSize);
-    if (symbol == "Minus")         return new Symbol(drawMinus, w, h, symbolColor, borderSize);
+    if (symbol == "TriangleLeft")  return new Symbol(drawTriangleLeft,  w, h, symbolColor, borderSize);
+    if (symbol == "Rect")          return new Symbol(drawRect,          w, h, symbolColor, borderSize);
+    if (symbol == "ToggleSwitch")  return new Symbol(drawToggleSwitch,  w, h, symbolColor, borderSize);
+    if (symbol == "Plus")          return new Symbol(drawPlus,          w, h, symbolColor, borderSize);
+    if (symbol == "Minus")         return new Symbol(drawMinus,         w, h, symbolColor, borderSize);
+    if (symbol == "Crosslines")      return new Symbol(drawCrosslines,      w, h, symbolColor, borderSize);
 
     return new Symbol(drawError, w, h, symbolColor, borderSize);
 }

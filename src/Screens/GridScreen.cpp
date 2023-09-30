@@ -1,5 +1,6 @@
 #include <tuple>
 #include "GridScreen.h"
+#include "ElementViews/textbox_Blank.h"
 
 GridScreen::GridScreen(const uint8_t col, const uint8_t row, const Color& background):
     color_background(Color(background)),
@@ -58,8 +59,10 @@ bool GridScreen::add(Element* element, const uint16_t posX, const uint16_t posY,
 
     // abort, if the size does not fit the element 
     if (!element->setSize(w, h, display->getRotation())) {
-        LOGGER_ERROR("Element hat falsche größe und kann daher nicht hinzugefügt werden")
-        return false;
+        LOGGER_ERROR("Element ist mit der aktuellen Größe icht kompatibel")
+        delete element;
+        element = new Textbox_Blank("symb:Crosslines", COLOR_RED);
+        element->setSize(w, h, display->getRotation());
     }
     element->setPosition(x, y);
     element->setDisplay(display);

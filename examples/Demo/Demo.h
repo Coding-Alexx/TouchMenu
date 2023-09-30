@@ -89,10 +89,10 @@ void setup() {
     // All NumberInputs
     CREATE_GRID_SCREEN_WITH_SITEBAR(TML, 2, 0, 4, 3, Color(200, 200, 255),
         AddElement(new Number_Slider(COLOR_RED, TML_empty_slider, &numberValue), 0, 0, 1, 3),
-        AddElement(new Number_Counter("symb:TriangleUp", "symb:TriangleDown", (COLOR_LIGHT_YELLOW|COLOR_ORANGE|COLOR_GRAY), true, TML_empty_slider, &numberValue), 1, 0, 1, 2),
+        AddElement(new Number_Counter("symb:TriangleUp", "symb:TriangleDown", (COLOR_LIGHT_YELLOW|COLOR_ORANGE|COLOR_GRAY) + (COLOR_DARK_YELLOW|Color(10,30,10)|COLOR_LIGHT_MAGENTA), true, TML_empty_slider, &numberValue), 1, 0, 1, 2),
         AddElement(new Number_Counter("symb:TriangleLeft", "symb:TriangleRight", COLOR_YELLOW, true, TML_empty_slider, &numberValue), 2, 0, 2, 1),
         AddElement(new Number_Counter("symb:TriangleLeft", "symb:TriangleRight", COLOR_YELLOW, false, TML_empty_slider, &numberValue), 2, 1, 2, 1),
-        AddElement(new Number_Slider(COLOR_RED, TML_empty_slider, &numberValue), 1, 2, 3, 1)
+        AddElement(new Number_Slider((COLOR_RED|COLOR_LIGHT_YELLOW|COLOR_GRAY) + COLOR_DARK_GREEN, TML_empty_slider, &numberValue), 1, 2, 3, 1)
     )
 
     // All Textfield

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
+#include <algorithm>
 #include "Logger.h"
 
 #define COLOR_RED           Color(255,   0,   0)
@@ -73,10 +74,17 @@ private:
 
     inline const Color setColorOffset(const Color& color, const int offset) const {
         if (offset == 0) return Color(0, color);
+
+        LOGGER_PATTERN ("_ + _ + _ + _ < 0", static_cast<int>(color.r_prim), static_cast<int>(color.g_prim), static_cast<int>(color.b_prim), offset)
+
+        // Very dark colours should only become lighter
+        if (static_cast<int>(color.r_prim) + static_cast<int>(color.g_prim) + static_cast<int>(color.b_prim) + offset <= 0) return Color(color, std::abs(offset));
         
-        const uint8_t r = std::max(0, std::min((int) r_prim + offset, UINT8_MAX));
-        const uint8_t g = std::max(0, std::min((int) g_prim + offset, UINT8_MAX));
-        const uint8_t b = std::max(0, std::min((int) b_prim + offset, UINT8_MAX));
+        const uint8_t r = std::min(std::max(static_cast<int>(color.r_prim) + offset, 0), 255);
+        const uint8_t g = std::min(std::max(static_cast<int>(color.g_prim) + offset, 0), 255);
+        const uint8_t b = std::min(std::max(static_cast<int>(color.b_prim) + offset, 0), 255);
+
+        LOGGER_PATTERN("Berechne Offset: _ + _ = _", color.toString(), offset, Color(r, g, b, 0).toString())
 
         return Color(r, g, b, 0);
     }
