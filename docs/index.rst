@@ -31,36 +31,32 @@ Welcome to Touch Menu's documentation!
    :caption: Class Reference:
 
    ClassReference/button.rst
+   ClassReference/button_blank.rst
+   ClassReference/rectbutton.rst
+   ClassReference/roundButton.rst
    ClassReference/color.rst
    ClassReference/display.rst
    ClassReference/displaytftespi.rst
    ClassReference/element.rst
    ClassReference/error.rst
    ClassReference/externalbuttonvalue.rst
+   ClassReference/ExternalNumberValue.rst
    ClassReference/externaltextboxvalue.rst
    ClassReference/grid.rst
    ClassReference/icon.rst
    ClassReference/input.rst
    ClassReference/item.rst
    ClassReference/numberInput.rst
-   ClassReference/rectbutton.rst
-   ClassReference/roundButton.rst
+   ClassReference/number_counter.rst
+   ClassReference/number_slider.rst
    ClassReference/screen.rst
-   ClassReference/slider_rect.rst
    ClassReference/symbol.rst
    ClassReference/text.rst
-   ClassReference/textbox_rect.rst
+   ClassReference/textbox.rst
    ClassReference/textboxblank.rst
+   ClassReference/textbox_rect.rst
    ClassReference/touchMenuLib.rst
 
-   
 
-
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-   :caption: Tutorials:
-
-   Tutorials & Examples/tutorials.rst
 
 

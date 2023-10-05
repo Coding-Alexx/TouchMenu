@@ -5,14 +5,10 @@ Color
 
 Beschreibung
 =============
-Color verwaltet alles, was in irgendeiner Form mit Farben zu tun hat.
+Diese Klasse verwaltet alles, was mit Farben zu tun hat. Mit dieser Klasse kann man die Farben sämtlicher :ref:`Elemente<button_blank>`, 
+:ref:`Screens<screen>` etc. anpassen.
 
-TODO auf jeden fall erklären, was border etc sind
 
-Tutorials/ Examples
-=====================
-Link dazu, wenn vorhanden
-oder direkt hier einbinden
 
 Funktionen
 =============
@@ -90,6 +86,9 @@ Variablen und Konstanten
 Farbwerte
 =============
 
+Hier ist eine Übersicht aller Macros, die anstelle von der ``Color (r, g, b)`` Schreibweise verwendet werden können, um 
+einfacher häufig verwendete Farben zu erstellen.
+
 .. csv-table:: 
     :widths: 100 1000
 
@@ -132,13 +131,12 @@ inline Color(const Color& prim, const Color& item, const Color& border, const Co
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 45-54
+    :lines: 46-55
     :linenos:
 
 Dieser Konstruktor wird genutzt, um die RGB Werte der Parameter, also der Hauptfarbe ``prim``, der Farbe des Objektes 
 ``item`` und der Umrandunsfarbe ``border`` zu extrahieren, und mit ihnen die entsprechenden Variablen zu initialisieren.
-
-TODO isBorderSet???
+Außerdem findet eine Initialisierung von :ref:`isBorderSet<colorvisborderset>` statt.
 
 .. _colorConstructor2:
 
@@ -146,10 +144,10 @@ inline Color(const uint8_t r, const uint8_t g, const uint8_t b, const bool)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 57-63
+    :lines: 58-64
     :linenos:
 
-Dieser Konstruktor wird genutzt, um mit den RGB übergebenen Werten nur die Variablen `r_prim <colorvr_prim>`, `g_prim <colorvg_prim>` und `b_prim <colorvb_prim>` zu initialisieren. 
+Dieser Konstruktor wird genutzt, um mit den RGB übergebenen Werten nur die Variablen `r_prim<colorvr_prim>`, `g_prim<colorvg_prim>` und `b_prim<colorvb_prim>` zu initialisieren. 
 Daher eignet sich der Konstruktor besonders, um ein ``Color``-Objekt ohne Item oder Border zu erstellen.
 
 .. _colorConstructor3:
@@ -158,10 +156,10 @@ inline Color(const bool, const Color& other)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 66-72
+    :lines: 66-73
     :linenos:
 
-Dieser Konstruktor wird genutzt, um mit der übergebenen Farbe ``other`` nur die Variablen `r_prim <colorvr_prim>`, `g_prim <colorvg_prim>` und `b_prim <colorvb_prim>` zu initialisieren. 
+Dieser Konstruktor wird genutzt, um mit der übergebenen Farbe ``other`` nur die Variablen `r_prim<colorvr_prim>`, `g_prim<colorvg_prim>` und `b_prim<colorvb_prim>` zu initialisieren. 
 Daher eignet sich der Konstruktor besonders, um von einer Farbe, die vorher auch Farbinformationen zu einem Icon oder Border gehabt hat, nur die Hauptfarbe zu extrahieren.
 
 .. _colorsetColorOffset:
@@ -170,15 +168,31 @@ inline const Color setColorOffset(const Color& color, const int offset) const
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 74-82
+    :lines: 75-90
     :linenos:
 
 Mit dieser Funktion kann aus einer Farbe eine neue Farbe erstellt werden, deren RGB Werte um einen bestimmten ``offset`` verschoben ist gegenüber der Ausgangsfarbe.
-Sollte kein ``offset`` angegeben werden, wird dieser `Color <colorconstructor3>` Konstruktor aufgerufen. Die neue Farbe ist äquivalent zur alten.
-Andernfalls werden mithilfe des ``offset`` neue RGB Werte berechnet. Dafür wird der maximale Wert aus ``0`` und ``std::min((int) r_prim + offset, UINT8_MAX)`` bestimmt. Bei 
-``std::min((int) r_prim + offset, UINT8_MAX)`` wird das Minimum aus ``((int) r_prim + offset`` und ``UINT8_MAX`` gewählt. Da wird `r_prim <colorvr_prim>` von einem ``uint8_t`` zu einem normalen ``int`` 
-casten und das Ergebnis der Addition deshalb ``>255`` sein kann, ist dieses Minumum äußerst wichtig. ``UINT8_MAX`` hat einen Wert von ``255`` und wird deshalb als eine Art Sicherheitsgarantie gebraucht.
-Anschließend wird dieser `Color <colorconstructor2>` Konstruktor aufgerufen, wodurch aus den neuen RGB Werten ein ``Color`` Objekt entsteht.
+
+.. literalinclude:: ../../src/Color.h
+    :lines: 76
+
+Sollte kein ``offset`` angegeben werden, wird dieser `Color<colorconstructor3>` Konstruktor aufgerufen. Die neue Farbe ist äquivalent zur alten.
+
+.. literalinclude:: ../../src/Color.h
+    :lines: 81
+
+Besonders dunkle Farben sollen nur heller und nicht noch dunkler werden, deshalb wird hier geprüft, ob die Summe von
+`r_prim<colorvr_prim>`, `g_prim<colorvg_prim>` und `b_prim<colorvb_prim>` kleinergleich ``0`` ist. Wenn ja, wird der `Color<colorconstructor3>` mit ``std::abs(offset)`` aufgerufen, um aus einer negativen Zahl
+eine positive zu erhalten.
+
+.. literalinclude:: ../../src/Color.h
+    :lines: 83-89
+
+Andernfalls werden mithilfe des ``offset`` neue RGB Werte berechnet. Dafür wird der maximale Wert aus ``0`` und ``static_cast<int>(color.r_prim) + offset`` bestimmt, also dem Wert für
+auf einen ``int`` gecasteten Wert für `r_prim<colorvr_prim>` addiert mit dem ``offset``. Anschließend vergleichen wir das gerade ermittelte Maximum mit ``255`` und weisen ``r`` dem Wert des daraus
+resultierenden Minumums zu. Da wir :ref:`r_prim<colorvr_prim>` von einem ``uint8_t`` zu einem normalen ``int`` casten und das Ergebnis der Addition deshalb ``>255`` sein kann, ist dieses Minumum äußerst wichtig. 
+Mit den Variablen ``g`` und ``b`` wird genauso verfahren.
+Anschließend wird dieser `Color<colorconstructor2>` Konstruktor aufgerufen, wodurch aus den neuen RGB Werten ein ``Color`` Objekt entsteht.
 
 .. _colorCreateItemcolor:
 
@@ -186,11 +200,11 @@ inline const Color createItemColor(const Color& color) const
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 84-87
+    :lines: 92-95
     :linenos:
 
 Mit dieser Funktion wird automatisch eine Farbe für ein Item bestimmt. Dieses kann hier entweder weiß oder schwarz werden, je nachdem, welche Farbe sichtbarer ist.
-Sollte die Summe aus `r_prim <colorvr_prim>`, `g_prim <colorvg_prim>` und `b_prim <colorvb_prim>` kleiner sein als der Referenzwert, so wird der `Color <colorconstructor2>` Konstruktor aufgerufen, um eine Farbe in Weiß zu erstellen.
+Sollte die Summe aus `r_prim<colorvr_prim>`, `g_prim<colorvg_prim>` und `b_prim<colorvb_prim>` kleiner sein als der Referenzwert, so wird der `Color<colorconstructor2>` Konstruktor aufgerufen, um eine Farbe in Weiß zu erstellen.
 Andernfalls wird derselbe Konstruktor aufgerufen, um eine Farbe in Schwarz zu erstellen. 
 
 .. _colorCreateBorderColor:
@@ -198,11 +212,11 @@ Andernfalls wird derselbe Konstruktor aufgerufen, um eine Farbe in Schwarz zu er
 inline const Color createBorderColor(const Color& color) const
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. literalinclude:: ../../src/Color.h
-    :lines: 89-92
+    :lines: 97-99
     :linenos:
 
 Mit dieser Funktion wird automatisch eine Farbe für die Umrandung bestimmt. Diese kann hier entweder weiß oder schwarz werden, je nachdem, welche Farbe sichtbarer ist.
-Sollte die Summe aus `r_prim <colorvr_prim>`, `g_prim <colorvg_prim>` und `b_prim <colorvb_prim>` kleiner sein als der Referenzwert, so wird der `Color <colorconstructor2>` Konstruktor aufgerufen, um eine Farbe in Weiß zu erstellen.
+Sollte die Summe aus `r_prim<colorvr_prim>`, `g_prim<colorvg_prim>` und `b_prim<colorvb_prim>` kleiner sein als der Referenzwert, so wird der `Color<colorconstructor2>` Konstruktor aufgerufen, um eine Farbe in Weiß zu erstellen.
 Andernfalls wird derselbe Konstruktor aufgerufen, um eine Farbe in Schwarz zu erstellen. 
 TODO
 
@@ -212,7 +226,7 @@ inline Color(const Color& other)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 95
+    :lines: 103
     :linenos:
 
 Mithilfe dieser Copy Konstruktors kann ein Objekt der ``Color`` Klasse kopiert werden.
@@ -223,10 +237,10 @@ inline Color(const Color& prim, const int offset)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 96
+    :lines: 104
     :linenos:
 
-Mithilfe dieses Konstruktors kann aus einer Farbe eine neue Farbe mit einem ``offset`` erstellt werden. Dafür erfolgt bei der Initialisierung ein Funktionsaufruf von `colorsetColorOffset <colorsetColorOffset>` mit den gegebenen Parametern.
+Mithilfe dieses Konstruktors kann aus einer Farbe eine neue Farbe mit einem ``offset`` erstellt werden. Dafür erfolgt bei der Initialisierung ein Funktionsaufruf von `colorsetColorOffset<colorsetColorOffset>` mit den gegebenen Parametern.
 
 .. _colorConstructor6:
 
@@ -234,10 +248,10 @@ inline Color(const Color& prim, const Color& item)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 97
+    :lines: 105
     :linenos:
 
-Mithilfe dieses Konstruktors kann eine Farbe mit einer selbst festgelegten Item Farbe erstellt werden. Die Borderfarbe wird mit `colorcreatebordercolor <colorcreatebordercolor>` generiert.
+Mithilfe dieses Konstruktors kann eine Farbe mit einer selbst festgelegten Item Farbe erstellt werden. Die Borderfarbe wird mit `colorcreatebordercolor<colorcreatebordercolor>` generiert.
 
 .. _colorConstructor7:
 
@@ -245,10 +259,10 @@ inline Color(const Color& prim, const bool, const Color& border)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 98
+    :lines: 106
     :linenos:
 
-Mithilfe dieses Konstruktors kann eine Farbe mit einer selbst festgelegten Umrandungs Farbe erstellt werden. Die Item Farbe wird mit `colorcreateitemcolor <colorcreateitemcolor>` generiert.
+Mithilfe dieses Konstruktors kann eine Farbe mit einer selbst festgelegten Umrandungs Farbe erstellt werden. Die Item Farbe wird mit `colorcreateitemcolor<colorcreateitemcolor>` generiert.
 
 .. _colorConstructor8:
 
@@ -256,7 +270,7 @@ inline Color(const Color& prim, const Color& item, const Color& border)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 99
+    :lines: 107
     :linenos:
 
 Mithilfe dieses Konstruktors kann eine Farbe mit einer selbst festgelegten Item Farbe und einer selbst festgelegten Umrandungs Farbe erstellt werden.
@@ -267,11 +281,11 @@ inline Color(const Color& prim, const bool, const bool, const Color& secondary)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 100
+    :lines: 108
     :linenos:
 
-Mithilfe dieses Konstruktors kann eine Farbe zusammen mit einer zusätzlichen Zweitfarbe (siehe `secondaryColor <_colorvsecondaryColor>`) erstellt werden. Die Item Farbe und Umrandungs Farbe werden 
-mit `colorcreateitemcolor <colorcreateitemcolor>` bzw. `colorcreatebordercolor <colorcreatebordercolor>` generiert.
+Mithilfe dieses Konstruktors kann eine Farbe zusammen mit einer zusätzlichen Zweitfarbe (siehe `secondaryColor<_colorvsecondaryColor>`) erstellt werden. Die Item Farbe und Umrandungs Farbe werden 
+mit `colorcreateitemcolor<colorcreateitemcolor>` bzw. `colorcreatebordercolor<colorcreatebordercolor>` generiert.
 
 .. _colorConstructor10:
 
@@ -279,10 +293,10 @@ inline Color(const Color& prim, const bool, Color& border, const Color& secondar
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 101
+    :lines: 109
     :linenos:
 
-Mithilfe dieses Konstruktors kann eine Farbe mit einer selbst festgelegten Umrandungsfarbe zusammen mit einer zusätzlichen Zweitfarbe (siehe `secondaryColor <_colorvsecondaryColor>`) erstellt werden.
+Mithilfe dieses Konstruktors kann eine Farbe mit einer selbst festgelegten Umrandungsfarbe zusammen mit einer zusätzlichen Zweitfarbe (siehe `secondaryColor <colorvsecondaryColor>`) erstellt werden.
 Die Item Farbe wird mit `colorcreateitemcolor <colorcreateitemcolor>` generiert.
 
 .. _colorConstructor11:
@@ -291,10 +305,10 @@ inline Color(const Color& prim, const Color& item, const bool, const Color& seco
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 102
+    :lines: 110
     :linenos:
 
-Mithilfe dieses Konstruktors kann eine Farbe mit einer selbst festgelegten Item Farbe zusammen mit einer zusätzlichen Zweitfarbe (siehe `secondaryColor <_colorvsecondaryColor>`) erstellt werden.
+Mithilfe dieses Konstruktors kann eine Farbe mit einer selbst festgelegten Item Farbe zusammen mit einer zusätzlichen Zweitfarbe (siehe `secondaryColor <colorvsecondaryColor>`) erstellt werden.
 Die Umrandungs Farbe wird mit `colorcreatebordercolor <colorcreatebordercolor>` generiert.
 
 .. _colorConstructor12:
@@ -303,22 +317,22 @@ inline Color(const Color& prim, const Color& item, const Color& border, const Co
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 103
+    :lines: 111
     :linenos:
 
 .. _colorConstructor13:
 
 Mithilfe dieses Konstruktors kann eine Farbe mit einer selbst festgelegten Item Farbe und einer selbst festgelegten Umrandungs Farbe zusammen 
-mit einer zusätzlichen Zweitfarbe (siehe `secondaryColor<_colorvsecondaryColor>`) erstellt werden.
+mit einer zusätzlichen Zweitfarbe (siehe `secondaryColor<colorvsecondaryColor>`) erstellt werden.
 
 inline Color(const uint8_t r, const uint8_t g, const uint8_t b): Color(Color(r,g,b, true), 0)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 105
+    :lines: 113
     :linenos:
 
-Mithilfe dieses Konstruktors kann man mit Angabe von RGB Werten diesen `Color<_colorconstructor5>` Konstruktor aufrufen.
+Mithilfe dieses Konstruktors kann man mit Angabe von RGB Werten diesen `Color<colorconstructor5>` Konstruktor aufrufen.
 
 .. _colorDestructor:
 
@@ -326,10 +340,10 @@ inline ~Color()
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 110
+    :lines: 118
     :linenos:
 
-Der Destructor wird bei der Zerstörung eines ``Color`` Objektes aufgerufen und gibt den von `secondaryColor<_colorvsecondaryColor>` belegten Speicherplatz wieder frei.
+Der Destructor wird bei der Zerstörung eines ``Color`` Objektes aufgerufen und gibt den von `secondaryColor<colorvsecondaryColor>` belegten Speicherplatz wieder frei.
 
 .. _colorOperatorExcl:
 
@@ -337,10 +351,10 @@ inline Color operator!() const
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 115
+    :lines: 123
     :linenos:
 
-Diese Funktion invertiert die RGB Werte einer Farbe und erzeugt ruft diesen `Color<_colorconstructor13>` Konstruktor auf, um diese neue Farbe zu erstellen.
+Diese Funktion invertiert die RGB Werte einer Farbe und erzeugt ruft diesen `Color<colorconstructor13>` Konstruktor auf, um diese neue Farbe zu erstellen.
 
 .. _colorOperatorPlus:
 
@@ -348,10 +362,10 @@ inline Color operator+(const Color& secondary) const
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 116
+    :lines: 124
     :linenos:
 
-Diese Funktion addiert eine Farbe mit einer zweiten, übergebenen Farbe. Sie gibt ein neues ``Color`` Objekt mit diesen addierten Farbwerten nach dem Konstruktoraufruf von `Color<_colorconstructor12>` zurück.
+Diese Funktion addiert eine Farbe mit einer zweiten, übergebenen Farbe. Sie gibt ein neues ``Color`` Objekt mit diesen addierten Farbwerten nach dem Konstruktoraufruf von `Color<colorconstructor12>` zurück.
 
 .. _colorOperatorLine:
 
@@ -359,15 +373,30 @@ inline Color operator|(const Color& other)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 117
+    :lines: 125-129
     :linenos:
 
-TODO
+Diese Funktion nimmt eine Farbe ``other`` und benutzt diese Farbe als Hauptfarbe für eine neues ``Color`` Objekt, wenn bereits eine Umrandungsfarbe festgelegt ist (`isBorderSet<colorvisborderset>`). 
+Dafür wird dieser `Color<colorconstructor1>` Konstruktor aufgerufen. Dabei wird mithilfe von `getBorderColor<colorGetBorderColor>` die Umrandunsfarbe übergeben. Desweiteren übergeben wir ``true`` an den 
+Konstruktor, da dieses Objekt eine Umrandungsfarbe besitzt.
+Ist noch keine Umrandungsfarbe festgelet, wird ``other`` stattdessen als Umrandunsfarbe für ein neues Objekt verwendet und es wird ebenso dieser `Color<colorconstructor1>` Konstruktor aufgerufen.
+Mithilfe von `getItemColor<colorGetItemColor>` wird die Farbe des Items als Hauptfarbe übermittelt.
 
 .. _colorOperatorEquals:
 
 inline Color& operator=(const Color& other)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../../src/Color.h
+    :lines: 130-143
+    :linenos:
+
+Diese Funktion überschreibt die Farbwerte von einem Objekt mit den Farbwerten eines anderen Objekts.
+Um eine Selbstzuweisung zu verhindern, wird mit ``this != &other`` sichergestellt, dass tatsächlich zwei verschiedene Objekte betrachtet werden.
+Anschließend werden `r_prim<colorvr_prim>`, `g_prim<colorvg_prim>`, `b_prim<colorvb_prim>`, `r_item<colorvr_item>`, `g_item<colorvg_item>`, `b_item<colorvb_item>`,
+`r_border<colorvr_border>`, `g_border<colorvg_border>` und `b_border<colorvb_border>` mit den entsprechenden Werten der anderen Farbe ``other`` überschrieben.
+Schließlich wird `secondaryColor<colorvsecondaryColor>` gelöscht und der Speicherplatz freigegeben. Sollte ``other`` hingegen eine `secondaryColor<colorvsecondaryColor>` besitzen, 
+so wird für das aktuelle Objekt eine neue `secondaryColor<colorvsecondaryColor>` erstellt, die auf den Speicherplatz der anderen zeigt. 
 
 .. _colorGetPrimColor:
 
@@ -375,7 +404,7 @@ inline Color getPrimColor()
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 126
+    :lines: 147
     :linenos:
 
 Diese Getter-Funktion gibt die Hauptfarbe eines ``Color`` Objektes aus.
@@ -386,7 +415,7 @@ inline Color getItemColor()
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 127
+    :lines: 148
     :linenos:
 
 Diese Getter-Funktion gibt die Item Farbe eines ``Color`` Objektes aus.
@@ -398,7 +427,7 @@ inline Color getBorderColor()
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 128
+    :lines: 149
     :linenos:
 
 Diese Getter-Funktion gibt die Umrandungs Farbe eines ``Color`` Objektes aus.
@@ -409,7 +438,7 @@ inline Color getSecondaryItemColor()
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 129
+    :lines: 150
     :linenos:
 
 Diese Getter-Funktion gibt die Item Farbe der Zweitfarbe eines ``Color`` Objektes aus.
@@ -420,7 +449,7 @@ inline Color getSecondaryBorderColor()
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 130
+    :lines: 151
     :linenos:
 
 Diese Getter-Funktion gibt die Umrandungs Farbe der Zweitfarbe eines ``Color`` Objektes aus.
@@ -431,17 +460,18 @@ inline Color getSecondaryColor()
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 131-134
+    :lines: 152-155
     :linenos:
 
 Diese Getter-Funktion gibt die Zweitfarbe eines ``Color`` Objektes aus. Wenn ein Objekt keine Zweifarbe besitzt, wird stattdessen das ``Color`` Objekt zurückgegeben.
+
 .. _colorGetRed:
 
 inline uint8_t getRed()
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 136
+    :lines: 157
     :linenos:
 
 Gibt den Rotanteil einer Farbe (":ref:`r_prim<colorvr_prim>`") zurück.
@@ -452,7 +482,7 @@ inline uint8_t getGreen()
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 137
+    :lines: 158
     :linenos:
 
 Gibt den Grünanteil einer Farbe (":ref:`g_prim<colorvg_prim>`") zurück.
@@ -463,7 +493,7 @@ inline uint8_t getBlue()
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 138
+    :lines: 159
     :linenos:
 
 Gibt den Blauanteil einer Farbe (":ref:`b_prim<colorvb_prim>`") zurück.
@@ -475,7 +505,7 @@ inline bool hasSecondaryColor() const
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 140
+    :lines: 161
     :linenos:
 
 Diese Funktion gibt ``true`` zurück, wenn ein ``Color`` Objekt eine Zweitfarbe (":ref:`secondaryColor<colorvsecondarycolor>`") besitzt, und ``false`` falls es keine besitzt.
@@ -486,7 +516,7 @@ inline Color setPrimaryColor(const Color& color) const
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 145
+    :lines: 166
     :linenos:
 
 Mit dieser Funktion lässt sich die Hauptfarbe eines ``Color`` Objektes setzen. Die Funktion gibt ein neues Objekt zurück.
@@ -498,7 +528,7 @@ inline Color setItemColor(const Color& color) const
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 146
+    :lines: 167
     :linenos:
 
 Mit dieser Funktion lässt sich die Item Farbe eines ``Color`` Objektes setzen. Die Funktion gibt ein neues Objekt zurück.
@@ -510,7 +540,7 @@ inline Color setBorderColor(const Color& color) const
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 147
+    :lines: 168
     :linenos:
 
 Mit dieser Funktion lässt sich die Umrandungs Farbe eines ``Color`` Objektes setzen. Die Funktion gibt ein neues Objekt zurück.
@@ -522,7 +552,7 @@ inline Color setSecondaryColor(const Color& color) const
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 148
+    :lines: 169
     :linenos:
  
 Mit dieser Funktion lässt sich die Zweitfarbe eines ``Color`` Objektes setzen. Die Funktion gibt ein neues Objekt zurück.
@@ -534,7 +564,7 @@ inline Color setSecondaryItemColor(const Color& color) const
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 149
+    :lines: 170
     :linenos:
 
 Mit dieser Funktion lässt sich die Item Farbe der Zweitfarbe eines ``Color`` Objektes setzen. Die Funktion gibt ein neues Objekt zurück.
@@ -546,7 +576,7 @@ inline Color setSecondaryBorderColor(const Color& color) const
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 150
+    :lines: 151
     :linenos:
 
 Mit dieser Funktion lässt sich die Umrandungs Farbe der Zweitfarbe eines ``Color`` Objektes setzen. Die Funktion gibt ein neues Objekt zurück.
@@ -557,7 +587,7 @@ inline void setPrimaryColor(const Color& color)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 152
+    :lines: 173
     :linenos:
 
 Mit dieser Funktion lässt sich die Hauptfarbe des aktuellen ``Color`` Objektes verändern.
@@ -568,7 +598,7 @@ inline void setItemColor(const Color& color)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 153
+    :lines: 174
     :linenos:
 
 Mit dieser Funktion lässt sich die Item Farbe des aktuellen ``Color`` Objektes verändern.
@@ -579,7 +609,7 @@ inline void setBorderColor(const Color& color)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 154
+    :lines: 175
     :linenos:
 
 Mit dieser Funktion lässt sich die Umrandungs Farbe des aktuellen ``Color`` Objektes verändern.
@@ -590,7 +620,7 @@ inline void setSecondaryColor(const Color& color)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 155
+    :lines: 176
     :linenos:
 
 Mit dieser Funktion lässt sich die Zweitfarbe des aktuellen ``Color`` Objektes verändern.
@@ -601,7 +631,7 @@ inline void setSecondaryItemColor(const Color& color)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 156
+    :lines: 177
     :linenos:
 
 Mit dieser Funktion lässt sich die Item Farbe der Zweitfarbe des aktuellen ``Color`` Objektes verändern.
@@ -612,7 +642,7 @@ inline void setSecondaryBorderColor(const Color& color)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 157
+    :lines: 178
     :linenos:
 
 Mit dieser Funktion lässt sich die Umrandungs Farbe der Zweitfarbe des aktuellen ``Color`` Objektes verändern.
@@ -623,7 +653,7 @@ inline String toString() const
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Color.h
-    :lines: 160
+    :lines: 181-183
     :linenos:
 
 Diese Funktion gibt einen ``String`` in der Form Color(r,g,b) zurück, 
@@ -709,4 +739,4 @@ aktivierten Form eine andere Farbe haben soll, als in seiner deaktivierten Form.
 const bool isBorderSet = false
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-TODO
+Speichert, ob bereits eine Umrandungsfarbe für ein Objekt festgelegt ist.

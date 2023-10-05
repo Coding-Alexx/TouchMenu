@@ -5,16 +5,10 @@ Elements
 
 Beschreibung
 =============
-| Elemente sind vordefinierte Funktionseinheiten, die auf einem :ref:`Screen <screen>` eingefügt werden können.
-| Dazu gehören 
+Elemente sind vordefinierte Funktionseinheiten, die auf einem :ref:`Screen <screen>` eingefügt werden können. 
+Dazu gehören :ref:`Button<button>`, :ref:`Number_Input<numberinput>` und :ref:`Textbox<textbox>`.
 
-* :ref:`Buttons <button>`
-* :ref:`Slider <slider>`
 
-Tutorials/ Examples
-=====================
-Link dazu, wenn vorhanden
-oder direkt hier einbinden
 
 Funktionen
 =============
@@ -23,7 +17,7 @@ relevant für eigenes Menü
 .. csv-table:: 
     :widths: 100 1000
 
-     void, ":ref:`setPosition <elementsetposition>` (const uint16_t posX, const uint16_t posY)"
+     void, ":ref:`setPosition <elementsetposition>` (const uint16_t posX, const uint16_t posY, const uint8_t rotation)"
      bool, ":ref:`setsize <elementsetsize>` (const uint16_t sizeX, const uint16_t sizeY, const uint8_t rotation)"
      void, ":ref:`setDisplay <elementsetdisplay>` (Display* const disp)"
      , :ref:`Element <elementelementconstructor>` ()
@@ -80,7 +74,7 @@ virtual bool select () = 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Diese virtuelle Funktion muss von einer abgeleiteten Klasse überschrieben werden.
-(Siehe ":ref:`Button <buttonselect>`", ":ref:`NumberInput <numberinputselect>`", ":ref:`Textbox <textboxselect>`")
+(Siehe :ref:`Button <buttonselect>`, :ref:`NumberInput <numberinputselect>`, :ref:`Textbox <textboxselect>`)
 
 .. _elementLoopInput:
 
@@ -97,7 +91,8 @@ virtual void draw () = 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Diese virtuelle Funktion muss von einer abgeleiteten Klasse überschrieben werden.
-(Siehe ":ref:`RoundButton <roundbuttondraw>`", ":ref:`RectButtonCircle <rectbuttoncircledraw>`", ":ref:`ToggleSwitch <toggleswitchdraw>`")
+(Siehe :ref:`Button_Round <roundbuttondraw>`, :ref:`Button_Rect <rectbuttondraw>`, :ref:`Button_Blank <buttonblankdraw>`, :ref:`Textbox_Blank <textboxblankdraw>`,  
+:ref:`Textbox_Rect <textbox_rectdraw>`,  :ref:`Number_Counter <number_counterdraw>`,  :ref:`Number_Slider <number_sliderdraw>`)
 
 .. _elementSetTouch:
 
@@ -137,7 +132,7 @@ virtual bool checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) = 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Diese virtuelle Funktion muss von einer abgeleiteten Klasse überschrieben werden.
-(Siehe ":ref:`RoundButton <roundbuttonchecksize>`", ":ref:`RectButtonCircle <rectbuttoncirclechecksize>`", ":ref:`ToggleSwitch <toggleswitchchecksize>`", ":ref:`Slider_Rect <sliderrectchecksize>`", ":ref:`ToggleSwitch <toggleswitchchecksize>`", ":ref:`Textbox_rect <textbox_rectchecksize>`",  ":ref:`Slider_Arrow <slider_arrowchecksize>`")
+(Siehe  :ref:`Button_Round <roundbuttonchecksize>`, :ref:`Button_Rect <rectbuttonchecksize>`, :ref:`Button_Blank <buttonblankchecksize>`, :ref:`Number_Counter <number_counterchecksize>`, :ref:`Number_Slider <number_sliderchecksize>`)
 
 .. _elementSetPosition:
 
