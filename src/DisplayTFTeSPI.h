@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <tft_espi.h>
+#include <TFT_eSPI.h>
 #include <SPI.h>
 #include <array>
 // #include <LittleFS.h>
@@ -64,7 +64,7 @@ public:
     bool getTouch(uint16_t* x, uint16_t* y) override;
 
     TFT_eSPI& getTFTObjekt();
-    void startTouchCalibration() override;
+    // void startTouchCalibration() override;
 
 private:
     uint8_t rotation = 0;

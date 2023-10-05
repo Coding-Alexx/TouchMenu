@@ -177,6 +177,13 @@ void DisplayTFTeSPI::setRotation(uint8_t rotation) {
 }
 
 bool DisplayTFTeSPI::getTouch(uint16_t* x, uint16_t* y) {
+    #ifndef TOUCH_CS
+
+    // if no touchscreen has been defined in the UserSetup.h of the TFT_eSPI library
+    return false;
+
+    #else
+
     if (!x || !y) LOGGER_ERROR("x oder y ist ein Null Pointer")
     bool isTouched = tft.getTouch(x, y) != 0;
     
@@ -199,33 +206,35 @@ bool DisplayTFTeSPI::getTouch(uint16_t* x, uint16_t* y) {
     }
 
     return isTouched;
+
+    #endif
 }
 
 TFT_eSPI& DisplayTFTeSPI::getTFTObjekt() {
     return tft;
 }
 
-void DisplayTFTeSPI::startTouchCalibration(){
-    uint16_t calData[5];
-    tft.calibrateTouch(calData, colorTo565(COLOR_MAGENTA), colorTo565(COLOR_BLACK), 15);
-    std::ostringstream stm;
-    stm << "{";
-    for (uint8_t i = 0; i < 5; i++) {
-        // str += std::to_string(static_cast<int>(calData[i]));
-        stm << (int) calData[i];
-        if (i < 4) stm << ", ";
-    }
-    stm << "}";
+// void DisplayTFTeSPI::startTouchCalibration(){
+//     uint16_t calData[5];
+//     tft.calibrateTouch(calData, colorTo565(COLOR_MAGENTA), colorTo565(COLOR_BLACK), 15);
+//     std::ostringstream stm;
+//     stm << "{";
+//     for (uint8_t i = 0; i < 5; i++) {
+//         // str += std::to_string(static_cast<int>(calData[i]));
+//         stm << (int) calData[i];
+//         if (i < 4) stm << ", ";
+//     }
+//     stm << "}";
     
-    if (Serial.available()) {
-        Serial.print("Kalibrierungsdaten:"); 
-        Serial.println(stm.str().c_str());
-    }
+//     if (Serial.available()) {
+//         Serial.print("Kalibrierungsdaten:"); 
+//         Serial.println(stm.str().c_str());
+//     }
 
-    fillScreen(COLOR_LIGHT_CYAN);
-    text_center(tft.width()/2,     tft.height()/3, 1, "Kalibrierungsdaten:", COLOR_BLACK);
-    text_center(tft.width()/2, 2 * tft.height()/3, 1, stm.str().c_str(), COLOR_BLACK);
-}
+//     fillScreen(COLOR_LIGHT_CYAN);
+//     text_center(tft.width()/2,     tft.height()/3, 1, "Kalibrierungsdaten:", COLOR_BLACK);
+//     text_center(tft.width()/2, 2 * tft.height()/3, 1, stm.str().c_str(), COLOR_BLACK);
+// }
 
 void DisplayTFTeSPI::drawBitmap(const uint16_t x, const uint16_t y, const uint16_t w, const uint16_t h, const uint8_t* bitmap, const Color& fgcolor){
     tft.drawBitmap(x, y, bitmap, w, h, colorTo565(fgcolor));

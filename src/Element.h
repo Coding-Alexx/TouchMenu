@@ -16,7 +16,7 @@ public:
 
     void setDisplay(Display* const display);
     void setPosition(const uint16_t posX, const uint16_t posY);
-    bool setSize(const uint16_t sizeX, const uint16_t sizeY, const uint8_t rotation);  // true -> größe OK, false -> zu klein/groß zum Zeichnen
+    bool setSize(const uint16_t sizeX, const uint16_t sizeY, const uint8_t rotation = 0);  // true -> größe OK, false -> zu klein/groß zum Zeichnen
     
 protected:
     virtual bool checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) = 0;

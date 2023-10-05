@@ -20,7 +20,7 @@
 
 #include "TouchMenuLib.h"
 
-TouchMenuLib TML (new DisplayTFTeSPI());
+TouchMenuLib TML;
 
 ExternalTextboxValue textvalue;
 ExternalNumberValue  numberValue;
