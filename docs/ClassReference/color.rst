@@ -69,17 +69,17 @@ Variablen und Konstanten
 .. csv-table:: 
     :widths: 100 1000
 
-    uint8_t, ":ref: `r_prim <_colorvr_prim>`"
-    uint8_t, ":ref: `g_prim <_colorvg_prim>`"
-    uint8_t, ":ref: `b_prim <_colorvb_prim>`"
-    uint8_t, ":ref: `r_item<_colorvr_item>`"
-    uint8_t, ":ref: `g_item<_colorvg_item>`"
-    uint8_t, ":ref: `b_item<_colorvb_item>`"
-    uint8_t, ":ref: `r_border<_colorvr_border>`"
-    uint8_t, ":ref: `g_border<_colorvg_border>`"
-    uint8_t, ":ref: `n_border<_colorvb_border>`"
-    Color*, ":ref: `secondaryColor<_colorvsecondaryColor>` = nullptr"
-    const bool, ":ref: `isBorderSet<_colorvisborderset>` = false"
+    uint8_t, ":ref: `r_prim <colorvr_prim>`"
+    uint8_t, ":ref: `g_prim <colorvg_prim>`"
+    uint8_t, ":ref: `b_prim <colorvb_prim>`"
+    uint8_t, ":ref: `r_item<colorvr_item>`"
+    uint8_t, ":ref: `g_item<colorvg_item>`"
+    uint8_t, ":ref: `b_item<colorvb_item>`"
+    uint8_t, ":ref: `r_border<colorvr_border>`"
+    uint8_t, ":ref: `g_border<colorvg_border>`"
+    uint8_t, ":ref: `n_border<colorvb_border>`"
+    Color*, ":ref: `secondaryColor<colorvsecondaryColor>` = nullptr"
+    const bool, ":ref: `isBorderSet<colorvisborderset>` = false"
 
 
 
