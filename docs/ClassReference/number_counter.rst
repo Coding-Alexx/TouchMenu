@@ -265,7 +265,7 @@ Diese Funktion dient dazu, den Zustand des aktuellen Objektes zu aktualisieren.
 .. literalinclude:: ../../src/ElementViews/Number_Counter.h
     :lines: 147
 
-Zuerst wird :ref:`loop<numberinputloop>` Funktion mit ``input`` aufgerufen, um diese auszuführen.
+Zuerst wird :ref:`loop<numberinputloopinputs>` Funktion mit ``input`` aufgerufen, um diese auszuführen.
 
 .. literalinclude:: ../../src/ElementViews/Number_Counter.h
     :lines: 150
