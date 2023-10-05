@@ -1,10 +1,8 @@
 /*
-    - Menü mit allen Elementen und verschiednenen Screens
-    - Verschiedene Darstellungen der Elemente
-    - Beispielscreens
-    - Funktionsweisen auf einzelnen Screens genauer erklären
-    - ...
+    Dieses Beispiel ist nicht Fertig!!!
 
+    Es soll schrittweise die Funktionien dieser Bibliothek zeigen und erklären, wie all diese Funktionen in seinen Projekten umsetzen kann
+    
     Tutorials:
         - Aufbau: Screens -> Elemente -> Items
         - Button modes
@@ -15,7 +13,6 @@
         - Item System
             * Icons
 
-    Idee: eine Datei, wo man seine Icons Speichern kann. Diese werden beim Kompellieren automatisch in Bitmaps umgewandelt und auf den ESP mit hochgeladen
 */
 
 #include "TouchMenuLib.h"

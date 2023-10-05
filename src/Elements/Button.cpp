@@ -119,6 +119,8 @@ void Button::loop(Inputs& input) {
 }
 
 void Button::setTouch(Inputs& input) {
+    if (input.touchX < posX || input.touchX > posX + sizeX || input.touchY < posY || input.touchY > posY + sizeY) return;
+    
     if (hasLongPress && longPressTimer == 0 && !blocked) {
         LOGGER("Aktiviere long press timer")
         longPressTimer = millis();
