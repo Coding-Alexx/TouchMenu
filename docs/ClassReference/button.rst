@@ -229,15 +229,15 @@ bool select ()
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Elements/Button.cpp 
-    :lines: 44-60
+    :lines: 44-59
     :linenos:
 
 Diese Funktion ist für den Aufruf der entsprechenden Callback Funktionen von Objekten der ``Button`` Klasse zuständig, wenn diese ausgewählt werden.
 
 .. literalinclude:: ../../src/Elements/Button.cpp 
-    :lines: 44-51
+    :lines: 45-51
 
-Dieser Codeabschnitt gilt für Buttons (also nicht für Switches). Wenn Buttons eine Button Animation haben sollen (:ref:`hasButtonAnimation<buttonvhasbuttonanimation>`), dann wird der
+Dieser Codeabschnitt gilt für Buttons (also nicht für Switches). Wenn Buttons eine Button Animation haben(:ref:`hasButtonAnimation<buttonvhasbuttonanimation>`), dann wird der
 :ref:`animationTimer<buttonvanimationtimer>` die Millisekunden seit Start speichert (siehe `millis() <https://www.arduino.cc/reference/en/language/functions/time/millis/>`_ ). Der Button wird außerdem deaktiviert (:ref:`value<buttonvvalue>`).
 Es folgt der Aufruf der Callback Funktion :ref:`button_callback<buttonbuttoncallback>`. Sollte durch den :ref:`externalValue<buttonvexternalvalue>` ein gewünschter Zustand für den Button angegeben sein, so wird
 :ref:`setValue<externalbuttonsetvalue>` aufgerufen.
@@ -259,20 +259,25 @@ void setTouch(Inputs& input)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Elements/Button.cpp 
-    :lines: 122-130
+    :lines: 121-131
     :linenos:
 
-Diese Funktion verarbeitet Toucheingaben auf das ``Button`` Objekt auf dem ":ref:`Display<display>`".
+Diese Funktion verarbeitet Toucheingaben auf das ``Button`` Objekt auf dem :ref:`Display<display>`.
 
 .. literalinclude:: ../../src/Elements/Button.cpp 
-    :lines: 123-125
+    :lines: 122
+
+Bei Toucheingaben, die außerhalb des Buttons geschehen, wird die Funktion abgebrochen.    
+
+.. literalinclude:: ../../src/Elements/Button.cpp 
+    :lines: 124-126
 
 Sollte es möglich sein, das Objekt länger gedrückt zu halten (:ref:`hasLongPress<buttonvhaslongpress>`), sollte noch kein :ref:`longPressTimer<buttonvlongpresstimer>` gestartet worden sein
 und sollte :ref:`blocked<buttonvblocked>` ``false`` sein, so wird der :ref:`longPressTimer<buttonvlongpresstimer>` gestartet, indem dieser die Millisekunden seit Start 
 (siehe `millis() <https://www.arduino.cc/reference/en/language/functions/time/millis/>`_ ) speichert.
 
 .. literalinclude:: ../../src/Elements/Button.cpp 
-    :lines: 126-129
+    :lines: 127-130
 
 Sollte man das Objekt allerdings nicht länger gedrückthalten können und sollte :ref:`blocked<buttonvblocked>` ``false`` sein, so wird lediglich
 die :ref:`select<buttonselect>` Funktion aufgerufen und :ref:`blocked<buttonvblocked>` auf ``true`` gesetzt.
@@ -282,7 +287,7 @@ die :ref:`select<buttonselect>` Funktion aufgerufen und :ref:`blocked<buttonvblo
 bool getValue()
 ~~~~~~~~~~~~~~~~~
 .. literalinclude:: ../../src/Elements/Button.h
-    :lines: 25
+    :lines: 98
     :linenos:
 
 Gibt den :ref:`value<buttonvvalue>` des aktuellen Objektes zurück. 
@@ -293,7 +298,7 @@ bool isInsideHitbox(uint16_t x, uint16_t y, uint16_t posX, uint16_t posY, uint16
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Elements/Button.cpp
-    :lines: 62-64
+    :lines: 61-63
     :linenos:
 
 Diese Funktion testet, ob, wenn das ``Display`` berührt wird, auch das aktuelle Objekt der ``Button`` Klasse berührt wird.
@@ -305,6 +310,10 @@ Dabei sind ``x`` und ``y`` die Koordinaten, bei welchem das Display berührt wir
 const std::function<void()> button_callback = [](){}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. literalinclude:: ../../src/Elements/Button.h
+    :lines: 77
+    :linenos:
+
 Diese Funktion ist die Callback Funktion für Buttons (für Switches siehe :ref:`switch_callback<buttonswitchcallback>`). Standardmäßig tut diese Funktion nichts,
 sie erhält erst eine Bedeutung, wenn bei der Erstellung eines ``Button`` Objektes eine Funktion als ``button_callback`` übergeben wird, die aufgerufen wird, wenn der Button aktiviert
 wird.
@@ -314,6 +323,10 @@ wird.
 const std::function<void(bool)> switch_callback = [](bool){}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. literalinclude:: ../../src/Elements/Button.h
+    :lines: 78
+    :linenos:
+
 Diese Funktion ist die Callback Funktion für Switches (für Buttons siehe :ref:`button_callback<buttonbuttoncallback>`). Standardmäßig tut diese Funktion nichts 
 (akzeptiert aber ein ``bool`` Argument, da ein Switch einen aktivierten und deaktivierten Zustand hat), sie erhält erst eine Bedeutung, wenn bei der Erstellung eines ``Button`` 
 Objektes eine Funktion als ``button_callback``  übergeben wird, die aufgerufen wird, wenn der Switch aktiviert wird.
@@ -322,6 +335,10 @@ Objektes eine Funktion als ``button_callback``  übergeben wird, die aufgerufen 
 
 const std::function<void()> longpress_callback = [](){};
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../../src/Elements/Button.h
+    :lines: 79
+    :linenos:
 
 Diese Funktion ist die Callback Funktion für Buttons und Switches, welche beim längeren Gedrückthalten auf das Objekt verwendet wird. Standardmäßig tut diese Funktion nichts,
 sie erhält erst eine Bedeutung, wenn bei der Erstellung eines ``Button`` Objektes eine Funktion als ``longpress_callback`` übergeben wird, die aufgerufen wird, wenn der Button/Switch aktiviert
@@ -420,15 +437,21 @@ eine Instanz der :ref:`TouchMenuLib<touchmenulib>` Klasse. Beim Verwenden dieses
 TML_back (tml) [](){tml.back();}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Mit diesem Macro wird die :ref:`back<touchmenulibback>` Funktion ausgeführt.
+
 .. _buttonMTML_empty_button:
 
 TML_empty_button [](){}
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Mit diesem Macro lässt sich ein ``Button`` erstellen, der keine weitere Funktionalität (also einen anderen Screen aufzurufen) haben soll.
+
 .. _buttonMTML_empty_switch:
 
 TML_empty_switch [](bool){}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Mit diesem Macro lässt sich ein ``Switch`` erstellen, der keine weitere Funktionalität (also einen anderen Screen aufzurufen) haben soll.
 
 .. _buttonMBButton_On_Time:
 
