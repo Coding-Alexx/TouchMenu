@@ -30,6 +30,7 @@ Welcome to Touch Menu's documentation!
    :hidden:
    :caption: Class Reference:
 
+   ClassReference/button_blank.rst
    ClassReference/button.rst
    ClassReference/color.rst
    ClassReference/display.rst
@@ -37,20 +38,23 @@ Welcome to Touch Menu's documentation!
    ClassReference/element.rst
    ClassReference/error.rst
    ClassReference/externalbuttonvalue.rst
+   ClassReference/ExternalNumberValue.rst
    ClassReference/externaltextboxvalue.rst
    ClassReference/grid.rst
    ClassReference/icon.rst
    ClassReference/input.rst
    ClassReference/item.rst
+   ClassReference/number_counter.rst
+   ClassReference/number_slider.rst
    ClassReference/numberInput.rst
    ClassReference/rectbutton.rst
    ClassReference/roundButton.rst
    ClassReference/screen.rst
-   ClassReference/slider_rect.rst
    ClassReference/symbol.rst
    ClassReference/text.rst
    ClassReference/textbox_rect.rst
    ClassReference/textboxblank.rst
+   ClassReference/textbox.rst
    ClassReference/touchMenuLib.rst
 
    

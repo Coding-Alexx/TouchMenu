@@ -1,15 +1,24 @@
-.. _textbox:
+.. _textbox_rect:
 
-SliderRect
+Textbox_Rect
 ++++++++++++++
+
 
 Beschreibung
 =============
 
+Diese Klasse erzeugt rechteckige Umrandungen/ Kästen für :ref:`Elemente<element>`.
+
 Tutorials/ Examples
 =====================
-Link dazu, wenn vorhanden
-oder direkt hier einbinden
+Diese Bild dient nur der Veranschaulichung, wie Objekte dieser Klasse aussehen können.
+
+.. image:: example-pictures/textbox_rect-ex.jpg
+
+.. code-block:: 
+
+    new Textbox_Rect("Hello", 3, COLOR_GRAY|COLOR_DARK_GREEN)
+
 
 Funktionen
 =============
@@ -20,6 +29,8 @@ Funktionen
 
     inline, ":ref:`Textbox_Rect <textbox_rectconstructoritemstr>` (char* itemStr, const Color& color, ExternalTextboxValue* value=nullptr)"
     inline, ":ref:`Textbox_Rect <textbox_rectconstructoritem>` (Item* item, const Color& color, ExternalTextboxValue* value=nullptr)"
+    inline, ":ref:`Textbox_Rect <textbox_rectconstructoritemstrtextsize>` (const char* itemStr, const uint8_t textsize, const Color& color, ExternalTextboxValue* value=nullptr)"
+    inline, ":ref:`Textbox_Rect <textbox_rectconstructoritemtextsize>` (const char* itemStr, const uint8_t textsize, const Color& color, ExternalTextboxValue* value=nullptr)"
     inline void, ":ref:`draw <textbox_rectdraw>` ()"
     Color, ":ref:`getColor <textbox_rectgetcolor>` ()"
 
@@ -43,60 +54,98 @@ Funktionen Beschreibung
 inline Textbox_Rect(char* itemStr, const Color& color, ExternalTextboxValue* value=nullptr)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. literalinclude:: ../../src/ElementViews/textbox_rect.h
-    :lines: 10-17
+    :lines: 10-11
     :linenos:
 
-Diese Funktion ist ein Konstruktor, der Objekte der ``textbox_rect`` Klasse erzeugt. Als Paramater nimmt er den Text, der angezeigt werden soll (``text``), die Farbe des Rechtecks (``color``) und dem ``value``, der angibt, in welchem Zustand sich das 
-Objekt befindet. In der Initialisierungsliste erfolgt zuerst der Aufruf vom ":ref:`Textbox Konstruktor<textboxconstructor>`".
-Außerdem erfolgt die Initialisierung von ":ref:`color<textbox_rectvcolor>`" und ":ref:`size<textbox_rectvsize>`" mit den entsprechenden Parametern.
+Diese Funktion ist ein Konstruktor, der Objekte der ``Textbox_Rect`` Klasse erzeugt. Als Parameter nimmt er einen String, welches zu einem :ref:`Item<item>` umgewandelt werden soll (``itemStr``), 
+die Farbe der Textbox (``color``) und dem ``value``, der angibt, in welchem Zustand sich das Objekt befindet. 
+
+In der Initialisierungsliste erfolgt zuerst der Aufruf vom :ref:`Textbox<textboxconstructor>` Konstruktor, dessen Argument das Ergebnis des Funktionsaufruf von 
+:ref:`createItem<displaycreateitemcolor>` der :ref:`Display<display>` Klasse (``itemStr`` wird zu einem :ref:`Item<item>` umgewandelt) ist.
+Außerdem erfolgt die Initialisierung von :ref:`color<textbox_rectvcolor>` dem entsprechenden Parameter.
+
+
 
 .. _textbox_rectConstructorItem:
 
 inline Textbox_Rect(char* itemStr, const Color& color, ExternalTextboxValue* value=nullptr)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. literalinclude:: ../../src/ElementViews/textbox_rect.h
+    :lines: 13-14
+    :linenos:
+
+Diese Funktion ist ein Konstruktor, der Objekte der ``Textbox_Rect`` Klasse erzeugt. Als Parameter nimmt er :ref:`Item<item>` (``item``), 
+die Farbe der Textbox (``color``) und dem ``value``, der angibt, in welchem Zustand sich das Objekt befindet. 
+
+In der Initialisierungsliste erfolgt zuerst der Aufruf vom :ref:`Textbox<textboxconstructor>` Konstruktor, dann die Initialisierung von :ref:`color<textbox_rectvcolor>` dem entsprechenden Parameter.
+
+
+.. _textbox_rectConstructorItemstrtextsize:
+
+inline Textbox_Rect(const char* itemStr, const uint8_t textsize, const Color& color, ExternalTextboxValue* value=nullptr)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. literalinclude:: ../../src/ElementViews/textbox_rect.h
+    :lines: 16-17
+    :linenos:
+
+Diese Funktion ist ein Konstruktor, der Objekte der ``Textbox_Rect`` Klasse erzeugt. Als Parameter nimmt er einen String, welches zu einem :ref:`Item<item>` umgewandelt werden soll (``itemStr``), der Schriftgröße 
+(``textSize``), die Farbe der Textbox (``color``) und dem ``value``, der angibt, in welchem Zustand sich das Objekt befindet. 
+
+In der Initialisierungsliste erfolgt zuerst der Aufruf vom :ref:`Textbox<textboxconstructortextsize>` Konstruktor, dessen Argument das Ergebnis des Funktionsaufruf von 
+:ref:`createItem<displaycreateitemcolor>` der :ref:`Display<display>` Klasse (``itemStr`` wird zu einem :ref:`Item<item>` umgewandelt) ist.
+Außerdem erfolgt die Initialisierung von :ref:`color<textbox_rectvcolor>` dem entsprechenden Parameter.
+
+.. _textbox_rectConstructorItemtextsize:
+
+inline Textbox_Rect(Item* item, const uint8_t textsize, const Color& color, ExternalTextboxValue* value=nullptr)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. literalinclude:: ../../src/ElementViews/textbox_rect.h
+    :lines: 19-20
+    :linenos:
+
+Diese Funktion ist ein Konstruktor, der Objekte der ``Textbox_Rect`` Klasse erzeugt. Als Parameter nimmt er :ref:`Item<item>` (``item``), der Schriftgröße 
+(``textSize``), die Farbe der Textbox (``color``) und dem ``value``, der angibt, in welchem Zustand sich das Objekt befindet. 
+
+In der Initialisierungsliste erfolgt zuerst der Aufruf vom :ref:`Textbox<textboxconstructortextsize>` Konstruktor, 
+dann die Initialisierung von :ref:`color<textbox_rectvcolor>` dem entsprechenden Parameter.
+
 
 .. _textbox_rectDraw:
 
 inline void draw()
 ~~~~~~~~~~~~~~~~~~~
 .. literalinclude:: ../../src/ElementViews/textbox_rect.h
-    :lines: 23-26
+    :lines: 22-26
     :linenos:
 
-Diese Funktion wird genutzt, um das Objekt zu zeichnen. Zuerst wird mit dem Funktionsaufruf von ":ref:`rect_center<displayrectcenterinfill>`" auf dem ":ref:`display<elementvdisplay>`" das REchteck gezeichnet,
-auf dem der Text dargestellt werden soll. Mit ":ref:`text_center<displaytextcenter>`" wird schließlich der Text über das REchteck gezeichnet.
+Diese Funktion wird genutzt, um das Objekt zu zeichnen. 
 
-.. _textbox_rectGetText:
-
-char* getText() const
-~~~~~~~~~~~~~~~~~~~~~~~~
 .. literalinclude:: ../../src/ElementViews/textbox_rect.h
-    :lines: 28-30
-    :linenos:
+    :lines: 23
 
-Gibt den Text zurück.
+Zuerst wird mit dem Funktionsaufruf von :ref:`rect_center<displayrectcenterinfill>` auf dem :ref:`display<elementvdisplay>` das Rechteck gezeichnet,
+auf dem das :ref:`item<textboxvitem>` dargestellt werden soll.
+
+.. literalinclude:: ../../src/ElementViews/textbox_rect.h
+    :lines: 24
+
+Sollte ein :ref:`externalValue<externaltextboxvalue>` existieren und sollte dieses ein :ref:`value<externaltextboxvaluevvalue>` haben, 
+wird dieses mit :ref:`draw<externaltextboxvaluedraw>` gezeichnet.
+
+.. literalinclude:: ../../src/ElementViews/textbox_rect.h
+    :lines: 25
+
+Sollte diese Bedingung aber nicht erfüllt werden, wird stattdessen :ref:`item<textboxvitem>` mit :ref:`item<displaydrawitemnocolor>` gezeichnet.
 
 .. _textbox_rectGetColor:
 
 Color getColor() const
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. literalinclude:: ../../src/ElementViews/textbox_rect.h
-    :lines: 32-34
+    :lines: 28-30
     :linenos:
 
 Gibt die ":ref:`Farbe<color>`" zurück.
-
-.. _textbox_rectGetColorInfill:
-
-.. _textbox_rectCheckSize:
-
-inline bool checkSize(uint16_t sizeX, uint16_t sizeY, uint8_t rotation) override
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-.. literalinclude:: ../../src/ElementViews/textbox_rect.h
-    :lines: 45-48
-    :linenos:
-
-nicht implementiert
 
 Variablen und Konstanten Beschreibung
 =====================================

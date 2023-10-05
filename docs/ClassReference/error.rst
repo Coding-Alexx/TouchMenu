@@ -8,10 +8,6 @@ Beschreibung
 ErrorScreens sind :ref:`Screens <screen>`, die eine Fehlermeldung ausgeben.
 
 
-Tutorials/ Examples
-=====================
-Link dazu, wenn vorhanden
-oder direkt hier einbinden
 
 Funktionen
 =============
