@@ -1,22 +1,17 @@
-/*
-    - Menü mit allen Elementen und verschiednenen Screens
-    - Verschiedene Darstellungen der Elemente
-    - Beispielscreens
-    - Funktionsweisen auf einzelnen Screens genauer erklären
-    - ...
-
-    Tutorials:
-        - Aufbau: Screens -> Elemente -> Items
-        - Button modes
-        - Button Callback
-        - Number Input -> Slider
-        - Number Input -> counter
-
-        - Item System
-            * Icons
-
-    Idee: eine Datei, wo man seine Icons Speichern kann. Diese werden beim Kompellieren automatisch in Bitmaps umgewandelt und auf den ESP mit hochgeladen
-*/
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                                                                                     *
+ *                     Calculator Keyboard Interface Example                           *
+ *   Description:                                                                      *
+ *       In this example, you get an overview with all elements.                       *
+ *       You will learn to use them to integrate the elements into your projects.      *                                                                              *
+ *                                                                                     *
+ *   Read our documentation for more information:                                      *
+ *      https://touchmenu.readthedocs.io/de/latest/index.html                          *
+ *                                                                                     *
+ *   Licence:                                                                          *
+ *                                                                                     *
+ *                                                                                     *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "TouchMenuLib.h"
 
@@ -58,9 +53,11 @@ void previousScreen() {
 
 void setup() {
 
+    // Initialisation of the serial interface when logging is activated
     LOGGER_BEGIN(9600)
     LOGGER("Starting Programm ...")
 
+    // inizialise the touch menu lib
     TML.init(0);
 
     // create a sitebar to navigate and display the current page title
@@ -70,14 +67,14 @@ void setup() {
         AddElement(new Button_Round("symb:TriangleRight", COLOR_LIGHT_BLUE, 1, nextScreen),    4, 0, 1, 1)
     )
 
-    // Mian Screen
+    // normal GridScreen -> the first (non-sitebar) screen is set as the start screen
     CREATE_GRID_SCREEN(TML, 0, 1, 3, Color(200, 200, 255),
         AddElement(new Button_Rect("icon:ButtonClick", COLOR_LIGHT_BLUE, 1, 1, TML_goTo(TML, 1)), 0, 0, 1, 1),
         AddElement(new Button_Rect("icon:slider",      COLOR_LIGHT_BLUE, 1, 1, TML_goTo(TML, 2)), 0, 1, 1, 1),
         AddElement(new Button_Rect("icon:number",      COLOR_LIGHT_BLUE, 1, 1, TML_goTo(TML, 3)), 0, 2, 1, 1)
     )
 
-    // All Buttons
+    // GirdScreen with Sitebar with all button elements
     CREATE_GRID_SCREEN_WITH_SITEBAR(TML, 1, 0, 4, 3, Color(200, 200, 255),
         AddElement(new Button_Rect("icon:text", COLOR_GREEN + COLOR_RED, 2, 4, TML_empty_switch), 0, 0, 2, 2),
         AddElement(new Button_Round("icon:text", COLOR_GREEN + COLOR_RED, 4, TML_empty_button),   2, 0, 2, 2),
@@ -86,7 +83,7 @@ void setup() {
         AddElement(new Button_Rect("icon:text", COLOR_GREEN + COLOR_RED, 2, 4, TML_empty_switch), 3, 2, 1, 1)
     )
 
-    // All NumberInputs
+    // GirdScreen with Sitebar with all number input elements
     CREATE_GRID_SCREEN_WITH_SITEBAR(TML, 2, 0, 4, 3, Color(200, 200, 255),
         AddElement(new Number_Slider(COLOR_RED, TML_empty_slider, &numberValue), 0, 0, 1, 3),
         AddElement(new Number_Counter("symb:TriangleUp", "symb:TriangleDown", (COLOR_LIGHT_YELLOW|COLOR_ORANGE|COLOR_GRAY) + (COLOR_DARK_YELLOW|Color(10,30,10)|COLOR_LIGHT_MAGENTA), true, TML_empty_slider, &numberValue), 1, 0, 1, 2),
@@ -95,7 +92,7 @@ void setup() {
         AddElement(new Number_Slider((COLOR_RED|COLOR_LIGHT_YELLOW|COLOR_GRAY) + COLOR_DARK_GREEN, TML_empty_slider, &numberValue), 1, 2, 3, 1)
     )
 
-    // All Textfield
+    // GirdScreen with Sitebar with all textfield elements 
     CREATE_GRID_SCREEN_WITH_SITEBAR(TML, 3, 0, 2, 3, Color(200, 200, 255),
         AddElement(new Textbox_Blank("This is a Blank Textbox", 1, COLOR_DARK_GREEN), 0, 0, 2, 1),
         AddElement(new Textbox_Rect("This is a Blank Textbox", 1, COLOR_LIGHT_BLUE|COLOR_DARK_GREEN), 0, 1, 2, 1),

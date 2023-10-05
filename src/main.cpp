@@ -1,7 +1,7 @@
 #ifdef TestInPlattformIO
 
 // #include "../examples/Calculator/Calculator.ino"
-#include "../examples/OwnScreenElement/OwnScreenElement.ino"
+#include "../examples/Calculator/Calculator.ino"
 
 /*
 #include <Arduino.h>
