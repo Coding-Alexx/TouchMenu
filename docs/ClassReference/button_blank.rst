@@ -18,6 +18,7 @@ Beispielbild
 Dieses Bild dient nur der Veranschaulichung, wie Objekte dieser Klasse aussehen können.
 
 .. image:: example-pictures/button_blank-example.jpg
+    :scale: 20%
 
 .. code-block:: 
 

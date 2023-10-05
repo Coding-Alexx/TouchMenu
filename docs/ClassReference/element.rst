@@ -18,7 +18,7 @@ relevant für eigenes Menü
     :widths: 100 1000
 
      void, ":ref:`setPosition <elementsetposition>` (const uint16_t posX, const uint16_t posY, const uint8_t rotation)"
-     bool, ":ref:`setsize <elementsetsize>` (const uint16_t sizeX, const uint16_t sizeY, const uint8_t rotation)"
+     bool, ":ref:`setsize <elementsetsize>` (const uint16_t sizeX, const uint16_t sizeY, const uint8_t rotation = 0)"
      void, ":ref:`setDisplay <elementsetdisplay>` (Display* const disp)"
      , :ref:`Element <elementelementconstructor>` ()
      virtual, :ref:`~Element <elementelementdenstructor>` ()
@@ -73,6 +73,7 @@ Der Destruktor wird bei der Zerstörung eines Objekts der ``Element`` Klasse auf
 virtual bool select () = 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Die Funktion wird aufgerufen, wenn ein ``Element`` berührt wird.
 Diese virtuelle Funktion muss von einer abgeleiteten Klasse überschrieben werden.
 (Siehe :ref:`Button <buttonselect>`, :ref:`NumberInput <numberinputselect>`, :ref:`Textbox <textboxselect>`)
 
@@ -81,6 +82,7 @@ Diese virtuelle Funktion muss von einer abgeleiteten Klasse überschrieben werde
 virtual void loop(Inputs& input) = 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Die Funktion wird bei jedem Update aufgerufen.
 Diese virtuelle Funktion muss von einer abgeleiteten Klasse überschrieben werden.
 (Siehe ":ref:`Button <buttonloopinput>`", ":ref:`NumberInput <numberinputloopinputs>`", ":ref:`Textbox <textboxloopinput>`")
 
@@ -90,6 +92,7 @@ Diese virtuelle Funktion muss von einer abgeleiteten Klasse überschrieben werde
 virtual void draw () = 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Die Funktion zeichnet das Element.
 Diese virtuelle Funktion muss von einer abgeleiteten Klasse überschrieben werden.
 (Siehe :ref:`Button_Round <roundbuttondraw>`, :ref:`Button_Rect <rectbuttondraw>`, :ref:`Button_Blank <buttonblankdraw>`, :ref:`Textbox_Blank <textboxblankdraw>`,  
 :ref:`Textbox_Rect <textbox_rectdraw>`,  :ref:`Number_Counter <number_counterdraw>`,  :ref:`Number_Slider <number_sliderdraw>`)
@@ -104,8 +107,8 @@ Diese virtuelle Funktion muss von einer abgeleiteten Klasse überschrieben werde
 
 .. _elementSetSize:
 
-bool setSize(const uint16_t sizeX, const uint16_t sizeY, const uint8_t rotation)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+bool setSize(const uint16_t sizeX, const uint16_t sizeY, const uint8_t rotation = 0)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Element.cpp
     :lines: 9-17
@@ -125,6 +128,7 @@ void setDisplay(Display* const dis)
     :linenos:
 
 Diese Funktion weist :ref:`display <elementvdisplay>` des aktuellen ``Element`` Objekts den Wert des übergebenen ``disp`` zu.
+Diese Funktion sollte vor allen anderen Funktionen zuerst aufgerufen werden, um einen reibungslosen Ablauf zu gewährleisten.
 
 .. _elementCheckSize:
 
@@ -153,28 +157,28 @@ Variablen und Konstanten Beschreibung
 uint16_t posX
 ~~~~~~~~~~~~~~
 
-Gibt die X-Koordinate eines ``Element`` Objektes an.
+Gibt die X-Koordinate (in Pixeln) eines ``Element`` Objektes an.
 
 .. _elementVPosY:
 
 uint16_t posY
 ~~~~~~~~~~~~~~
 
-Gibt die Y-Koordinate eines ``Element`` Objektes an.
+Gibt die Y-Koordinate (in Pixeln) eines ``Element`` Objektes an.
 
 .. _elementVSizeX:
 
 uint16_t sizeX
 ~~~~~~~~~~~~~~
 
-Gibt die Höhe eines ``Element`` Objektes an, bzw. die Größe des Objektes in X-Richtung.
+Gibt die Höhe eines ``Element`` Objektes an, bzw. die Größe des Objektes in X-Richtung (in Pixeln).
 
 .. _elementVSizeY:
 
 uint16_t sizeY
 ~~~~~~~~~~~~~~
 
-Gibt die Breite eines ``Element`` Objektes an, bzw. die Größe des Objektes in Y-Richtung.
+Gibt die Breite eines ``Element`` Objektes an, bzw. die Größe des Objektes in Y-Richtung (in Pixeln).
 
 .. _elementVRotation:
 

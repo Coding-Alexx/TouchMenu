@@ -143,7 +143,7 @@ Schritt 4: Dem GridScreen Elemente hinzufügen
         TML.loop();
     }
 
-Schritt 5: Mit dem Button einen anderen Screen wechseln.
+Schritt 5: Mit dem Button zu einen anderen Screen wechseln.
 =========================================================
 Aktuell hat der Button noch keine großartige Funktion, das werden wir jetzt ändern.
 | 1. Erstelle einen neuen, gelben GridScreen mit den Maßen 1x5. Dieser Screen bekommt die ID ``1``:

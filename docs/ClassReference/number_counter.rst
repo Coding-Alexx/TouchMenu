@@ -15,6 +15,7 @@ Beispielbild
 Dieses Bild dient nur der Veranschaulichung, wie Objekte dieser Klasse aussehen können.
 
 .. image:: example-pictures/number_counter-ex.jpg
+    :scale: 20%
 
 .. code-block:: 
     

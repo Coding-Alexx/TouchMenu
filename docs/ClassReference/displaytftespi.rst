@@ -44,7 +44,6 @@ Funktionen
     uint8_t, ":ref:`setRotation <displaytftespisetrotation>` () override" 
     bool, ":ref:`getTouch <displaytftespigettouch>` (uint16_t* x, uint16_t* y) override" 
     TFT_eSPI&, ":ref:`getTFTObjekt <displaytftespigettftobject>` ()"
-    void, ":ref:`startTouchCalibration <displaytftespistarttouchcalibration>` () override"
     
 
 Variablen und Konstanten
@@ -117,7 +116,7 @@ DisplayTFTeSPI& operator= (const DisplayTFTeSPI& other)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 9-13
+    :lines: 10-13
     :linenos:
 
 Gibt die aktuelle Instanz zurück.
@@ -128,7 +127,7 @@ void init()
 ~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 14-23
+    :lines: 15-24
     :linenos:
 
 Setzt das ":ref:`tft <displaytftespivtft>`" Objekt erst zurück und initialisiert es dann. (siehe `begin(uint8_t tc) <https://github.com/Bodmer/TFT_eSPI/blob/master/TFT_eSPI.cpp#L601>`_)
@@ -457,7 +456,7 @@ bool getTouch(uint16_t* x, uint16_t* y)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 179-190
+    :lines: 179-211
     :linenos:
 
 Diese Funktion berechnet die Koordinaten, auf welchem das Display berührt, je nachdem, wie der Bildschirm durch :ref:`rotation <displaytftespivrotation>` ausgerichtet ist.
@@ -496,9 +495,14 @@ Da der Bildschirm bei ``rotation = 1`` auf dem Kopf steht, muss nur der Kehrwert
 Anders als beim vorletzten Codeabschnitt, wird hier bei der der Zuweisung von ``x`` und ``y`` nach dem Mappen der Kehrwert der temporären Variablen als neuer Wert gespeichert.
 
 .. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 197-199
+    :lines: 197-198
 
 Hier wird der Kehrwert von ``x`` bestimmt, da der Bildschirm um 270° gedreht ist.    
+
+.. literalinclude:: ../../src/DisplayTFTeSPI.cpp
+    :lines: 199-206
+
+Für ``rotation = 2`` und ``rotation = 3`` verhält sich der Code ähnlich.
 
 .. _displaytftespiGetTFTObject:
 
@@ -506,47 +510,14 @@ TFT_eSPI& getTFTObjekt();
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 180-182
+    :lines: 213-214
     :linenos:
 
 
 Diese Funktion gibt das ":ref:`tft <displaytftespivtft>`" Objekt zurück.
 
 .. _displaytftespiStartTouchCalibration:
-
-void startTouchCalibration();
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 208-228
-    :linenos:
-
-Diese Funktion wird verwendet, um das Display zu kalibrieren, damit Eingaben auf dem Display fehlerfrei stattfinden. Außerdem werden die Kalibrierungsdaten über die serielle Schnittstelle auf dem
-Bildschirm aus.
-
-.. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 209-210
-
-Zuerst wird ein Array erstellt, in dem die Kalibrierungsdaten gespeichert werden sollen. Anschließend wird die `calibrateTouch <https://github.com/Bodmer/TFT_eSPI/blob/master/Extensions/Touch.cpp#L228>`_ Funktion auf dem 
-:ref:`tft <displaytftespivtft>` aufgerufen, die die Kalibration durchführt. Der Text, der auf dem Display angezeigt werden wird, soll magenta sein und die Hintergrundfarbe schwarz. Mit ``15`` wird die Textgröße angegeben.
-Die Ergebnisse der Kalibration werden beim Funktionsaufruf in ``calData`` gespeichert.
-
-.. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 211-218
-
-Die Kalibrierungsdaten werden für die Ausgabe zusammengefügt und ``stm`` hinzugefügt. Zuerst wird mit einer geöffneten geschweiften Klammer ``{`` der Anfang der Ausgabe markiert, ehe die 
-Kalibrierungsdaten einzeln eingefügt und mit einem Komma getrennt werden. Eine geschlossene geschweifte Klammer ``}`` markiert das Ende des Ausgabestrings.
-
-.. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 220-223
-
-Danach wird mit `Serial.available <https://www.arduino.cc/reference/en/language/functions/communication/serial/available/>`_ überprüft, ob Daten auf der Schnittstelle verfügbar sind. Wenn ja, werden die 
-Kalibrierungsdaten über diese Schnittstelle ausgegeben.
-
-.. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 225-227
-
-Andernfalls werden die Kalibrierungsdaten mit :ref:`text_center<displaytftespitextcenter>` auf einem cyanfarbenen Hintergrund auf dem Display angezeigt.    
+  
 
 .. _displaytftespiDrawBitmapNoBgColor:
 
@@ -554,7 +525,7 @@ void drawBitmap(const uint16_t x, const uint16_t y, const uint16_t w, const uint
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 230-237
+    :lines: 239-240
     :linenos:
 
 | Diese Funktion zeichnet ein Bild. Als Parameter nimmt sie die X- und Y-Koordinate (``x`` und ``y``), bei welchen das Dreieckk gezeichnet werden soll. Die Breite (w) und Höhe (h) des Bildes, das Bild selbst (bitmap) und eine Vordergrundfarbe (fgcolor).
@@ -567,7 +538,7 @@ void drawBitmap(const uint16_t x, const uint16_t y, const uint16_t w, const uint
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 239-241
+    :lines: 248-250
     :linenos:
 
 | Diese Funktion zeichnet ein Bild. Als Parameter nimmt sie die X- und Y-Koordinate (x und y), bei welchen das Dreieckk gezeichnet werden soll. Die Breite (w) und Höhe (h) des Bildes, das Bild selbst (bitmap), eine Vordergrundfarbe (fgcolor) und eine Hintergrundfarbe (bgcolor).

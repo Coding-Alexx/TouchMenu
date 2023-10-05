@@ -15,6 +15,7 @@ Beispielbild
 Diese Bild dient nur der Veranschaulichung, wie Objekte dieser Klasse aussehen können.
 
 .. image:: example-pictures/number_slider-ex.jpg
+    :scale: 20%
 
 .. code-block:: 
 

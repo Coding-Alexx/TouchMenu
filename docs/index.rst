@@ -15,7 +15,6 @@ Welcome to Touch Menu's documentation!
    About/introduction
    About/features
    About/faq
-   About/troubleshooting
 
 .. toctree::
    :maxdepth: 2

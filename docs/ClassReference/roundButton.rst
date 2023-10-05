@@ -14,11 +14,13 @@ Beispielbilder
 Diese Bilder dienen nur der Veranschaulichung, wie Objekte dieser Klasse aussehen können.
 
 .. image:: example-pictures/button_round-ex-1.jpg
+    :scale: 20%
 .. code-block:: 
 
     new Button_Round("Hello World", COLOR_DARK_YELLOW, 1, TML_empty_button)
 
 .. image:: example-pictures/button_round-ex-2.jpg
+    :scale: 20%
 .. code-block:: 
 
     new Button_Round("", COLOR_GREEN, 50, TML_empty_button)

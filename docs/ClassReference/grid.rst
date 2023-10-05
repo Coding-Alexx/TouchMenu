@@ -63,8 +63,8 @@ GridScreen(const uint8_t col, const uint8_t row, const Color& background)
     :linenos:
 
 Der Konstruktor wird bei der Erzeugung eines neuen Objekts der ``GridScreen`` Klasse aufgerufen. Als Parameter nimmt der Konstruktor die Anzahl an Spalten (``col``) und Zeilen (``row``), die der GridScreen haben soll, sowie die Hintergrundfarbe
-(``background``), die der GridScreen haben soll. In der Initialisierungsliste wird die Variable ":ref:`color_background <gridvcolor_background>`" nach dem ":ref:`Color <color>`" Funktionsaufruf von ``background`` mit diesem initalisiert.
-":ref:`row <gridvrow>`" und ":ref:`col <gridvcol>`" werden mit den korrespondierenden Parametern initialisiert. Außerdem erfolgt die Initialisierung von ":ref:`elements <gridvelements>`" und von ":ref:`matrix <gridvmatrix>`". 
+(``background``), die der GridScreen haben soll. In der Initialisierungsliste wird die Variable :ref:`color_background <gridvcolor_background>` nach dem :ref:`Color <color>` Funktionsaufruf von ``background`` mit diesem initalisiert.
+":ref:`row <gridvrow>`" und ":ref:`col <gridvcol>`" werden mit den korrespondierenden Parametern initialisiert. Außerdem erfolgt die Initialisierung von :ref:`elements <gridvelements>` und von ":ref:`matrix <gridvmatrix>`". 
 Bei letzterem erfolgt die Multiplikation der Spalten- und Reihenanzahl, um die Anzahl an Felder innerhalb des Grids zu speichern, sowie die Angabe von ``UINT8_MAX``, welches später nützlich ist, um feststellen zu können, ob ein Feld bereits belegt ist.
 
 .. _gridDestructor:
@@ -90,7 +90,7 @@ die X-Koordinate 1 und die Y-Koordinate 0 usw.
 .. literalinclude:: ../../src/Screens/GridScreen.cpp
     :lines: 17-20
 
-Sollte :ref:`grid <screenvdisplay>` auf den ``nullptr`` zeigen, wird ``false`` zurückgegeben, da der aktuellen Screen noch keinem :ref:`TouchMenuLib <touchmenulib>` Objekt zugewiesen wurde.
+Sollte :ref:`grid <screenvdisplay>` ein ``nullptr`` sein, wird ``false`` zurückgegeben, da der aktuellen Screen noch keinem :ref:`TouchMenuLib <touchmenulib>` Objekt zugewiesen wurde und kein :ref:`Display<display>` zurückgekommen ist.
 
 .. literalinclude:: ../../src/Screens/GridScreen.cpp
     :lines: 22-25
@@ -100,7 +100,7 @@ Sollte der übergebene übergebene Zeiger auf kein Element zeigen, wird ``false`
 .. literalinclude:: ../../src/Screens/GridScreen.cpp
     :lines: 27-31
 
-Sollte ``col == 0`` oder ``row == 0`` gelten, wird ebenfalls ``false`` zurückgegeben, da es keinen Platz gibt, auf dem ein Element hinzugefügt werden kann.
+Sollte ``col == 0`` oder ``row == 0`` gelten, wird ebenfalls ``false`` zurückgegeben, da es keinen Platz gibt, auf dem ein Element hinzugefügt werden kann, da Elemente mindestens eine Zelle groß sein müssen.
 
 .. literalinclude:: ../../src/Screens/GridScreen.cpp
     :lines: 33-36
@@ -111,7 +111,7 @@ Ist ``posX + sizeX > col`` oder ``posY + sizeY > row``, befindet sich das Elemen
 .. literalinclude:: ../../src/Screens/GridScreen.cpp
     :lines: 40-48
 
-Dieser Codeblock wird genutzt, um zu testen, ob in den Feldern, in denen man ein Element hinzufügen möchte, bereits ein Element vorhanden ist. Da ein Element mehr als ein Feld belegen kann (indem ``sizeX`` oder ``sizeY`` > 1 sind),
+Dieser Codeblock wird genutzt, um zu testen, ob in den Feldern, in denen man ein Element hinzufügen möchte, bereits ein Element vorhanden ist. Also ob mehrere Elemente überlappen würden. Da ein Element mehr als ein Feld belegen kann (indem ``sizeX`` oder ``sizeY`` > 1 sind),
 sind hierfür zwei ``for``-Schleifen notwendig. Die äußere Schleife läuft von dem Wert der X-Koordinate, bei der das Element beginnt (``posX``) bis zum Wert der X-Koordinate, bei der das Element endet (``posX + sizeX``).
 Die innere Schleife läuft von dem Wert der Y-Koordinate, bei der das Element beginnt (``posY``) bis zum Wert der Y-Koordinate, bei der das Element endet (``posY + sizeY``).
 Es wird getestet, ob in der ":ref:`matrix <gridvmatrix>`" an der entsprechenden Stelle bereits ein Wert gespeichert ist. Ist dies der Fall, wird ``false`` zurückgegeben.
@@ -285,7 +285,7 @@ uint8_t getRow() const
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Screens/GridScreen.h
-    :lines: 93
+    :lines: 88
     :linenos:
 
 Gibt die Anzahl an Zeilen (":ref:`row <gridvrow>`") des Displays zurück.
@@ -296,7 +296,7 @@ uint8_t getCol() const
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Screens/GridScreen.h
-    :lines: 94
+    :lines: 89
     :linenos:
 
 Gibt die Anzahl an Spalten (:ref:`col <gridvcol>`) des Displays zurück.
@@ -360,7 +360,7 @@ Speichert alle ":ref:`Elemente <element>`", die sich auf einem ``GridScreen`` be
 std::vector<uint8_t> matrix
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Speichert, aus wie vielen Kästchen/ Feldern ein GridScreen zusammengesetzt ist.
+Speichert, aus wie vielen Kästchen/ Feldern ein GridScreen zusammengesetzt ist. Beim Konstruktoraufruf werden alle Felder auf ``UINT8_MAX`` gesetzt (als Platzhalter, um nicht benutzte Felder leichter identifizieren zu können).
 
 
 Macro Beschreibung
@@ -371,7 +371,7 @@ Macro Beschreibung
 CREATE_GRID_SCREEN(TML, screenID, col, row, color, ...)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. literalinclude:: ../../src/Screens/GridScreen.h
-    :lines: 13-32
+    :lines: 13-27
     :linenos:
 
 Dieses Macro vereinfacht die Erstellung eines Objektes der :ref:`GridScreen<grid>` Klasse, indem ein Raster erstellt wird.

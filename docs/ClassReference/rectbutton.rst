@@ -14,11 +14,14 @@ Beispielbilder
 Diese Bilder dienen nur der Veranschaulichung, wie Objekte dieser Klasse aussehen können.
 
 .. image:: example-pictures/button_rect-ex-1.jpg
+    :scale: 20%
+
 .. code-block:: 
 
     new Button_Rect("", COLOR_GREEN + COLOR_RED, 2, 4, TML_empty_switch)
 
 .. image:: example-pictures/button_rect-ex-2.jpg
+    :scale: 20%
 .. code-block:: 
 
     new Button_Rect("Hello World", COLOR_BLUE, 2, 12, TML_empty_button)

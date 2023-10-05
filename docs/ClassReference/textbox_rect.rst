@@ -14,6 +14,7 @@ Tutorials/ Examples
 Diese Bild dient nur der Veranschaulichung, wie Objekte dieser Klasse aussehen können.
 
 .. image:: example-pictures/textbox_rect-ex.jpg
+    :scale: 20%
 
 .. code-block:: 
 
