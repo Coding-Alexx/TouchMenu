@@ -1,6 +1,18 @@
-/*
-    
-*/
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                                                                                     *
+ *                     Calculator Keyboard Interface Example                           *
+ *   Description:                                                                      *
+ *       In this example you will learn how to create and                              *
+ *       use your own ecreens and your own elements.                                   *
+ *                                                                                     *
+ *   Read our documentation for more information:                                      *
+ *      https://touchmenu.readthedocs.io/de/latest/index.html                          *
+ *                                                                                     *
+ *   Licence:                                                                          *
+ *      GNU GENERAL PUBLIC LICENSE                                                     *
+ *                                                                                     *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 
 #include <Arduino.h>
 #include "TouchMenuLib.h"

@@ -23,7 +23,7 @@
  *      https://touchmenu.readthedocs.io/de/latest/index.html                          *
  *                                                                                     *
  *   Licence:                                                                          *
- *                                                                                     *
+ *      GNU GENERAL PUBLIC LICENSE                                                     *
  *                                                                                     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 

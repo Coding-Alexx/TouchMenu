@@ -3,13 +3,13 @@
  *                     Calculator Keyboard Interface Example                           *
  *   Description:                                                                      *
  *       In this example, you get an overview with all elements.                       *
- *       You will learn to use them to integrate the elements into your projects.      *                                                                              *
+ *       You will learn to use them to integrate the elements into your projects.      *
  *                                                                                     *
  *   Read our documentation for more information:                                      *
  *      https://touchmenu.readthedocs.io/de/latest/index.html                          *
  *                                                                                     *
  *   Licence:                                                                          *
- *                                                                                     *
+ *      GNU GENERAL PUBLIC LICENSE                                                     *
  *                                                                                     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
