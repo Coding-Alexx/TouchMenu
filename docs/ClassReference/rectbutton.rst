@@ -271,7 +271,7 @@ des :ref:`externalValue<buttonvexternalvalue>` mit :ref:`drawItem<displaydrawite
 auf das Rechteck gezeichnet.
 
 .. literalinclude:: ../../src/ElementViews/Button_Rect.cpp
-    :lines: 103
+    :lines: 103-108
 
 Ist :ref:`value<buttonvvalue>` hingegen ``false``, wird der ``Button`` in seinem asugeschalteten Zustand gezeichnet. Der Ablauf ist ähnlich wie im vorherigen Absatz.   
 

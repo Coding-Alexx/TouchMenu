@@ -557,21 +557,28 @@ Der erste hier gespeicherte :ref:`Screens <screen>`, der Screen mit der ID 1, wi
 std::map<uint8_t, std::unique_ptr<Screen>> sitebars
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Hierbei handelt es sich um eine Map, die :ref:`Screens <screen>`, die als Sidebar dienen, mit einer eindeutigen ID verknüpft.
+
 .. _TouchMenuLibVsidebarconnector:
 
 std::map<uint8_t, uint8_t> sitebarConnector
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hier werden die IDs von :ref:`Screens <screen>` mit ihrer entsprechenden Sidebar gespeichert.
 
 .. _TouchMenuLibVcurrentsidebar:
 
 uint8_t currentSitebar = UINT8_MAX
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Setzt die aktuelle Sidebar auf ``UINT8_MAX``. Dies ist ein Platzhalterwert, der aussagt, dass die Sidebar keinem :ref:`Screens <screen>` zugewiesen ist.
+
 .. _TouchMenuLibVdeactivatesidebar:
 
 bool deactivateSitebar = false
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Mit ``deactivateSitebar = true`` lässt sich eine Sidebar deaktivieren. Ist standardmäßig auf ``deactivateSitebar = false``, damit Sidebars (falls vorhanden) auch angezeigt werden.
 
 
 .. _TouchMenuLibVDisplay:

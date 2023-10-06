@@ -48,7 +48,7 @@ Funktionen Beschreibung
 Item(const double scale = 1)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: ../../src/Item/Icon.cpp
+.. literalinclude:: ../../src/Item/item.h
     :lines: 10
     :linenos:
 

@@ -168,18 +168,18 @@ Der Destruktor wird bei der Zerstörung eines ``Button`` Objektes aufgerufen.
 void loop(Inputs& input)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 .. literalinclude:: ../../src/Elements/Button.cpp 
-    :lines: 58-63
+    :lines: 66-78
     :linenos:
 
 Diese Funktion dient dazu, den Zustand eines Buttons bzw. Switches zu aktualisieren, um auf Benuzereingaben zu reagieren.
 
 .. literalinclude:: ../../src/Elements/Button.cpp 
-    :lines: 68-71
+    :lines: 67-70
 
 Sollte der als Argument übergebene :ref:`Input<input>` ``input.enter==true`` gelten, so wird mit ``input`` die :ref:`setTouch<buttonsettouch>` Funktion aufgerufen.
 
 .. literalinclude:: ../../src/Elements/Button.cpp 
-    :lines: 73-79
+    :lines: 72-78
 
 Sollte :ref:`externalValue<buttonvexternalvalue>` nicht ``null`` sein und sollte der darin gespeicherte Wert nicht dem :ref:`value<buttonvvalue>` entsprechen, so übernimmt
 :ref:`value<buttonvvalue>` die Referenz auf den Wert von :ref:`externalValue<buttonvexternalvalue>`. Anschließend wird das Objekt mit :ref:`draw<elementdraw>` gezeichnet.
@@ -187,38 +187,38 @@ Sollte das aktuelle Objekt ein Button (und kein Switch) sein und sollte zusätzl
 aktualisiert. Er speichert wie viele Millisekunden seit Start vergangen sind (siehe `millis() <https://www.arduino.cc/reference/en/language/functions/time/millis/>`_ ).
 
 .. literalinclude:: ../../src/Elements/Button.cpp 
-    :lines: 81-88
+    :lines: 80-87
 
 Sollte der :ref:`animationTimer<buttonvanimationtimer>` eines Buttons (keines Switches) im vorherigen Codeabschnitt aktualisiert worden sein und seitdem mehr Millisekunden vergangen sein, als in 
 :ref:`BUTTON_ON_TIME<buttonmbbutton_on_time>`, so wird der :ref:`animationTimer<buttonvanimationtimer>` wieder zurückgesetzt und, sollte dies nicht schon der Fall sein, :ref:`value<buttonvvalue>` auf ``true`` gesetzt,
 um den Button wieder in seinem aktivierten Zustand mit :ref:`draw<elementdraw>` zu zeichnen.
 
 .. literalinclude:: ../../src/Elements/Button.cpp 
-    :lines: 91-95
+    :lines: 90-94
 
 Sollten Änderungen durch den :ref:`externalValue<buttonvexternalvalue>` vorgenommen worden sein (:ref:`hasUpdate<externalbuttonhasupdate>`), so werden diese Änderungen mit 
 :ref:`draw<elementdraw>` gezeichnet und :ref:`resetUpdate<externalbuttonresetupdate>` aufgerufen.
 
 .. literalinclude:: ../../src/Elements/Button.cpp 
-    :lines: 98-99
+    :lines: 97-98
 
 Sollte das Objekt nicht länger berührt werden, aber weiterhin ``blocked==true`` sein, so wird :ref:`blocked<buttonvblocked>` wieder auf ``false`` gesetzt, um den Button 
 wieder freizusetzen.   
 
 .. literalinclude:: ../../src/Elements/Button.cpp 
-    :lines: 102-106
+    :lines: 101-105
 
 Dieser Codeabschnitt testet, ob das Objekt lange drückbar ist und lang genug gedrückt wurde, bereit ist und auch innerhalb der Grenzen des Buttons gedrückt wurde (:ref:`isInsideHitbox<buttonisinsidehitbox>`).
 Wenn dies der Fall ist, wird der :ref:`longPressTimer<buttonvlongpresstimer>` zurückgesetzt und die :ref:`longpress_callback<buttonlongpresscallback>` Funktion aufgerufen.
 
 .. literalinclude:: ../../src/Elements/Button.cpp 
-    :lines: 102-106
+    :lines: 108-110
 
 Wenn der Touchpoint allerdings nicht mehr innerhalb der Grenzen des Objektes liegt, wird der :ref:`longPressTimer<buttonvlongpresstimer>` zurückgesetzt ohne die Callback Funktion aufzurufen.
 Der Prozess wurde vom Benutzer abgebrochen.     
 
 .. literalinclude:: ../../src/Elements/Button.cpp 
-    :lines: 114-119
+    :lines: 113-118
 
 Drückt der Nutzer hingegen nicht kontinuierlich auf den Button, wird der Prozess ebenso abgebrochen und statt der Aktion, die durch langes Drücken ausgeführt wird, wird die Aktion für kurzes Drücken ausgeführt,
 indem :ref:`select<buttonselect>` mit dem ``input`` aufgerufen wird.

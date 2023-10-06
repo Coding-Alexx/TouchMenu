@@ -256,8 +256,6 @@ bool value = false
 
 Gibt den Zustand an, den ein :ref:`Button<button>` annehmen soll. Er wird aktiviert bei ``true`` und deaktiviert bei ``false``.
 
-Der Zustand, 
-
 .. _externalButtonValueVupdate:
 
 bool update = false

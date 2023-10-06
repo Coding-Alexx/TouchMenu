@@ -322,7 +322,7 @@ void setTouch(Inputs& input) override
     :lines: 85-93
     :linenos:
 
-Mit dieser Funktion wird ebstimmt, ob das Objekt berührt wird oder nicht.
+Mit dieser Funktion wird bestimmt, ob das Objekt berührt wird oder nicht.
 
 .. literalinclude:: ../../src/ElementViews/Button_Round.cpp
     :lines: 86

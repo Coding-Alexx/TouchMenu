@@ -82,7 +82,7 @@ void loop(Inputs& input) override
     :lines: 22-24
     :linenos:
 
-KEINE DEFINITION
+Diese Funktion hat eine leere ``loop`` Funktion, da an einem ``ErrorScreen`` nach erstmaligen Zeichnen keine Änderungen vorgenommen werden.
 
 .. _errorDraw:
 

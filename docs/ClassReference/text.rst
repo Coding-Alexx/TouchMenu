@@ -87,7 +87,7 @@ void draw(uint16_t x, uint16_t y, Display* disp) override
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Item/Text.cpp
-    :lines: 12-14
+    :lines: 17-19
     :linenos:
 
 
@@ -100,7 +100,7 @@ void drawOn(uint16_t x, uint16_t y, Display* disp) override
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Item/Text.cpp
-    :lines: 16-18
+    :lines: 21-23
     :linenos:
   
 
@@ -113,7 +113,7 @@ void drawOff(uint16_t x, uint16_t y, Display* disp) override
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Item/Text.cpp
-    :lines: 20-22
+    :lines: 25-27
     :linenos:
 
 

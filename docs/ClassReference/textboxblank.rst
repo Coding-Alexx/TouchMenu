@@ -89,7 +89,7 @@ inline Textbox_Blank(const char* itemStr, const uint8_t textsize, ExternalTextbo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/ElementViews/textbox_Blank.h
-    :lines: 25-25
+    :lines: 24-25
     :linenos:
 
 Diese Funktion ist ein Konstruktor, der Objekte der ``Textbox_Blank`` Klasse erzeugt. Als Parameter nimmt er einen String, welches zu einem :ref:`Item<item>` umgewandelt werden soll (``itemStr``),

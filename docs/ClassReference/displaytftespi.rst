@@ -462,22 +462,22 @@ bool getTouch(uint16_t* x, uint16_t* y)
 Diese Funktion berechnet die Koordinaten, auf welchem das Display berührt, je nachdem, wie der Bildschirm durch :ref:`rotation <displaytftespivrotation>` ausgerichtet ist.
 
 .. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 180
+    :lines: 187
 
 Wenn ``x`` oder ``y`` der Null Pointer sind, existiert kein Berührungspunkt auf dem Bildschirm.    
 
 .. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 181
+    :lines: 188
 
 In der Variable ``isTouched`` wird gespeichert, ob der Bildschirm berührt wird oder nicht.
 
 .. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 182
+    :lines: 191
 
 Sollte der Bildschirm nicht berührt werden, ist es auch nicht notwendig, Koordinaten zu bestimmen.
 
 .. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 185-189
+    :lines: 192-196
 
 Andernfalls werden für jede der vier möglichen Bildschirmausrichtungen die Koordinaten bestimmt. Zuerst für eine :ref:`rotation<displaytftespivrotation>` von ``0``, also der Standardausrichtung.
 Dafür werden temporäre Variablen angelegt, die das Ergebnis der `map <https://github.com/espressif/arduino-esp32/blob/master/cores/esp32/WMath.cpp#L75>`_ Funktion speichert. Diese Funktion mapped für
@@ -485,24 +485,19 @@ Dafür werden temporäre Variablen angelegt, die das Ergebnis der `map <https://
 Nun müssen die Pointer für ``x`` und ``y`` nur noch auf die Speicheradressen der temporären Variablen zeigen.
 
 .. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 190-191
+    :lines: 197-198
 
 Da der Bildschirm bei ``rotation = 1`` auf dem Kopf steht, muss nur der Kehrwert von ``y`` bestimmt werden.
 
 .. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 192-196
+    :lines: 199-203
 
 Anders als beim vorletzten Codeabschnitt, wird hier bei der der Zuweisung von ``x`` und ``y`` nach dem Mappen der Kehrwert der temporären Variablen als neuer Wert gespeichert.
 
 .. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 197-198
+    :lines: 204-205
 
 Hier wird der Kehrwert von ``x`` bestimmt, da der Bildschirm um 270° gedreht ist.    
-
-.. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 199-206
-
-Für ``rotation = 2`` und ``rotation = 3`` verhält sich der Code ähnlich.
 
 .. _displaytftespiGetTFTObject:
 
@@ -510,7 +505,7 @@ TFT_eSPI& getTFTObjekt();
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/DisplayTFTeSPI.cpp
-    :lines: 213-214
+    :lines: 213-215
     :linenos:
 
 

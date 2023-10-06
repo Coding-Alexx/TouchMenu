@@ -249,7 +249,8 @@ virtual void startTouchCalibration() {}
     :lines: 57
     :linenos:
 
-LEER
+Diese virtuelle Funktion muss von einer abgeleiteten Klasse überschrieben werden.
+(Siehe :ref:`DisplayTFTeSPI <displaytftespistarttouchcalibration>`)
 
 .. _displayDrawItemColor:
 
@@ -375,7 +376,7 @@ Sollte keines der oben genannten Objekte erstellt werden können, weil die Bedin
 
 .. _displayParseColor:
 
-static Color parseColor(const std::string& str, const Color& color)
+Color parseColor(const std::string& str, const Color& color)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Display.cpp
@@ -421,7 +422,7 @@ Sollte die while Schleife nicht durchlaufen worden sein, wird ``color`` genauso 
 
 .. _displayProcessText:
 
-static std::string processText(const std::string& input)
+std::string processText(const std::string& input)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../src/Display.cpp

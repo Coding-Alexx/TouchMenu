@@ -58,7 +58,7 @@ Diese Funktion setzt alle Variablen zurück auf ihren Ausgangswert.
 bool hasInput()
 ~~~~~~~~~~~~~~~~
 
-.. literalinclude:: ../../src/Screens/GridScreen.h
+.. literalinclude:: ../../src/Input.h
     :lines: 32-34
     :linenos:
 
@@ -123,6 +123,7 @@ bool isTouched = false
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Gibt an, ob das :ref:`Display<display>` gerade gedrückt wird oder nicht.
+Wenn ``isTouched`` ``false`` ist, so sind :ref:`touchX<inputvtouchx>` und :ref:`touchY<inputvtouchy>` nicht definiert.
 
 .. _inputVUpdate:
 
@@ -130,6 +131,7 @@ bool update = true
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Gibt an, ob Änderungen bei der Eingabe vorliegen, die noch nicht durchgeführt wurden.
+Wird von :ref:`Elementen<element>` auf ``true`` gesetzt, falls der :ref:`Screen<screen>` also neugezeichnet werden soll.
 
 .. _inputVupdatetouchpoint:
 
@@ -137,6 +139,7 @@ bool updateTouchPoint = false
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Gibt an, ob ein neuer Punkt auf dem :ref:`Display<display>` berührt wird.
+Ist nachdem es ``true`` wird für kurze Zeit außer Kraft gesetzt, damit es nicht zu Fehleingaben kommt.
 
 .. _inputVback:
 
