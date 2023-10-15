@@ -7,6 +7,7 @@
 #define TML_empty_slider [](int){}
 
 class ExternalNumberValue {
+protected:
     int value = 0;
     int minValue = 0;
     int maxValue = 100;
@@ -21,21 +22,21 @@ public:
     }
 
     void setMinValue(int min) {
-        if (min >= maxValue) return;
+        if (min > maxValue) return;
         if (value < min) value = min;
         minValue = min;
         update = true;
     }
 
     void setMaxValue(int max) {
-        if (max <= minValue) return;
+        if (max < minValue) return;
         if (value > max) value = max;
         maxValue = max;
         update = true;
     }
 
     void setSteps(uint step) {
-        if (step < (minValue - maxValue)) return;
+        if (step < (uint)(maxValue - minValue)) return;
         steps = step;
         update = true;
     }
@@ -46,15 +47,15 @@ public:
     uint getSteps   () const { return steps; }
 };
 
-class NumberInput: public Element {
+class NumberInput: public Element, public ExternalNumberValue {
 protected:  
     const std::function<void(int)> callback = [](int){};
 
     ExternalNumberValue* const externalValue = nullptr;
-    int value = 0;
-    int minValue = 0;
-    int maxValue = 100;
-    uint steps = 1;
+    // int value = 0;
+    // int minValue = 0;
+    // int maxValue = 100;
+    // uint steps = 1;
 
 private:
     virtual void setTouch(Inputs& input) = 0;
@@ -63,5 +64,5 @@ public:
     NumberInput(std::function<void(int)> callback, ExternalNumberValue* const externalValue = nullptr);
     virtual ~NumberInput();
     bool select(Inputs& input) override;
-    void loop(Inputs& input) override;
+    void loop(Inputs& input) override;    
 };

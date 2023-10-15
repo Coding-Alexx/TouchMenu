@@ -1,0 +1,17 @@
+
+TODO:
+    - popup Screen Modus -> Screens sollen über einen andere Screen erscheinen können
+
+Eventuelle änderrungen:
+    - Element.setTouch entfernen -> auf loop übertragen
+    - Variablen vereinheitlichen (width und siteX, ...)
+    - koordinaten Positionen vereinheitlichen (bei Elemente ist es Oben Links, bei Icons in der Mitte)
+    - Button und Textbox zusammenbringen (da Textbox ein Button ohne FUnktion ist)
+
+
+    - Eventuell Screen und Element vereinigen (so dass man auch einen Screen als Element nutzen kann) 
+
+
+Bugs:
+    - wenn es zu viele Buxen beim Slider gibt, sieht man, dass es ein berechnungsfehler da gibt (Slider hängt dadurch hinterher, value funktioniert richtig)
+    - im ListScreen ist aufgefallen, dass bei identischen Button_Rect Elementen das Erste trotzdem eine andere automatisch! generierte Item und Border Farbe hat

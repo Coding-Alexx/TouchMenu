@@ -13,7 +13,7 @@ public:
     virtual void loop (Inputs& input) = 0;   // aktualisiere die Elemente
     virtual void draw() = 0;    // Zeichne den Screen und alle Elemente neu
 
-    void setDisplay(Display* const display);
+    virtual void setDisplay(Display* const display);
     virtual void setResolution(uint16_t width, uint16_t height);
     virtual void setOffsetPosition(uint16_t x, uint16_t y);
     const int16_t getResolutionHeight() const;

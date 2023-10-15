@@ -10,35 +10,57 @@ public:
     inline Number_Slider(const Color& color, const std::function<void(int)> slider_callback, ExternalNumberValue* value=nullptr):
         NumberInput(slider_callback, value),
         color(color)
-    {
-        // if (!color.hasSecondaryColor())
-        //     this->color = color + !color;
-    }
+    {}
 
     inline void draw() {
 
+        if (!display) {
+            LOGGER_ERROR("DISPLAY IS NULLPTR!")
+            return;
+        }
+
+        uint16_t size = isVertical? sizeY : sizeX;
+        uint16_t boxes = (uint16_t)(getMaxValue() - getMinValue()) / steps;
+        
+        // calculate position for the slider
+        if (getMaxValue() == getMinValue()) 
+            sliderPos = size/2;
+
+        else if (boxes * r > size) 
+            sliderPos = map(value, minValue-1, maxValue+1, 0, size); 
+
+        else {
+            uint16_t boxSize = size / boxes;
+            sliderPos = boxSize * value/steps + boxSize/2;   
+        } 
+
+        uint16_t sy = sizeY - (2*b) - (2*t); // Slider movement length
+        uint16_t sx = sizeX - (2*b) - (2*t); // Slider movement length
+
         if (isVertical) {
-            uint16_t sy = sizeY - (2*b) - (2*t); // Slider movement length
-            // uint16_t sliderPos = value * sy / maxValue;
-            uint16_t sliderPos = map(value, minValue-1, maxValue+1, 0, sy);
+            display->rect_center(posX + sizeX/2, posY + sizeY/2, sizeX - t*2, sizeY - t*2, b, r, color.getBorderColor(), color.getSecondaryColor());        // 
+            display->rect(posX + t + b, posY + t + b + sliderPos, sx, sy - sliderPos, 0, r, color.getBorderColor(), color);   // 
+            display->rect_center(posX + sizeX/2, posY + t + b + sliderPos, sx + b, r * 2, 0, r, color.getBorderColor(), color.getItemColor());     // Slider
 
-            display->rect_center(posX + sizeX/2, posY + sizeY/2, sizeX - t*2, sizeY - t*2, b, r, color.getBorderColor(), color.getSecondaryColor());
-            display->rect(posX + t + b, posY + t + b + sliderPos, sizeX - t*2 - b*2, sizeY - sliderPos - 2*b - 2*t, 0, r, color.getBorderColor(), color);
-            display->rect_center(posX + sizeX/2, posY + t + b + sliderPos, sizeX - t*2 - b, r * 2, 0, r, color.getBorderColor(), color.getItemColor());
+            // // Dubug Hitboxes:
+            // if (getMinValue() != getMaxValue()) {
+            //     uint16_t boxes = (uint16_t)(getMaxValue() - getMinValue()) / steps;
+            //     for (int i = 0; i < boxes; i++)
+            //         display->line(posX, sizeY/boxes*i + posY + t + b, posX+sizeX, sizeY/boxes*i + posY + t + b, COLOR_RED);
+            //     LOGGER(boxes)
+            // }
+
         } else {
-            uint16_t sx = sizeX - (2*b) - (2*t); // Slider movement length
-            // uint16_t sliderPos = value * sx / maxValue;
-            uint16_t sliderPos = map(value, minValue-1, maxValue+1, 0, sx);
-
             display->rect_center(posX + sizeX/2, posY + sizeY/2, sizeX - t*2, sizeY - t*2, b, r, color.getBorderColor(), color.getSecondaryColor());
-            display->rect(posX + t + b, posY + t + b, sliderPos, sizeY - t*2 - b*2, 0, r, color.getBorderColor(), color);
-            display->rect_center(posX + t + b + sliderPos, posY + sizeY/2, r * 2, sizeY - t*2 - b, 0, r, color.getBorderColor(), color.getItemColor());
+            display->rect(posX + t + b, posY + t + b, sliderPos, sy, 0, r, color.getBorderColor(), color);
+            display->rect_center(posX + t + b + sliderPos, posY + sizeY/2, r * 2, sy + b, 0, r, color.getBorderColor(), color.getItemColor());
         }
     }
 
-    inline void setTouch(Inputs& input) override {
-        LOGGER_PATTERN("slider Berührt: X = _ < _ < _,     _ < _ < _", posX, input.touchX, posX + sizeX, posY, input.touchY, posY + sizeY)
 
+    // value soll 0 - 10 in 2er schritten abbilden können (also 0, 2, 4, 6, 8, 10)
+    // Slider soll dabei auf der Mitte anhalten
+    inline void setTouch(Inputs& input) override {
         uint16_t xl = posX + t + b;                 // left  X value
         uint16_t xr = xl + sizeX - (2*b) - (2*t);   // Right X value
 
@@ -47,16 +69,19 @@ public:
 
         if (!(xl < input.touchX && input.touchX < xr)) return;
         if (!(yl < input.touchY && input.touchY < yr)) return;
-        if (isVertical) {
-            // value = (input.touchY - yl) * maxValue / (yr-yl);
-            value = map(input.touchY, yl, yr, minValue, maxValue);  
-        } else {
-            // value = (input.touchX - xl) * maxValue / (xr-xl);
-            value = map(input.touchX, xl, xr, minValue, maxValue);
-        }
+
+        int new_value;
+        if (isVertical) new_value = map(input.touchY, yl, yr, minValue, maxValue);
+        else            new_value = map(input.touchX, xl, xr, minValue, maxValue);
+
+        if (new_value == value) return;
+        else value = getMinValue() + (int)((new_value - getMinValue()) / steps) * steps;
+
         if (externalValue) externalValue->setValue(value);
         callback(value);
-        // LOGGER(value)
+
+        // LOGGER_PATTERN("slider Berührt: X = _ < _ < _,     _ < _ < _, value:_", posX, input.touchX, posX + sizeX, posY, input.touchY, posY + sizeY, value)
+        // LOGGER_PATTERN("sliderPos: _, boxes: _, size: _", sliderPos, boxes, (isVertical)? yl - yr : xl - xr)
 
         draw();
     }
@@ -69,7 +94,7 @@ private:
             return true;
         }
 
-        if (sizeX >= 1.5 * sizeY) {    
+        if (sizeX >= 1.5 * sizeY) {
             LOGGER("Slider ist Horrizontal")
             return true;
         }
@@ -81,7 +106,9 @@ private:
     const Color color;
     bool isVertical = false;
 
-    const uint16_t t = 5; // distance to border
-    const uint16_t b = 4; // border
+    uint16_t sliderPos = 0;
+
+    const uint16_t t = 3; // distance to border
+    const uint16_t b = 2; // border
     const uint16_t r = 6; // border radius
 };

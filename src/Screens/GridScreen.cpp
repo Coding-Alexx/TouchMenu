@@ -153,6 +153,5 @@ void GridScreen::draw() {
     }
 }
 
-void GridScreen::setResolution(int16_t h, int16_t w) {
-    Screen::setResolution(h, w);
-}
+uint8_t GridScreen::getRow() const { return row; }
+uint8_t GridScreen::getCol() const { return col; }

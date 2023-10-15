@@ -10,6 +10,7 @@
 #include "Screen.h"
 #include "Input.h"
 #include "Screens/GridScreen.h"
+#include "Screens/ListScreen.h"
 #include "Screens/ErrorScreen.h"
 #include "ElementViews/Button_Rect.h"
 #include "ElementViews/Button_Blank.h"
